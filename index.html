@@ -42,12 +42,42 @@ h2{font-size:clamp(34px,4.7vw,56px);line-height:1.16;letter-spacing:-2px;margin:
 .takeaway h3{font-size:18px;line-height:1.3;margin:0 0 6px}.takeaway p{color:var(--muted);font-size:14px;line-height:1.5;margin:0}
 .system-title{font-size:26px;font-weight:700;letter-spacing:-.6px;line-height:1.2}.system-desc{color:var(--muted);margin-top:4px}
 .article-meta{font-size:11px;color:var(--muted);margin:12px 0 4px;letter-spacing:.3px}.article-title{font-size:16px;font-weight:650;line-height:1.4}
+.heat-legend{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin:0 0 8px}.heat-gradient{height:8px;width:110px;border-radius:4px;background:linear-gradient(to right,#eff3f8,#25588a)}
+.chart{width:100%;min-height:270px}.chart svg{display:block;width:100%;overflow:visible}.chart text{fill:#526977;font-size:11px}.chart .domain,.chart .tick line{stroke:#c9d6de}#heat-chart .domain{display:none}
+#heat-chart rect.cell{cursor:pointer;outline:none}#heat-chart rect.cell:hover,#heat-chart rect.cell:focus{stroke:var(--ink);stroke-width:2}
+#line-chart circle{cursor:pointer;outline:none}#line-chart circle:hover,#line-chart circle:focus{stroke:var(--ink);stroke-width:2}#line-chart .grid line{stroke:#edf2f5}#line-chart .grid .domain{display:none}
+.line-context{font-size:12px;color:var(--muted);margin:0 0 6px}.line-legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--muted);margin:0 0 8px}.line-legend:empty{display:none}.line-key{display:inline-flex;align-items:center;gap:7px}.line-key span{display:inline-block;width:18px;height:3px;border-radius:2px}
+.highway-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px;align-items:center}
+.hw-map svg{display:block;width:100%;height:auto;background:#f7f9fc;border:1px solid #e0e7ef;border-radius:10px}
+.hw-map .guide{stroke:#e8eef4;stroke-width:1}.hw-map .place{font-size:11px;fill:#7c8995;letter-spacing:.2px}.hw-map .highlight-badge{font-weight:700;font-size:12px}
+.hw-map .route-under{fill:none;stroke:#fff;stroke-width:13;stroke-linecap:round;stroke-linejoin:round}
+.hw-map .route-colored{fill:none;stroke-linecap:round;stroke-linejoin:round;cursor:pointer;transition:stroke-width .15s}.hw-map .route-colored:hover,.hw-map .route-colored:focus{stroke-width:11;outline:none}
+.hw-map .route-label{font-weight:700;font-size:13px;paint-order:stroke;stroke:#f7f9fc;stroke-width:4px;stroke-linejoin:round}
+.hw-rank-title{font-size:15px;margin:0 0 10px}.hw-caption{font-size:13px;font-weight:700;color:#2e4d65;margin:12px 0 0}
+.hw-rank{display:flex;align-items:center;gap:10px;font-size:14px;margin:4px 0;padding:7px 8px;border-radius:8px}.hw-rank .road{width:50px;font-weight:700}.hw-rank .track{height:12px;background:#eef1f4;flex:1;border-radius:6px;overflow:hidden}.hw-rank .fill{height:100%;background:#668da9;border-radius:6px;transition:width .4s}.hw-rank .val{min-width:84px;text-align:right;font-variant-numeric:tabular-nums}
+.hw-rank.first{background:#fbf0ed}.hw-rank.first .road,.hw-rank.first .val{color:#9d4939}.hw-rank.first .fill{background:#b65a47}.hw-rank.last .fill{background:#b3c4d2}
+.hw-legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--muted);margin-top:14px}.hw-legend>span{display:inline-flex;align-items:center;gap:7px}
+.legend-swatch{display:inline-block;width:22px;height:5px;border-radius:3px}.legend-swatch.top{background:#b65a47}.legend-swatch.mid{background:#668da9}.legend-swatch.low{background:#b3c4d2}
+.constellation-wrap{overflow-x:auto}#constellation-chart svg{min-width:700px}#constellation-chart .road-label{fill:var(--ink);font-size:15px;font-weight:750}#constellation-chart .row-line{stroke:#dbe5ec}#constellation-chart .gridline{stroke:#eef3f6}
+#constellation-chart circle{cursor:pointer;outline:none;stroke:#fff;stroke-width:1;transition:opacity .15s}#constellation-chart circle:hover,#constellation-chart circle:focus,#constellation-chart circle.selected{stroke:var(--ink);stroke-width:2.5}
+.key-dot{display:inline-block;width:10px;height:10px;border-radius:50%}
+.anatomy-layout{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:16px;align-items:start}.visual-panel{min-width:0}
+.icicle-hint{display:flex;align-items:center;gap:10px;margin:0 0 12px;padding:10px 14px;border:1px dashed #b9cfdd;border-radius:9px;background:var(--soft);color:#405667;font-size:13px;line-height:1.4}.icicle-hint svg{flex:0 0 18px;width:18px;height:18px;color:var(--blue)}.icicle-hint strong{color:var(--ink)}.icicle-hint em{font-style:normal;font-weight:650;color:var(--blue)}
+.crumbs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}.crumbs:empty{display:none}.crumb{border:1px solid #d8e4ea;border-radius:7px;background:#fff;padding:4px 9px;color:#526977;font-size:12px;cursor:pointer}.crumb:hover{border-color:var(--blue);color:var(--ink)}.crumb[aria-current="page"]{background:#193d54;border-color:#193d54;color:#fff}
+.icicle-wrap{overflow-x:auto}#icicle-chart{min-height:0}#icicle-chart svg{min-width:580px}#icicle-chart .row-heading{fill:#405667;font-size:12px;font-weight:800;letter-spacing:.06em}#icicle-chart .block-label{fill:#fff;stroke:#132b3c;stroke-opacity:.3;stroke-width:2;paint-order:stroke;font-weight:850;pointer-events:none}#icicle-chart .block-value{fill:#fff;stroke:#132b3c;stroke-opacity:.32;stroke-width:1.5;paint-order:stroke;font-weight:700;pointer-events:none}
+#icicle-chart g.icicle-block{cursor:pointer;outline:none}#icicle-chart g.icicle-block:hover rect,#icicle-chart g.icicle-block:focus rect{stroke:var(--ink);stroke-width:2.5}
+.icicle-legend{display:grid;gap:7px;margin-top:12px}.legend-row{display:grid;grid-template-columns:112px minmax(0,1fr);align-items:start;gap:8px 12px;border:1px solid var(--line);border-radius:9px;background:var(--soft);padding:8px 10px}.legend-heading{padding-top:2px;color:#405667;font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}.legend-items{display:flex;flex-wrap:wrap;align-items:center;gap:7px 16px}.legend-item{display:inline-flex;align-items:center;gap:6px;color:#263d4f;font-size:11px;line-height:1.35}.type-key .key-dot{border-radius:3px}
+.icicle-inspector{border:1px solid var(--line);border-radius:11px;background:var(--soft);padding:17px}.icicle-inspector h3{margin:7px 0 5px;font-size:17px;line-height:1.25}.icicle-big{font-size:31px;font-weight:800;letter-spacing:-.03em;color:var(--ink)}.icicle-muted{color:var(--muted);font-size:12px}.icicle-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}.icicle-grid strong{display:block;font-size:18px}.icicle-grid span{color:var(--muted);font-size:11px}
+.panel-label{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;font-weight:750;color:var(--muted)}
+.hw-tooltip{position:absolute;pointer-events:none;background:#fff;border:1px solid #dce7ed;border-radius:10px;box-shadow:0 6px 24px #15364b18;padding:10px 12px;font-size:12px;color:var(--muted);display:none;z-index:30}.hw-tooltip b{color:var(--ink)}
+.chart-status{color:var(--muted);font-size:14px;margin:0;padding:110px 0;text-align:center}
+.chart-detail{font-size:13px;min-height:22px;color:var(--muted);margin:10px 0 0}.chart-takeaway{font-size:15px;margin:10px 0 0}.chart-takeaway:empty{display:none}.chart-takeaway::before{content:"Takeaway: ";font-weight:700}
 .helper{font-size:12px;color:var(--muted);margin:15px 0 0}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}.question{margin:24px 0;background:var(--soft);padding:22px 26px;border-radius:13px;border-left:3px solid var(--blue);font-size:17px}
 .cityline{height:80px;opacity:.22;background:linear-gradient(to top,#8fb9cc 0 45%,transparent 45%);clip-path:polygon(0 100%,0 50%,5% 50%,5% 35%,11% 35%,11% 70%,17% 70%,17% 22%,24% 22%,24% 65%,30% 65%,30% 10%,37% 10%,37% 55%,43% 55%,43% 33%,49% 33%,49% 65%,55% 65%,55% 0,62% 0,62% 58%,68% 58%,68% 38%,75% 38%,75% 67%,83% 67%,83% 23%,90% 23%,90% 50%,100% 50%,100% 100%)}
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s,transform .7s}.reveal.visible{opacity:1;transform:none}
 .section>:first-child{margin-top:0}.section>:last-child{margin-bottom:0}
 footer{padding:38px 0;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
-@media(max-width:700px){.grid2,.articles,.systems,.takeaways{grid-template-columns:1fr}.hero{min-height:70vh}h1{letter-spacing:-3px}.section{padding-top:45px}.card{padding:17px}.tooltip-demo{position:static;margin:20px auto 0}.viz{display:block;min-height:350px;padding:45px 18px 20px}.viz-inner{margin:auto}}
+@media(max-width:700px){.grid2,.articles,.systems,.takeaways,.highway-grid,.anatomy-layout,.legend-row{grid-template-columns:1fr}.hero{min-height:70vh}h1{letter-spacing:-3px}.section{padding-top:45px}.card{padding:17px}.tooltip-demo{position:static;margin:20px auto 0}.viz{display:block;min-height:350px;padding:45px 18px 20px}.viz-inner{margin:auto}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.car{animation:none}.reveal{opacity:1;transform:none;transition:none}}
 </style></head><body>
 <main>
@@ -67,20 +97,50 @@ footer{padding:38px 0;border-top:1px solid var(--line);font-size:13px;color:var(
 <div class="system-card"><div class="system-label">System 2</div><div class="system-body"><div class="system-icons" aria-hidden="true"><i data-lucide="user"></i><i data-lucide="search"></i></div><div><div class="system-title">Think deeper.</div><div class="system-desc">Deliberate. Analytical. Reflective.</div></div></div></div>
 </div><h3 class="systems-cta"><em>Let's put your System 2 thinking to work.</em></h3></section>
 <section class="section reveal" id="rising"><div class="story-label">Timing</div><h2>Atlanta commuters feel like driving during rush hour is the most dangerous.</h2><p class="desc">Initially, the crash data seems to agree. Switch between the two views to challenge your first impression.</p>
-<div class="card"><div class="cardhead"><strong>Weekday × hour heatmap</strong><span class="tag">Visualization placeholder</span></div><div class="controls" role="group" aria-label="Heatmap metric"><button class="toggle active" data-group="heat" data-value="all" aria-pressed="true">All crashes</button><button class="toggle" data-group="heat" data-value="fatal" aria-pressed="false">Fatal crashes</button></div>
-<div class="viz" id="heat-placeholder"><div class="viz-inner"><div class="viz-icon">▦</div><strong id="heat-title">All crashes · Weekday by hour</strong><p>Interactive 7 × 24 heatmap placeholder. Compare weekday and hour patterns; hover/tap cells for precise totals and fatal counts.</p></div><div class="tooltip-demo"><strong>Day + hour tooltip · planned</strong><span>Total crashes: —</span><span>Fatal crashes: —</span></div></div><p class="helper">Toggle changes the intended metric, not real values yet. Both metrics and tooltips will use the final dataset.</p></div></section>
+<div class="card"><div class="cardhead"><strong>Crashes by Day and Hour</strong><span class="tag">2021–2023</span></div><div class="controls" role="group" aria-label="Heatmap metric"><button class="toggle active" data-group="heat" data-value="crashes" aria-pressed="true">All crashes</button><button class="toggle" data-group="heat" data-value="fatalSerious" aria-pressed="false">Fatal or serious-injury crashes</button></div>
+<p class="heat-legend"><span>0</span><span class="heat-gradient" aria-hidden="true"></span><span id="heat-max"></span></p>
+<div id="heat-chart" class="chart"><p class="chart-status">Loading crash data…</p></div>
+<p id="heat-detail" class="chart-detail" aria-live="polite">Hover, tap, or focus a cell for its count.</p>
+<p id="heat-takeaway" class="chart-takeaway"></p>
+<p class="helper">Darker cells mean more crashes. 00 is 00:00–00:59. Fatal or serious-injury counts crashes, not people.</p></div></section>
 <section class="section reveal" id="rising-2"><div class="story-label">Traffic volume</div><h2>Accounting for traffic gives us a more complete picture.</h2><p class="desc">Notice how some hours have a higher crash frequency relative to how many vehicles are on the road.</p>
-<div class="card"><div class="cardhead"><strong>Hourly crash count vs. hourly vehicle count</strong><span class="tag">Visualization placeholder</span></div><div class="controls" role="group" aria-label="Hourly metric"><button class="toggle active" data-group="hourly" data-value="counts" aria-pressed="true">Counts</button><button class="toggle" data-group="hourly" data-value="rates" aria-pressed="false">Rates</button></div>
-<div class="viz" id="hourly-placeholder"><div class="viz-inner"><div class="viz-icon">⌇</div><strong id="hourly-title">Crash counts vs. vehicle counts · By hour</strong><p id="hourly-desc">Dual line chart placeholder. Hourly crash counts overlaid on hourly vehicle counts across a 24-hour day, so peaks in crashes can be compared against peaks in traffic volume. Hover/tap an hour for exact values.</p></div><div class="tooltip-demo" id="hourly-tooltip"><strong>Hour tooltip · planned</strong><span>Hour: —</span><span>Crashes: —</span><span>Vehicles: —</span></div></div><p class="helper">Toggle switches between raw counts and the exposure-adjusted rate (crashes per 100,000 vehicle passages). Values will be populated from the cleaned dataset.</p></div></section>
+<div class="card"><div class="cardhead"><strong>Hourly crash count vs. hourly vehicle count</strong><span class="tag">2021–2023</span></div><div class="controls" role="group" aria-label="Hourly metric"><button class="toggle active" data-group="hourly" data-value="counts" aria-pressed="true">Counts</button><button class="toggle" data-group="hourly" data-value="rates" aria-pressed="false">Rates</button></div>
+<p id="line-context" class="line-context"></p><p id="line-legend" class="line-legend"></p>
+<div id="line-chart" class="chart"><p class="chart-status">Loading crash and traffic data…</p></div>
+<p id="line-detail" class="chart-detail" aria-live="polite">Hover, tap, or focus a point for its value.</p>
+<p id="line-takeaway" class="chart-takeaway"></p>
+<p class="helper">Counts: the two lines use separate axes, so compare their shapes rather than their heights. Vehicle passages come from FHWA TMAS traffic counting stations, so they approximate traffic near those counters, not every road. Rates: crashes matched within 500 m of a station, divided by that station's vehicle passages in the same hour.</p></div></section>
 <section class="section reveal" id="climax"><div class="story-label">The reveal</div><h2>First impressions can be misleading.</h2><p class="desc">Now let's revisit our initial map. After dividing crashes by traffic volume to be more risk-relative, our rankings change.</p>
-<div class="card"><div class="cardhead"><strong>Highway comparison · 2023</strong><span class="tag">Visualization placeholder</span></div>
-<div class="controls" role="group" aria-label="Highway comparison metric"><button class="toggle active" data-group="highway" data-value="total" aria-pressed="true">Total crashes</button><button class="toggle" data-group="highway" data-value="normalized" aria-pressed="false">Fatal crashes / traffic exposure</button></div>
-<div class="viz"><div class="viz-inner"><div class="viz-icon">⌁</div><strong id="highway-title">Highways · Total crashes · 2023</strong><p>Replace with labeled geographic highway routes and an obvious highest-ranked corridor. Toggle to exposure-normalized fatal crash rates to reveal how rankings change.</p></div><div class="tooltip-demo"><strong>Highway tooltip · planned</strong><span>Highway: —</span><span>Total crashes: —</span><span>Fatal crashes: —</span><span>Traffic exposure: —</span><span>Normalized rate: —</span></div></div><p class="helper">Use a consistent exposure unit (e.g., fatalities per 100 million vehicle-miles traveled) and disclose any unmatched data. The metric toggle is functional UI scaffolding only.</p></div>
+<div class="card"><div class="cardhead"><strong>Highway comparison · 2023</strong><span class="tag">Atlanta interstates</span></div>
+<div class="controls" role="group" aria-label="Highway comparison metric"><button class="toggle active" data-group="highway" data-value="total" aria-pressed="true">Total crashes</button><button class="toggle" data-group="highway" data-value="normalized" aria-pressed="false">Serious or fatal crashes / traffic exposure</button></div>
+<p id="hw-sub" class="line-context"></p>
+<div class="highway-grid"><div id="hw-map" class="hw-map"><p class="chart-status">Loading crash and traffic data…</p></div>
+<div><h4 id="hw-rank-title" class="hw-rank-title"></h4><div id="hw-ranks"></div><p id="hw-caption" class="hw-caption"></p></div></div>
+<div class="hw-legend"><span><span class="legend-swatch top"></span>Highest rank</span><span><span class="legend-swatch mid"></span>Middle ranks</span><span><span class="legend-swatch low"></span>Lowest rank</span></div>
+<p id="hw-takeaway" class="chart-takeaway" aria-live="polite"></p>
+<p class="helper">Schematic highway map, not individual crash locations; hover over or focus a road for details. Crashes are assigned to an interstate through their matched road segment. Serious or fatal = K/A crashes; rate = serious or fatal crashes ÷ estimated vehicle-miles traveled (VMT) × 100 million. Corridor matching and traffic estimates introduce uncertainty, so rankings are exploratory.</p></div>
 <div class="question">Which highway looked worst before normalization? Does your answer change when you account for traffic?</div></section>
 <section class="section reveal" id="resolution"><div class="story-label">Look closer</div><h2>There’s more to road safety.</h2><p class="desc">Zoom out from a single ranking. Explore the structure of crash outcomes and compare crash density by highway to put the earlier patterns into context.</p>
-<div class="card"><div class="cardhead"><strong>Crash density by highway</strong><span class="tag">Placeholder</span></div><div class="viz"><div class="viz-inner"><div class="viz-icon">▥</div><strong>Highway density comparison</strong><p>Interactive corridor-density chart placeholder. Hover/tap to inspect the highway, crash count and density value.</p></div><div class="tooltip-demo"><strong>Highway tooltip</strong><span>Highway: —</span><span>Crash count: —</span><span>Density: —</span></div></div></div>
+<div class="card"><div class="cardhead"><strong>Crash density by highway</strong><span class="tag">2021–2023</span></div>
+<p id="const-sub" class="line-context"></p>
+<div class="constellation-wrap"><div id="constellation-chart" class="chart"><p class="chart-status">Loading crash and traffic data…</p></div></div>
+<div id="const-key" class="hw-legend"></div>
+<p id="const-detail" class="chart-detail" aria-live="polite">Hover, tap, or focus a circle for its count. Click a circle to highlight that hour on every highway.</p>
+<p class="helper">Each circle is one interstate in one hour of the day, combining all three years. Circle area shows the number of crashes; color shows the share that were serious or fatal (K/A). Crashes are assigned to an interstate through their matched road segment. These are historical counts, not per-trip crash probabilities.</p></div>
 <div class="question">When do different crashes happen? How severe are they? And do these patterns look the same across highways?</div>
-<div class="card spaced"><div class="cardhead"><strong>Crash outcomes · Icicle chart</strong><span class="tag">Placeholder</span></div><div class="viz"><div class="viz-inner"><div class="viz-icon">▤</div><strong>Hierarchical crash breakdown</strong><p>Interactive icicle chart placeholder. Hover/tap each segment for exact category and crash count.</p></div><div class="tooltip-demo"><strong>Segment tooltip</strong><span>Category: —</span><span>Count: —</span></div></div></div>
+<div class="card spaced"><div class="cardhead"><strong id="icicle-title">Crash outcomes · All recorded crashes</strong><span class="tag">2021–2023</span></div>
+<div class="controls" role="group" aria-label="Icicle highway focus"><button class="toggle active" data-group="icicle" data-value="all" aria-pressed="true">All crashes</button><button class="toggle" data-group="icicle" data-value="I-285" aria-pressed="false">I-285</button><button class="toggle" data-group="icicle" data-value="I-75" aria-pressed="false">I-75</button><button class="toggle" data-group="icicle" data-value="I-85" aria-pressed="false">I-85</button><button class="toggle" data-group="icicle" data-value="I-20" aria-pressed="false">I-20</button></div>
+<div class="anatomy-layout"><div class="visual-panel">
+<p class="icicle-hint"><i data-lucide="mouse-pointer-click" aria-hidden="true"></i><span><strong>Click any section to zoom into that part of the hierarchy.</strong> Use the breadcrumbs that appear below or <em>↺ Full hierarchy</em> to zoom back out.</span></p>
+<div id="icicle-crumbs" class="crumbs" aria-label="Hierarchy breadcrumbs"></div>
+<div class="icicle-wrap"><div id="icicle-chart" class="chart"><p class="chart-status">Loading crash data…</p></div></div>
+<div class="icicle-legend" aria-label="Icicle chart legend">
+<div class="legend-row"><strong class="legend-heading">Collision type</strong><div class="legend-items type-key" id="icicle-type-key"></div></div>
+<div class="legend-row"><strong class="legend-heading">Injury severity</strong><div class="legend-items" id="icicle-severity-key"></div></div>
+</div></div>
+<aside class="icicle-inspector" aria-live="polite"><div class="panel-label">Selected branch</div><h3 id="icicle-node-title">All recorded crashes</h3><div class="icicle-big" id="icicle-node-count">—</div><div class="icicle-muted">Recorded crashes in this branch</div><div class="icicle-grid"><div><strong id="icicle-node-severe">—</strong><span>Serious / fatal K/A</span></div><div><strong id="icicle-node-share">—</strong><span>K/A share</span></div></div><button class="toggle" id="icicle-reset" type="button">↺ Full hierarchy</button></aside>
+</div>
+<p class="helper">Width is proportional to the number of crashes in the selected branch. Rush hour means weekdays 07:00–09:59 and 16:00–18:59; off-peak covers all remaining hours and weekends, so its larger total partly reflects more hours. Highway views assign crashes through their matched road segment. Severity shares are not exposure-adjusted crash risk.</p></div>
 <div class="question">Does every crash have the same outcome? When do crashes occur? What types of collisions happen? How severe are their outcomes?</div></section>
 <section class="section reveal conclusion" id="conclusion"><h2>To make better data decisions, don't just count crashes, count the <em>context.</em></h2>
 <div class="takeaways">
@@ -91,12 +151,459 @@ footer{padding:38px 0;border-top:1px solid var(--line);font-size:13px;color:var(
 <footer>ATL Traffic · Interactive storytelling prototype</footer>
 </main>
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
 <script>
 if(window.lucide)lucide.createIcons();
-const labels={heat:{all:"All crashes",fatal:"Fatal crashes"},highway:{total:"Total crashes",normalized:"Fatal crashes / traffic exposure"}};
-const hourly={counts:{title:"Crash counts vs. vehicle counts · By hour",desc:"Dual line chart placeholder. Hourly crash counts overlaid on hourly vehicle counts across a 24-hour day, so peaks in crashes can be compared against peaks in traffic volume. Hover/tap an hour for exact values.",tip:["Hour: —","Crashes: —","Vehicles: —"]},rates:{title:"Crashes per 100,000 passages · By hour",desc:"Line chart placeholder. Hourly crashes divided by hourly vehicle passages (× 100,000), showing which hours are riskier relative to how many vehicles are on the road. Hover/tap an hour for the exact rate.",tip:["Hour: —","Crashes per 100k passages: —"]}};
-const state={heat:"all",highway:"total",hourly:"counts"};
-function update(){const h=hourly[state.hourly];document.getElementById("hourly-title").textContent=h.title;document.getElementById("hourly-desc").textContent=h.desc;document.getElementById("hourly-tooltip").innerHTML="<strong>Hour tooltip · planned</strong>"+h.tip.map(t=>"<span>"+t+"</span>").join("");document.getElementById("heat-title").textContent=labels.heat[state.heat]+" · Weekday by hour";document.getElementById("highway-title").textContent="Highways · "+labels.highway[state.highway]+" · 2023"}
+
+const DAYS=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+const heatNames={crashes:"all crashes",fatalSerious:"fatal or serious-injury crashes"};
+const count=d3.format(",d");
+const pad=(h)=>String(h).padStart(2,"0");
+const interval=(h)=>`${pad(h)}:00–${pad(h)}:59`;
+const rate=d3.format(".3f");
+const MATCH_RADIUS_M=500;
+let heatRows=null;
+let lineData=null;
+
+const loadError=(id,file)=>()=>{document.getElementById(id).innerHTML=`<p class="chart-status">Could not load ${file}. Open this page through a local web server (e.g. <code>python3 -m http.server</code>) instead of as a file.</p>`};
+const watchResize=(id,draw)=>{let frame;new ResizeObserver(()=>{cancelAnimationFrame(frame);frame=requestAnimationFrame(draw)}).observe(document.getElementById(id))};
+
+const COLLISION_TYPES={"Rear End":"Rear-end","Angle Crash":"Angle","Angle":"Angle","Sideswipe-Same Direction":"Sideswipe","Sideswipe-Opposite Direction":"Sideswipe","Head On":"Head-on","Not a Collision with Motor Vehicle":"Single vehicle / object"};
+const SEVERITY_KEYS={serious_or_fatal:"severe",minor_or_possible:"injury",no_recorded_injury:"none",unknown:"unknown"};
+const crashData=d3.csv("data/crashes_2021_2023.csv",(r)=>({day:+r.weekday_index,hour:+r.hour,year:r.year,segment:r.matched_road_segment_id,fatalSerious:r.injury_severity_group==="serious_or_fatal",
+  anatomy:`${r.commute_period==="weekday_rush_hour"?"rush":"off"}|${COLLISION_TYPES[r.collision_type]||"Other / unknown"}|${SEVERITY_KEYS[r.injury_severity_group]||"unknown"}`}))
+  .then((crashes)=>{
+    const cells=d3.range(7).flatMap((day)=>d3.range(24).map((hour)=>({day,hour,crashes:0,fatalSerious:0})));
+    const hourly=new Array(24).fill(0);
+    const bySegmentYear=new Map();
+    const onSegment=[];
+    const anatomyAll=new Map();
+    for(const c of crashes){
+      const cell=cells[c.day*24+c.hour];cell.crashes++;if(c.fatalSerious)cell.fatalSerious++;hourly[c.hour]++;
+      anatomyAll.set(c.anatomy,(anatomyAll.get(c.anatomy)||0)+1);
+      if(!c.segment)continue;
+      onSegment.push({segment:c.segment,year:c.year,hour:c.hour,fatalSerious:c.fatalSerious,anatomy:c.anatomy});
+      const key=`${c.segment}|${c.year}`;
+      const seg=bySegmentYear.get(key)||{crashes:0,severe:0};
+      seg.crashes++;if(c.fatalSerious)seg.severe++;
+      bySegmentYear.set(key,seg);
+    }
+    return {cells,hourly,total:crashes.length,bySegmentYear,onSegment,anatomyAll};
+  });
+
+const trafficData=d3.csv("data/tmas_hourly_exposure_2021_2023.csv",(r)=>({station:r.tmas_station_id,hour:+r.hour,vehicles:+r.vehicles_bidirectional,matched:+r[`matched_crashes_within_${MATCH_RADIUS_M}m`]}))
+  .then((rows)=>{
+    const vehicles=new Array(24).fill(0),matched=new Array(24).fill(0);
+    for(const r of rows){vehicles[r.hour]+=r.vehicles;matched[r.hour]+=r.matched}
+    return {vehicles,matched,stationCount:new Set(rows.map((r)=>r.station)).size};
+  });
+
+crashData.then(({cells})=>{
+  heatRows=cells;
+  document.getElementById("heat-chart").innerHTML="";
+  drawHeat();
+  watchResize("heat-chart",drawHeat);
+}).catch(loadError("heat-chart","data/crashes_2021_2023.csv"));
+
+Promise.all([crashData,trafficData]).then(([crashes,traffic])=>{
+  lineData={
+    hourly:d3.range(24).map((hour)=>({hour,crashes:crashes.hourly[hour],vehicles:traffic.vehicles[hour],matched:traffic.matched[hour],rate:traffic.matched[hour]/traffic.vehicles[hour]*1e5})),
+    totalCrashes:crashes.total,totalMatched:d3.sum(traffic.matched),stationCount:traffic.stationCount
+  };
+  document.getElementById("line-chart").innerHTML="";
+  drawLine();
+  watchResize("line-chart",drawLine);
+}).catch(loadError("line-chart","the crash and traffic CSVs in data/"));
+
+const HIGHWAYS=["I-285","I-75","I-85","I-20"];
+const HIGHWAY_YEARS=["2023"];
+let highwayRows=null;
+const CONST_YEARS=["2021","2022","2023"];
+const CONST_SHARE_BANDS=[{min:.025,color:"#d9604c",label:"2.5% or more serious/fatal"},{min:.013,color:"#e6a27b",label:"1.3–2.5%"},{min:0,color:"#8fb3c8",label:"Under 1.3%"}];
+let constRows=null;
+let constHour=null;
+const ICICLE_PERIODS={rush:{name:"Rush hour",color:"#126b63"},off:{name:"Off-peak",color:"#405d78"}};
+const ICICLE_TYPES={"Rear-end":"#176b78",Angle:"#9b451f",Sideswipe:"#405c9a","Head-on":"#a52a3a","Single vehicle / object":"#67428c","Other / unknown":"#475d69"};
+const ICICLE_SEVERITY={severe:{name:"Serious / fatal K/A",short:"K/A",color:"#b4232f",note:"fatal or suspected serious injury"},injury:{name:"Minor / possible B/C",short:"B/C",color:"#8a5700",note:"suspected minor or possible injury"},none:{name:"No injury O",short:"O",color:"#28627d",note:"no injury reported"},unknown:{name:"Unknown",short:"Unknown",color:"#59636d",note:"severity not reported"}};
+const ICICLE_HEADINGS=["ALL CRASHES","RUSH / OFF-PEAK","COLLISION TYPE","SEVERITY"];
+let anatomyCounts=null;
+let icicleBranch=[];
+let icicleRoad="all";
+
+const segmentData=d3.csv("data/traffic_2021_2023.csv",(r)=>({segment:r.matched_road_segment_id,road:r.road_name_display,year:r.year,vmt:+r.estimated_annual_vehicle_miles||0}));
+
+Promise.all([crashData,segmentData]).then(([crashes,segments])=>{
+  const segmentRoad=new Map();
+  const byRoad=new Map(HIGHWAYS.map((road)=>[road,{road,crashes:0,severe:0,vmt:0}]));
+  for(const s of segments){
+    if(!byRoad.has(s.road))continue;
+    segmentRoad.set(s.segment,s.road);
+    if(HIGHWAY_YEARS.includes(s.year))byRoad.get(s.road).vmt+=s.vmt;
+  }
+  for(const [key,v] of crashes.bySegmentYear){
+    const [segment,year]=key.split("|");
+    const road=segmentRoad.get(segment);
+    if(!road||!HIGHWAY_YEARS.includes(year))continue;
+    const r=byRoad.get(road);r.crashes+=v.crashes;r.severe+=v.severe;
+  }
+  highwayRows=[...byRoad.values()].map((r)=>({...r,rate:r.severe/r.vmt*1e8}));
+  document.getElementById("hw-map").innerHTML="";
+  drawHighway();
+
+  const grid=new Map(HIGHWAYS.flatMap((road)=>d3.range(24).map((hour)=>[`${road}|${hour}`,{road,hour,crashes:0,severe:0}])));
+  for(const c of crashes.onSegment){
+    const road=segmentRoad.get(c.segment);
+    if(!road||!CONST_YEARS.includes(c.year))continue;
+    const cell=grid.get(`${road}|${c.hour}`);cell.crashes++;if(c.fatalSerious)cell.severe++;
+  }
+  constRows=[...grid.values()];
+  document.getElementById("constellation-chart").innerHTML="";
+  drawConstellation();
+  watchResize("constellation-chart",drawConstellation);
+
+  anatomyCounts={all:crashes.anatomyAll};
+  for(const road of HIGHWAYS)anatomyCounts[road]=new Map();
+  for(const c of crashes.onSegment){
+    const road=segmentRoad.get(c.segment);
+    if(!road)continue;
+    const counts=anatomyCounts[road];counts.set(c.anatomy,(counts.get(c.anatomy)||0)+1);
+  }
+  document.getElementById("icicle-chart").innerHTML="";
+  drawIcicle();
+  watchResize("icicle-chart",drawIcicle);
+}).catch((err)=>{
+  console.error(err);
+  for(const id of ["hw-map","constellation-chart","icicle-chart"])loadError(id,"the crash and traffic CSVs in data/")();
+});
+
+// Hand-drawn, schematic Atlanta freeway corridors. Not official GDOT geometry.
+const ROUTES=[
+  {road:"I-285",path:"M 169 394 C 140 358 126 318 127 271 C 125 224 143 169 174 133 C 205 96 255 79 303 79 C 357 79 407 96 440 137 C 470 174 480 215 474 264 C 469 320 439 358 397 385 C 353 413 304 421 257 415 C 223 413 192 405 169 394",lx:423,ly:113},
+  {road:"I-75",path:"M 216 28 C 227 64 246 86 258 118 C 272 146 283 169 285 197 C 288 223 297 242 307 263 C 310 289 302 313 291 337 C 280 361 277 390 288 443",lx:219,ly:66},
+  {road:"I-85",path:"M 479 39 C 449 56 428 78 406 104 C 391 130 372 147 349 163 C 331 184 312 200 301 224 C 287 244 278 265 269 293 C 258 323 252 350 238 375 C 227 398 214 424 201 446",lx:452,ly:72},
+  {road:"I-20",path:"M 37 281 C 90 281 119 283 150 281 C 181 277 205 285 236 286 C 265 291 286 284 314 285 C 347 285 367 290 387 295 C 413 303 435 307 461 306 C 486 307 509 310 531 312",lx:49,ly:265}
+];
+const PLACES=[{text:"BUCKHEAD",x:348,y:200},{text:"MIDTOWN",x:331,y:249},{text:"DOWNTOWN",x:336,y:335},{text:"EAST POINT",x:143,y:400}];
+const hwTooltip=d3.select("body").append("div").attr("class","hw-tooltip");
+
+function drawHighway(){
+  if(!highwayRows)return;
+  const $=(id)=>document.getElementById(id);
+  const items=highwayRows;
+  const isRate=state.highway==="normalized";
+  const key=isRate?"rate":"crashes";
+  const yearLabel=HIGHWAY_YEARS.length>1?`${HIGHWAY_YEARS[0]}–${HIGHWAY_YEARS.at(-1)}`:HIGHWAY_YEARS[0];
+  const fmtVal=(d)=>isRate?`${d.rate.toFixed(2)} / 100M VMT`:`${count(d.crashes)} crashes`;
+  const sorted=[...items].sort((a,b)=>b[key]-a[key]);
+  const rank=new Map(sorted.map((d,i)=>[d.road,i]));
+  const last=items.length-1;
+  const color=(i)=>i===0?"#b65a47":i===last?"#b3c4d2":"#668da9";
+  const byRoad=new Map(items.map((d)=>[d.road,d]));
+  const tipHtml=(r)=>`<b>${r.road} · rank ${rank.get(r.road)+1}</b><div>${count(r.crashes)} total crashes</div><div>${count(r.severe)} serious/fatal crashes</div><div>${r.rate.toFixed(2)} serious/fatal crashes / 100M VMT</div>`;
+
+  $("hw-sub").textContent=isRate
+    ?`Serious or fatal crashes per 100 million vehicle-miles traveled · ${yearLabel}`
+    :`All reported crashes matched to each interstate · ${yearLabel}`;
+
+  const svg=d3.select("#hw-map").selectAll("svg").data([null]).join("svg")
+    .attr("viewBox","0 0 560 465").attr("role","img")
+    .attr("aria-label",isRate?"Simplified Atlanta interstate network, colored by serious and fatal crash rate rank":"Simplified Atlanta interstate network, colored by total crash rank");
+  drawBaseMap(svg);
+  const g=svg.selectAll("g.network").data([null]).join("g").attr("class","network");
+  g.selectAll("path.route-under").data(ROUTES,(d)=>d.road).join("path").attr("class","route-under").attr("d",(d)=>d.path);
+  g.selectAll("path.route-colored").data(ROUTES,(d)=>d.road).join("path")
+    .attr("class","route-colored").attr("d",(d)=>d.path).attr("stroke-width",8)
+    .attr("stroke",(d)=>color(rank.get(d.road))).attr("tabindex",0)
+    .attr("aria-label",(d)=>{const r=byRoad.get(d.road);return `${d.road}, rank ${rank.get(d.road)+1}: ${isRate?r.rate.toFixed(2)+" serious or fatal crashes per 100 million vehicle miles":count(r.crashes)+" crashes"}`})
+    .on("mousemove",(event,d)=>{hwTooltip.style("display","block").style("left",`${event.pageX+12}px`).style("top",`${event.pageY+12}px`).html(tipHtml(byRoad.get(d.road)))})
+    .on("mouseleave",()=>hwTooltip.style("display","none"))
+    .on("focus",(event,d)=>{const box=event.target.getBoundingClientRect();hwTooltip.style("display","block").style("left",`${box.right+scrollX+8}px`).style("top",`${box.top+scrollY}px`).html(tipHtml(byRoad.get(d.road)))})
+    .on("blur",()=>hwTooltip.style("display","none"));
+  svg.selectAll("g.route-labels").data([null]).join("g").attr("class","route-labels")
+    .selectAll("text.route-label").data(ROUTES,(d)=>d.road).join("text").attr("class","route-label")
+    .attr("x",(d)=>d.lx).attr("y",(d)=>d.ly).attr("fill",(d)=>color(rank.get(d.road))).text((d)=>d.road);
+  svg.selectAll("text.map-top").data([sorted[0]]).join("text").attr("class","highlight-badge map-top")
+    .attr("x",16).attr("y",22).attr("fill","#9d4939").text((d)=>`#1: ${d.road} · ${fmtVal(d)}`);
+
+  $("hw-rank-title").textContent=isRate?"Serious/fatal crashes per 100M vehicle-miles":"Total reported crashes";
+  const max=d3.max(items,(d)=>d[key]);
+  d3.select("#hw-ranks").selectAll("div.hw-rank").data(sorted,(d)=>d.road).join("div")
+    .attr("class",(d,i)=>"hw-rank"+(i===0?" first":i===last?" last":""))
+    .html((d)=>`<span class="road">${d.road}</span><div class="track"><div class="fill" style="width:${(d[key]/max*100).toFixed(1)}%"></div></div><span class="val">${isRate?d.rate.toFixed(2):count(d.crashes)}</span>`);
+  $("hw-caption").textContent=`#1: ${sorted[0].road} (${fmtVal(sorted[0])})`;
+
+  const countTop=d3.greatest(items,(d)=>d.crashes),rateTop=d3.greatest(items,(d)=>d.rate);
+  $("hw-takeaway").textContent=countTop.road!==rateTop.road
+    ?`${countTop.road} has the most recorded crashes, but ${rateTop.road} has the highest serious-or-fatal crash rate after accounting for estimated traffic exposure.`
+    :`${countTop.road} ranks highest on both measures in ${yearLabel}.`;
+}
+
+function drawBaseMap(svg){
+  const bg=svg.selectAll("g.bg").data([null]).join("g").attr("class","bg");
+  bg.selectAll("line.guide.vertical").data(d3.range(70,550,70)).join("line").attr("class","guide vertical").attr("x1",(d)=>d).attr("x2",(d)=>d).attr("y1",20).attr("y2",445);
+  bg.selectAll("line.guide.horizontal").data(d3.range(70,460,70)).join("line").attr("class","guide horizontal").attr("x1",20).attr("x2",540).attr("y1",(d)=>d).attr("y2",(d)=>d);
+  bg.selectAll("text.place").data(PLACES).join("text").attr("class","place").attr("x",(d)=>d.x).attr("y",(d)=>d.y).text((d)=>d.text);
+  svg.selectAll("text.north").data([null]).join("text").attr("class","place north").attr("x",516).attr("y",27).text("N ↑");
+}
+
+function drawConstellation(){
+  if(!constRows)return;
+  const $=(id)=>document.getElementById(id);
+  const pct=(n,d)=>d?`${(100*n/d).toFixed(1)}%`:"0.0%";
+  const band=(r)=>CONST_SHARE_BANDS.find((b)=>r.severe/Math.max(r.crashes,1)>=b.min);
+  const yearLabel=`${CONST_YEARS[0]}–${CONST_YEARS.at(-1)}`;
+  const width=Math.max(700,$("constellation-chart").clientWidth);
+  const height=360;
+  const margin={top:20,right:24,bottom:40,left:72};
+  const x=d3.scalePoint().domain(d3.range(24)).range([margin.left,width-margin.right]);
+  const y=d3.scalePoint().domain(HIGHWAYS).range([margin.top+30,height-margin.bottom-30]);
+  const max=d3.max(constRows,(r)=>r.crashes)||1;
+  const rMax=Math.min(20,x.step()*.62,y.step()*.45);
+  const radius=(r)=>3+(rMax-3)*Math.sqrt(r.crashes/max);
+  const total=d3.sum(constRows,(r)=>r.crashes),severe=d3.sum(constRows,(r)=>r.severe);
+
+  $("const-sub").textContent=`${count(total)} crashes on I-285, I-75, I-85, and I-20 · ${count(severe)} serious or fatal (${pct(severe,total)}) · ${yearLabel}`;
+  $("const-key").innerHTML=`<span>Small ↔ large = fewer ↔ more crashes</span>`+CONST_SHARE_BANDS.map((b)=>`<span><i class="key-dot" style="background:${b.color}"></i>${b.label}</span>`).join("");
+
+  const describe=(r)=>`${r.road} · ${interval(r.hour)} · ${count(r.crashes)} crashes, including ${count(r.severe)} serious or fatal (${pct(r.severe,r.crashes)})`;
+  const svg=d3.select("#constellation-chart").selectAll("svg").data([null]).join("svg")
+    .attr("height",height).attr("viewBox",`0 0 ${width} ${height}`).attr("role","group")
+    .attr("aria-label","Crash counts and serious or fatal shares by interstate and hour");
+  svg.selectAll("line.gridline").data(d3.range(0,24,3)).join("line").attr("class","gridline")
+    .attr("x1",(h)=>x(h)).attr("x2",(h)=>x(h)).attr("y1",margin.top).attr("y2",height-margin.bottom);
+  svg.selectAll("text.tick").data(d3.range(0,24,3)).join("text").attr("class","tick")
+    .attr("x",(h)=>x(h)).attr("y",height-margin.bottom+22).attr("text-anchor","middle").text(pad);
+  svg.selectAll("text.hour-label").data([null]).join("text").attr("class","hour-label")
+    .attr("x",(margin.left+width-margin.right)/2).attr("y",height-3).attr("text-anchor","middle").text("Hour of day (00 means 00:00–00:59)");
+  svg.selectAll("line.row-line").data(HIGHWAYS).join("line").attr("class","row-line")
+    .attr("x1",margin.left-14).attr("x2",width-margin.right+8).attr("y1",(d)=>y(d)).attr("y2",(d)=>y(d));
+  svg.selectAll("text.road-label").data(HIGHWAYS).join("text").attr("class","road-label")
+    .attr("x",4).attr("y",(d)=>y(d)+5).text((d)=>d);
+  svg.selectAll("circle").data(constRows,(r)=>`${r.road}|${r.hour}`).join("circle")
+    .attr("cx",(r)=>x(r.hour)).attr("cy",(r)=>y(r.road)).attr("r",radius)
+    .attr("fill",(r)=>band(r).color).attr("fill-opacity",(r)=>constHour===null||constHour===r.hour?.85:.3)
+    .classed("selected",(r)=>constHour===r.hour)
+    .attr("tabindex",0).attr("role","button").attr("aria-label",describe)
+    .on("pointermove",(event,r)=>{hwTooltip.style("display","block").style("left",`${event.pageX+12}px`).style("top",`${event.pageY+12}px`)
+      .html(`<b>${r.road} · ${interval(r.hour)}</b><div>${count(r.crashes)} crashes</div><div>${count(r.severe)} serious/fatal · ${pct(r.severe,r.crashes)}</div>`)})
+    .on("pointerleave",()=>hwTooltip.style("display","none"))
+    .on("focus",(_,r)=>{$("const-detail").textContent=describe(r)})
+    .on("click",(_,r)=>{constHour=constHour===r.hour?null:r.hour;$("const-detail").textContent=describe(r);drawConstellation()})
+    .on("keydown",(event,r)=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();constHour=constHour===r.hour?null:r.hour;drawConstellation()}});
+}
+
+function buildIcicleTree(road){
+  const root={key:"root",name:road==="all"?"All recorded crashes":`${road} · matched segments`,count:0,severe:0,children:[],depth:0,path:[]};
+  for(const [key,n] of anatomyCounts[road]){
+    const [period,type,severity]=key.split("|");
+    const levels=[[period,ICICLE_PERIODS[period].name,ICICLE_PERIODS[period].color],[type,type,ICICLE_TYPES[type]],[severity,ICICLE_SEVERITY[severity].name,ICICLE_SEVERITY[severity].color]];
+    root.count+=n;if(severity==="severe")root.severe+=n;
+    let node=root;
+    levels.forEach(([k,name,color],i)=>{
+      let child=node.children.find((item)=>item.key===k);
+      if(!child){child={key:k,name,color,count:0,severe:0,children:[],depth:i+1,path:[...node.path,k]};node.children.push(child)}
+      child.count+=n;if(severity==="severe")child.severe+=n;
+      node=child;
+    });
+  }
+  const sort=(node)=>{node.children.sort((a,b)=>b.count-a.count);node.children.forEach(sort)};
+  sort(root);
+  return root;
+}
+
+function drawIcicle(){
+  if(!anatomyCounts)return;
+  const $=(id)=>document.getElementById(id);
+  const pct=(n,d)=>d?`${(100*n/d).toFixed(1)}%`:"0.0%";
+  if(state.icicle!==icicleRoad){icicleRoad=state.icicle;icicleBranch=[]}
+  const root=buildIcicleTree(icicleRoad);
+  let focus=root;
+  for(const key of icicleBranch){const next=focus.children.find((c)=>c.key===key);if(!next)break;focus=next}
+  icicleBranch=focus.path;
+
+  const width=Math.max(580,$("icicle-chart").clientWidth);
+  const rowHeight=62,rowGap=29,top=30;
+  const layers=[];
+  const walk=(node,x,w)=>{
+    const row=node.depth-focus.depth;
+    if(row>3||w<.08)return;
+    layers.push({node,x,w,row});
+    let offset=x;
+    for(const child of node.children){const cw=w*child.count/node.count;walk(child,offset,cw);offset+=cw}
+  };
+  walk(focus,0,width);
+  const rowCount=4-focus.depth;
+  const height=top+rowCount*(rowHeight+rowGap)-rowGap+4;
+  const zoom=(path)=>{icicleBranch=path;drawIcicle()};
+
+  const svg=d3.select("#icicle-chart").selectAll("svg").data([null]).join("svg")
+    .attr("height",height).attr("viewBox",`0 0 ${width} ${height}`).attr("role","group").attr("aria-label","Zoomable crash hierarchy");
+  svg.selectAll("*").remove();
+  svg.selectAll("text.row-heading").data(d3.range(rowCount)).join("text").attr("class","row-heading")
+    .attr("x",0).attr("y",(i)=>top+i*(rowHeight+rowGap)-8).text((i)=>ICICLE_HEADINGS[focus.depth+i]);
+  const blocks=svg.selectAll("g.icicle-block").data(layers).join("g").attr("class","icicle-block")
+    .attr("tabindex",0).attr("role","button")
+    .attr("aria-label",({node})=>`${node.name}, ${count(node.count)} crashes, ${pct(node.severe,node.count)} serious or fatal; activate to drill down`)
+    .on("click",(_,{node})=>zoom(node.path))
+    .on("keydown",(event,{node})=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();zoom(node.path)}})
+    .on("pointermove",(event,{node})=>{hwTooltip.style("display","block").style("left",`${event.pageX+12}px`).style("top",`${event.pageY+12}px`)
+      .html(`<b>${node.name}</b><div>${count(node.count)} crashes</div><div>${count(node.severe)} serious/fatal · ${pct(node.severe,node.count)}</div>`)})
+    .on("pointerleave",()=>hwTooltip.style("display","none"));
+  blocks.append("rect")
+    .attr("x",(d)=>d.x).attr("y",(d)=>top+d.row*(rowHeight+rowGap))
+    .attr("width",(d)=>Math.max(.1,d.w-1.5)).attr("height",rowHeight).attr("rx",2)
+    .attr("fill",({node})=>node.depth===0?"#344c5e":node.color).attr("stroke","#fff").attr("stroke-width",1.2);
+  blocks.each(function(d){
+    const blockWidth=d.w-1.5;
+    if(blockWidth<34)return;
+    const {node}=d;
+    const label=node.depth===3?ICICLE_SEVERITY[node.key].short:node.name;
+    const font=Math.min(16,12.5+Math.log2(1+blockWidth/90)*1.35);
+    const maxChars=Math.max(1,Math.floor((blockWidth-16)/(font*.62)));
+    const y=top+d.row*(rowHeight+rowGap);
+    const g=d3.select(this);
+    g.append("text").attr("class","block-label").attr("x",d.x+7).attr("y",y+25).style("font-size",`${font.toFixed(1)}px`)
+      .text(label.length>maxChars?`${label.slice(0,Math.max(1,maxChars-1))}…`:label);
+    if(blockWidth>=115)g.append("text").attr("class","block-value").attr("x",d.x+7).attr("y",y+48).style("font-size",`${Math.min(13.5,font-1).toFixed(1)}px`)
+      .text(`${count(node.count)} · ${(100*node.count/focus.count).toFixed(1)}%`);
+  });
+
+  const crumbs=[];
+  let current=root;
+  for(const key of focus.path){current=current.children.find((c)=>c.key===key);crumbs.push(current)}
+  d3.select("#icicle-crumbs").selectAll("button").data(crumbs).join("button").attr("type","button").attr("class","crumb")
+    .attr("aria-current",(_,i)=>i===crumbs.length-1?"page":null)
+    .text((node,i)=>`${i?"› ":""}${node.name}`)
+    .on("click",(_,node)=>zoom(node.path));
+
+  $("icicle-node-title").textContent=focus.name;
+  $("icicle-node-count").textContent=count(focus.count);
+  $("icicle-node-severe").textContent=count(focus.severe);
+  $("icicle-node-share").textContent=pct(focus.severe,focus.count);
+  $("icicle-title").textContent=`Crash outcomes · ${icicleRoad==="all"?"All recorded crashes":icicleRoad}`;
+  $("icicle-reset").onclick=()=>zoom([]);
+  $("icicle-type-key").innerHTML=Object.entries(ICICLE_TYPES).map(([name,color])=>`<span class="legend-item"><i class="key-dot" style="background:${color}"></i>${name}</span>`).join("");
+  $("icicle-severity-key").innerHTML=Object.values(ICICLE_SEVERITY).map((s)=>`<span class="legend-item"><i class="key-dot" style="background:${s.color}"></i><span><b>${s.short}</b> · ${s.note}</span></span>`).join("");
+}
+
+function drawLine(){
+  if(!lineData)return;
+  const $=(id)=>document.getElementById(id);
+  const isRate=state.hourly==="rates";
+  const rows=lineData.hourly;
+  const width=$("line-chart").clientWidth;
+  const height=300;
+  const margin={top:26,right:isRate?14:58,bottom:45,left:58};
+  const x=d3.scaleLinear().domain([0,23]).range([margin.left,width-margin.right]);
+  const series=isRate
+    ?[{key:"rate",label:`Crashes within ${MATCH_RADIUS_M} m per 100,000 vehicle passages`,color:"#25588a",value:(r)=>r.rate}]
+    :[{key:"crashes",label:"All crashes",color:"#25588a",value:(r)=>r.crashes},{key:"vehicles",label:"Vehicle passages (traffic counters)",color:"#e0832f",value:(r)=>r.vehicles}];
+  for(const s of series)s.y=d3.scaleLinear().domain([0,d3.max(rows,s.value)*1.12||1]).nice().range([height-margin.bottom,margin.top]);
+  const [primary,secondary]=series;
+
+  $("line-context").textContent=isRate
+    ?`${count(lineData.totalMatched)} crashes matched to ${lineData.stationCount} traffic counting stations · 2021–2023`
+    :`${count(lineData.totalCrashes)} crash records (all severities) · traffic from ${lineData.stationCount} counting stations · 2021–2023`;
+  $("line-legend").innerHTML=series.map((s)=>`<span class="line-key"><span style="background:${s.color}"></span>${s.label}</span>`).join("");
+  $("line-detail").textContent="Hover, tap, or focus a point for its value.";
+
+  const svg=d3.select("#line-chart").selectAll("svg").data([null]).join("svg")
+    .attr("height",height).attr("viewBox",`0 0 ${width} ${height}`).attr("role","group")
+    .attr("aria-label",isRate?"Crashes per 100,000 vehicle passages by hour":"All crashes and vehicle passages by hour");
+  svg.selectAll("g.grid").data([null]).join("g").attr("class","grid").attr("transform",`translate(${margin.left},0)`)
+    .call(d3.axisLeft(primary.y).ticks(5).tickSize(-(width-margin.left-margin.right)).tickFormat(""));
+  svg.selectAll("g.x").data([null]).join("g").attr("class","x").attr("transform",`translate(0,${height-margin.bottom})`)
+    .call(d3.axisBottom(x).tickValues(d3.range(0,24,width<550?4:2)).tickFormat(pad).tickSize(4));
+  svg.selectAll("g.y").data([null]).join("g").attr("class","y").attr("transform",`translate(${margin.left},0)`)
+    .call(d3.axisLeft(primary.y).ticks(5).tickFormat(isRate?d3.format("~g"):d3.format("~s")));
+  svg.selectAll("g.y2").data(secondary?[null]:[]).join("g").attr("class","y2").attr("transform",`translate(${width-margin.right},0)`)
+    .call((g)=>{if(secondary)g.call(d3.axisRight(secondary.y).ticks(5).tickFormat(d3.format("~s")))});
+  svg.selectAll("text.unit").data(series,(s)=>s.key).join("text").attr("class","unit")
+    .attr("x",(s)=>s===primary?margin.left:width-margin.right).attr("y",12).attr("text-anchor",(s)=>s===primary?"start":"end")
+    .style("fill",(s)=>s.color).style("font-weight",700)
+    .text((s)=>isRate?"Crashes / 100,000 passages":s===primary?"Crash count":"Vehicle passages");
+  svg.selectAll("text.hour-label").data([null]).join("text").attr("class","hour-label")
+    .attr("x",(margin.left+width-margin.right)/2).attr("y",height-3).attr("text-anchor","middle").text("Hour (00 means 00:00–00:59)");
+
+  svg.selectAll("path.series").data(series,(s)=>s.key).join("path").attr("class","series")
+    .attr("d",(s)=>d3.line().x((r)=>x(r.hour)).y((r)=>s.y(s.value(r)))(rows))
+    .attr("fill","none").attr("stroke",(s)=>s.color).attr("stroke-width",2.5);
+
+  const describe=(_,r)=>{$("line-detail").textContent=isRate
+    ?`${interval(r.hour)} · ${rate(r.rate)} crashes per 100,000 passages · ${count(r.matched)} matched crashes · ${count(r.vehicles)} vehicle passages`
+    :`${interval(r.hour)} · ${count(r.crashes)} crashes · ${count(r.vehicles)} vehicle passages`};
+  svg.selectAll("g.points").data(series,(s)=>s.key).join("g").attr("class","points").each(function(s){
+    d3.select(this).selectAll("circle").data(rows,(r)=>r.hour).join("circle")
+      .attr("cx",(r)=>x(r.hour)).attr("cy",(r)=>s.y(s.value(r))).attr("r",3.5).attr("fill",s.color)
+      .attr("tabindex",s===primary?0:null).attr("role","img")
+      .attr("aria-label",(r)=>`${interval(r.hour)}, ${isRate?rate(r.rate)+" crashes per 100,000 passages":count(s.value(r))+" "+s.label.toLowerCase()}`)
+      .on("pointerenter",describe).on("focus",describe).on("click",describe)
+      .on("pointerleave",()=>{$("line-detail").textContent="Hover, tap, or focus a point for its value."});
+  });
+
+  if(isRate){
+    const peak=d3.greatest(rows,(r)=>r.rate);
+    const afternoon=d3.greatest(rows.filter((r)=>r.hour>=15&&r.hour<=18),(r)=>r.rate);
+    $("line-takeaway").textContent=`2021–2023: the late-afternoon rate peaks at ${interval(afternoon.hour)} (${rate(afternoon.rate)} per 100,000 passages). ${peak.hour===afternoon.hour
+      ?"This is also the overall hourly maximum."
+      :`The overall hourly maximum is ${interval(peak.hour)} (${rate(peak.rate)}): once traffic is accounted for, the busiest hours are no longer the only ones that stand out.`}`;
+  }else{
+    const peakCrash=d3.greatest(rows,(r)=>r.crashes);
+    const peakTraffic=d3.greatest(rows,(r)=>r.vehicles);
+    $("line-takeaway").textContent=`2021–2023: crashes peak at ${interval(peakCrash.hour)} and traffic peaks at ${interval(peakTraffic.hour)}. Crash counts rise and fall with the number of vehicles on the road, so more crashes can simply reflect more traffic. Switch to Rates to adjust for it.`;
+  }
+}
+
+function drawHeat(){
+  if(!heatRows)return;
+  const $=(id)=>document.getElementById(id);
+  const rows=heatRows;
+  const metric=state.heat;
+  const width=$("heat-chart").clientWidth;
+  const height=270;
+  const margin={top:8,right:6,bottom:36,left:width<550?34:72};
+  const x=d3.scaleBand().domain(d3.range(24)).range([margin.left,width-margin.right]).padding(.04);
+  const y=d3.scaleBand().domain(d3.range(7)).range([margin.top,height-margin.bottom]).padding(.05);
+  const max=d3.max(rows,(r)=>r[metric]);
+  const color=d3.scaleSequential(d3.interpolateRgb("#eff3f8","#25588a")).domain([0,max||1]);
+  $("heat-max").textContent=`${count(max)} ${heatNames[metric]}`;
+  $("heat-detail").textContent="Hover, tap, or focus a cell for its count.";
+  const svg=d3.select("#heat-chart").selectAll("svg").data([null]).join("svg")
+    .attr("height",height).attr("viewBox",`0 0 ${width} ${height}`)
+    .attr("role","group").attr("aria-label",`Day-by-hour heatmap of ${heatNames[metric]}; use arrow keys to inspect cells`);
+  const cells=svg.selectAll("rect.cell").data(rows,(r)=>`${r.day}-${r.hour}`).join("rect")
+    .attr("class","cell").attr("x",(r)=>x(r.hour)).attr("y",(r)=>y(r.day))
+    .attr("width",x.bandwidth()).attr("height",y.bandwidth()).attr("rx",2).attr("fill",(r)=>color(r[metric]))
+    .attr("tabindex",(_,i)=>i===0?0:-1).attr("role","button")
+    .attr("aria-label",(r)=>`${DAYS[r.day]}, ${interval(r.hour)}, ${count(r[metric])} ${heatNames[metric]}`);
+  const describe=(_,r)=>{$("heat-detail").textContent=`${DAYS[r.day]} · ${interval(r.hour)} · ${count(r[metric])} ${heatNames[metric]}`};
+  cells.on("pointerenter",describe).on("focus",describe).on("click",describe)
+    .on("pointerleave",()=>{$("heat-detail").textContent="Hover, tap, or focus a cell for its count."})
+    .on("keydown",(event,r)=>{
+      const moves={ArrowRight:[0,1],ArrowLeft:[0,-1],ArrowUp:[-1,0],ArrowDown:[1,0]};
+      if(event.key==="Enter"||event.key===" "){event.preventDefault();describe(event,r);return}
+      if(!moves[event.key])return;
+      event.preventDefault();
+      const [dy,dx]=moves[event.key];
+      cells.attr("tabindex",-1).filter((item)=>item.day===Math.max(0,Math.min(6,r.day+dy))&&item.hour===Math.max(0,Math.min(23,r.hour+dx))).attr("tabindex",0).node().focus();
+    });
+  svg.selectAll("g.days").data([null]).join("g").attr("class","days")
+    .attr("transform",`translate(${margin.left-4},0)`)
+    .call(d3.axisLeft(y).tickSize(0).tickFormat((d)=>width<550?DAYS[d].slice(0,3):DAYS[d]));
+  svg.selectAll("g.hours").data([null]).join("g").attr("class","hours")
+    .attr("transform",`translate(0,${height-margin.bottom})`)
+    .call(d3.axisBottom(x).tickValues(d3.range(0,24,width<550?4:2)).tickSize(0).tickPadding(9).tickFormat(pad));
+  const peak=d3.greatest(rows,(r)=>r[metric]);
+  const tied=rows.filter((r)=>r[metric]===peak[metric]).length>1;
+  const severePeak=d3.greatest(rows,(r)=>r.fatalSerious);
+  const different=peak.day!==severePeak.day||peak.hour!==severePeak.hour;
+  $("heat-takeaway").textContent=`2021–2023: ${DAYS[peak.day]}, ${interval(peak.hour)} ${tied?"is one of the highest-count cells for":"has the highest count of"} ${heatNames[metric]}. ${metric==="crashes"&&different
+    ?`The fatal-or-serious maximum is instead at ${DAYS[severePeak.day]}, ${interval(severePeak.hour)}. The busiest and most severe-crash cells differ.`
+    :"This is a count of crashes, not a traffic-adjusted rate or a count of people injured."}`;
+}
+
+const state={heat:"crashes",highway:"total",hourly:"counts",icicle:"all"};
+function update(){drawHeat();drawLine();drawHighway();drawIcicle()}
 document.querySelectorAll("[data-group]").forEach(btn=>btn.addEventListener("click",()=>{const group=btn.dataset.group;state[group]=btn.dataset.value;document.querySelectorAll(`[data-group="${group}"]`).forEach(b=>{let active=b===btn;b.classList.toggle("active",active);b.setAttribute("aria-pressed",String(active))});update()}));
 const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target)}}),{threshold:.08});
 document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));update();
