@@ -29,9 +29,23 @@ h2{font-size:clamp(34px,4.7vw,56px);line-height:1.16;letter-spacing:-2px;margin:
 .articles+.desc{margin-top:36px}
 .desc.tight{margin-bottom:14px}.desc.tight+.desc{margin-top:0}
 .desc em{font-style:normal;color:var(--blue);font-weight:650}
-.systems{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;max-width:1000px;margin:36px auto 0}
+.systems{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;max-width:1000px;margin:36px auto 0;perspective:1400px}
 .systems-cta{margin-top:56px}.card.spaced{margin-top:75px}
 .system-card{border-radius:14px;background:linear-gradient(135deg,#f7fbfd,#eaf4f9);border:1px dashed #b9d2df;padding:18px 24px 24px}
+.system-card.flip{position:relative;min-height:340px;padding:0;background:transparent;border:0;cursor:pointer;perspective:1400px;text-align:left;color:inherit;width:100%;display:block;appearance:none;-webkit-appearance:none}
+.system-card.flip:focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:14px}
+.system-inner{position:relative;width:100%;height:100%;min-height:340px;transform-style:preserve-3d;transition:transform .65s cubic-bezier(.2,.7,.2,1);animation:card-hint 3.4s ease-in-out infinite}
+.system-card.flip.is-flipped .system-inner{transform:rotateY(180deg);animation:none}
+.system-card.flip:hover:not(.is-flipped) .system-inner,.system-card.flip:focus-visible:not(.is-flipped) .system-inner{animation:none;transform:rotateY(22deg)}
+.system-card.flip:hover.is-flipped .system-inner,.system-card.flip:focus-visible.is-flipped .system-inner{animation:none}
+.system-face{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;border-radius:14px;background:linear-gradient(135deg,#f7fbfd,#eaf4f9);border:1px dashed #b9d2df;padding:32px 34px;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 10px 28px #17364b0d}
+.system-face.back{transform:rotateY(180deg);background:linear-gradient(135deg,#eef6fb,#e2eef6)}
+.system-hint{display:inline-flex;align-items:center;gap:6px;margin-top:18px;color:var(--blue);font-size:12px;font-weight:650;letter-spacing:.04em;text-transform:uppercase}
+.system-hint svg{width:15px;height:15px;animation:flip-nudge 2.4s ease-in-out infinite}
+.system-card.flip.is-flipped .system-hint svg,.system-card.flip:hover .system-hint svg,.system-card.flip:focus-visible .system-hint svg{animation:none}
+@keyframes flip-nudge{0%,100%{transform:rotateY(0)}35%{transform:rotateY(-28deg)}55%{transform:rotateY(18deg)}70%{transform:rotateY(0)}}
+@keyframes card-hint{0%,100%{transform:rotateY(0)}40%{transform:rotateY(-7deg)}58%{transform:rotateY(5deg)}72%{transform:rotateY(0)}}
+.system-back-text{margin:10px 0 0;color:var(--ink);font-size:16px;line-height:1.55}.system-back-text em{font-style:normal;color:var(--blue);font-weight:650}
 .system-label{font-size:12px;text-transform:uppercase;letter-spacing:1.5px;font-weight:750;color:var(--muted)}
 .system-body{display:flex;align-items:center;gap:20px;margin-top:6px}
 .system-icons{display:flex;align-items:center;gap:4px;color:var(--blue);flex-shrink:0}.system-icons svg{width:88px;height:88px;stroke-width:1.5}
@@ -58,8 +72,20 @@ h2{font-size:clamp(34px,4.7vw,56px);line-height:1.16;letter-spacing:-2px;margin:
 .hw-rank.first{background:#fbf0ed}.hw-rank.first .road,.hw-rank.first .val{color:#9d4939}.hw-rank.first .fill{background:#b65a47}.hw-rank.last .fill{background:#b3c4d2}
 .hw-legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--muted);margin-top:14px}.hw-legend>span{display:inline-flex;align-items:center;gap:7px}
 .legend-swatch{display:inline-block;width:22px;height:5px;border-radius:3px}.legend-swatch.top{background:#b65a47}.legend-swatch.mid{background:#668da9}.legend-swatch.low{background:#b3c4d2}
-.constellation-wrap{overflow-x:auto}#constellation-chart svg{min-width:700px}#constellation-chart .road-label{fill:var(--ink);font-size:15px;font-weight:750}#constellation-chart .row-line{stroke:#dbe5ec}#constellation-chart .gridline{stroke:#eef3f6}
-#constellation-chart circle{cursor:pointer;outline:none;stroke:#fff;stroke-width:1;transition:opacity .15s}#constellation-chart circle:hover,#constellation-chart circle:focus,#constellation-chart circle.selected{stroke:var(--ink);stroke-width:2.5}
+.constellation-wrap{overflow-x:auto}#constellation-chart svg{min-width:700px}
+#constellation-chart .road-label{fill:#263d4f;font-size:17px;font-weight:780}#constellation-chart .row-line{stroke:#b9c7d1}#constellation-chart .gridline{stroke:#dce4eb;stroke-width:1}
+#constellation-chart .tick{fill:#43596a;font-size:11px}#constellation-chart .peak-label{fill:#4d6272;font-size:10px;font-weight:750;letter-spacing:.04em}
+#constellation-chart .peak-band-morning{fill:#d8ece8}#constellation-chart .peak-band-evening{fill:#f7e9d9}
+#constellation-chart .peak-marker{stroke:#6d938d;stroke-width:1;stroke-dasharray:3 3}
+#constellation-chart circle{cursor:pointer;outline:none;stroke:#46616b;stroke-width:1;transition:opacity .15s,r .15s}
+#constellation-chart circle:hover,#constellation-chart circle:focus{stroke:#172b3a;stroke-width:2.5}
+#constellation-chart circle.selected{stroke:#132b3c;stroke-width:2.7}
+.constellation-legend{margin-top:12px}.constellation-legend .legend-row{align-items:center}
+.constellation-legend .size-key{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;margin:0;border:0;padding:0;color:#263d4f;font-size:11px}
+.size-reference{display:inline-flex;align-items:flex-end;gap:5px}.size-reference svg{overflow:visible;flex:0 0 auto}
+.sequential-swatches{display:inline-flex;overflow:hidden;border:1px solid #99aebc;border-radius:4px}.sequential-swatches i{display:block;width:18px;height:12px}
+.const-interpretation{min-height:47px;margin:11px 0 0;border:1px solid #c5d2dc;border-radius:10px;background:#f5f8fa;padding:11px 14px;color:#344b5b;font-size:13px;line-height:1.5}
+.const-interpretation b{color:#075e58}
 .key-dot{display:inline-block;width:10px;height:10px;border-radius:50%}
 .anatomy-layout{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:16px;align-items:start}.visual-panel{min-width:0}
 .icicle-hint{display:flex;align-items:center;gap:10px;margin:0 0 12px;padding:10px 14px;border:1px dashed #b9cfdd;border-radius:9px;background:var(--soft);color:#405667;font-size:13px;line-height:1.4}.icicle-hint svg{flex:0 0 18px;width:18px;height:18px;color:var(--blue)}.icicle-hint strong{color:var(--ink)}.icicle-hint em{font-style:normal;font-weight:650;color:var(--blue)}
@@ -69,6 +95,18 @@ h2{font-size:clamp(34px,4.7vw,56px);line-height:1.16;letter-spacing:-2px;margin:
 .icicle-legend{display:grid;gap:7px;margin-top:12px}.legend-row{display:grid;grid-template-columns:112px minmax(0,1fr);align-items:start;gap:8px 12px;border:1px solid var(--line);border-radius:9px;background:var(--soft);padding:8px 10px}.legend-heading{padding-top:2px;color:#405667;font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}.legend-items{display:flex;flex-wrap:wrap;align-items:center;gap:7px 16px}.legend-item{display:inline-flex;align-items:center;gap:6px;color:#263d4f;font-size:11px;line-height:1.35}.type-key .key-dot{border-radius:3px}
 .icicle-inspector{border:1px solid var(--line);border-radius:11px;background:var(--soft);padding:17px}.icicle-inspector h3{margin:7px 0 5px;font-size:17px;line-height:1.25}.icicle-big{font-size:31px;font-weight:800;letter-spacing:-.03em;color:var(--ink)}.icicle-muted{color:var(--muted);font-size:12px}.icicle-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}.icicle-grid strong{display:block;font-size:18px}.icicle-grid span{color:var(--muted);font-size:11px}
 .panel-label{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;font-weight:750;color:var(--muted)}
+#hook-map{width:100%;height:480px;border-radius:14px;border:1px solid #e0e7ef;overflow:hidden;background:#eef3f7}
+.hook-map-legend{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin:12px 0 0;font-size:12px;color:var(--muted)}
+.hook-map-legend .heat-gradient{background:linear-gradient(to right,rgba(180,35,47,.08),rgba(180,35,47,.28),rgba(180,35,47,.55),rgba(140,20,30,.82));width:140px}
+.hook-map-legend .hwy-key{display:inline-flex;align-items:center;gap:6px}.hook-map-legend .hwy-key i{display:inline-block;width:18px;height:3px;border-radius:2px;background:#0d9b8a}
+.hook-map-legend .story-key{display:inline-flex;align-items:center;gap:6px}
+.hook-map-legend .story-key i,.hook-story-marker{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#193d54;color:#fff;box-shadow:0 2px 8px #123b5733}
+.hook-map-legend .story-key svg{width:12px;height:12px}
+.hook-story-marker{width:34px;height:34px;cursor:pointer;border:2px solid #fff;transition:transform .15s;position:relative;z-index:3;pointer-events:auto;padding:0;appearance:none;-webkit-appearance:none}.hook-story-marker:hover{transform:scale(1.12)}.hook-story-marker svg{width:16px;height:16px;pointer-events:none}
+.maplibregl-marker{z-index:3!important}
+.maplibregl-popup-content{border-radius:12px;padding:12px 14px;box-shadow:0 8px 28px #17364b26;font:12px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--muted);max-width:260px}
+.maplibregl-popup-content strong{display:block;color:var(--ink);font-size:13px;margin-bottom:4px}.maplibregl-popup-content a{color:var(--blue);font-weight:650;text-decoration:none}.maplibregl-popup-content a:hover{text-decoration:underline}
+.maplibregl-ctrl-attrib{font-size:10px}
 .hw-tooltip{position:absolute;pointer-events:none;background:#fff;border:1px solid #dce7ed;border-radius:10px;box-shadow:0 6px 24px #15364b18;padding:10px 12px;font-size:12px;color:var(--muted);display:none;z-index:30}.hw-tooltip b{color:var(--ink)}
 .chart-status{color:var(--muted);font-size:14px;margin:0;padding:110px 0;text-align:center}
 .chart-detail{font-size:13px;min-height:22px;color:var(--muted);margin:10px 0 0}.chart-takeaway{font-size:15px;margin:10px 0 0}.chart-takeaway:empty{display:none}.chart-takeaway::before{content:"Takeaway: ";font-weight:700}
@@ -77,7 +115,7 @@ h2{font-size:clamp(34px,4.7vw,56px);line-height:1.16;letter-spacing:-2px;margin:
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s,transform .7s}.reveal.visible{opacity:1;transform:none}
 .section>:first-child{margin-top:0}.section>:last-child{margin-bottom:0}
 footer{padding:38px 0;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
-@media(max-width:700px){.grid2,.articles,.systems,.takeaways,.highway-grid,.anatomy-layout,.legend-row{grid-template-columns:1fr}.hero{min-height:70vh}h1{letter-spacing:-3px}.section{padding-top:45px}.card{padding:17px}.tooltip-demo{position:static;margin:20px auto 0}.viz{display:block;min-height:350px;padding:45px 18px 20px}.viz-inner{margin:auto}}
+@media(max-width:700px){.grid2,.articles,.systems,.takeaways,.highway-grid,.anatomy-layout,.legend-row{grid-template-columns:1fr}.hero{min-height:70vh}h1{letter-spacing:-3px}.section{padding-top:45px}.card{padding:17px}.tooltip-demo{position:static;margin:20px auto 0}.viz{display:block;min-height:350px;padding:45px 18px 20px}.viz-inner{margin:auto}.system-card.flip,.system-inner{min-height:300px}.system-face{padding:26px 22px}.system-body{flex-direction:column;align-items:flex-start;gap:12px}.system-icons svg{width:64px;height:64px}#hook-map{height:360px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.car{animation:none}.reveal{opacity:1;transform:none;transition:none}}
 </style></head><body>
 <main>
@@ -89,12 +127,26 @@ footer{padding:38px 0;border-top:1px solid var(--line);font-size:13px;color:var(
 <a class="article-card" href="https://www.wsbtv.com/news/local/fulton-county/crash-shuts-down-i-285-fulton-co-construction-worker-officer-hospitalized-police-say/YMJWF2F5VFFSHHEDUT43BG3YEQ/" target="_blank" rel="noopener"><img src="assets/card_three_thumbnail.jpeg" alt="Crash on I-285 in Fulton County"><div class="article-meta">WSB-TV ⋅ June 25, 2023</div><div class="article-title">Crash on I-285 leaves construction worker, off-duty police officer in critical condition</div></a>
 </div><p class="desc">These stories stay with us because they happen frequently, are dramatic, and are vivid. The more we hear about crashes on certain roads, the more dangerous those roads can feel.</p></section>
 <section class="section reveal" id="hook"><div class="story-label">Where</div><h2>Let's map out each reported crash in 2023 to see where crashes pile up.</h2><p class="desc">Based on this map alone, which highway would you avoid?</p>
-<div class="card"><div class="cardhead"><strong>All recorded crashes · Raw geographic concentration</strong><span class="tag">Visualization placeholder</span></div><div class="viz" data-placeholder="density"><div class="viz-inner"><div class="viz-icon">◎</div><strong>Geographic crash density map</strong><p>Replace with an interactive map of raw crash counts. Hover or tap a location to reveal the total number of crashes and the fatal crash count.</p></div><div class="tooltip-demo"><strong>Location tooltip · planned</strong><span>Total crashes: —</span><span>Fatal crashes: —</span></div></div><p class="helper">Planned interaction: map zoom + hover/tap tooltips. Values will be populated from the cleaned dataset.</p></div>
+<div class="card"><div class="cardhead"><strong>All recorded crashes · Raw geographic concentration</strong><span class="tag">2023</span></div>
+<p id="hook-sub" class="line-context">Loading crash locations…</p>
+<div id="hook-map" role="region" aria-label="Interactive map of 2023 crash density across Atlanta"></div>
+<div class="hook-map-legend" aria-hidden="true"><span>Fewer crashes</span><span class="heat-gradient"></span><span>More crashes</span></div>
+<p class="helper">Zoom, drag, and point to explore. Click an article marker for a related WSB story. Close the popup with the ×.</p></div>
 <div class="question">Think about the darkest area on the map. Would you automatically call it the most dangerous?</div></section>
-<section class="section reveal" id="bias"><div class="story-label">A moment to pause</div><h2>The psychology of making data decisions</h2><p class="desc tight">You just made a quick judgment from the information in front of you. Psychologists often describe this kind of intuitive thinking as <em>System 1</em>.</p><p class="desc tight">It is susceptible to cognitive biases like availability bias. <em>Availability bias</em> can influence our judgments when memorable events are easier to recall than less dramatic information.</p><p class="desc"><em>System 2</em> is less susceptible to biases and encourages us to slow down, question our assumptions, and examine what the data might be missing.</p>
+<section class="section reveal" id="bias"><div class="story-label">A moment to pause</div><h2>The psychology of making data decisions.</h2><p class="desc">You just made a quick judgment from the information in front of you. Flip the cards to learn more about the two ways humans tend to process information.</p>
 <div class="systems">
-<div class="system-card"><div class="system-label">System 1</div><div class="system-body"><div class="system-icons" aria-hidden="true"><i data-lucide="user"></i><i data-lucide="zap"></i></div><div><div class="system-title">Think fast.</div><div class="system-desc">Automatic. Intuitive. Effortless.</div></div></div></div>
-<div class="system-card"><div class="system-label">System 2</div><div class="system-body"><div class="system-icons" aria-hidden="true"><i data-lucide="user"></i><i data-lucide="search"></i></div><div><div class="system-title">Think deeper.</div><div class="system-desc">Deliberate. Analytical. Reflective.</div></div></div></div>
+<button type="button" class="system-card flip" aria-expanded="false" aria-label="System 1 card. Click to flip and read more." onclick="this.classList.toggle('is-flipped');this.setAttribute('aria-expanded',String(this.classList.contains('is-flipped')))">
+<div class="system-inner">
+<div class="system-face front"><div class="system-label">System 1</div><div class="system-body"><div class="system-icons" aria-hidden="true"><i data-lucide="user"></i><i data-lucide="zap"></i></div><div><div class="system-title">Think fast.</div><div class="system-desc">Automatic. Intuitive. Effortless.</div></div></div><div class="system-hint" aria-hidden="true"><i data-lucide="rotate-cw"></i><span>Click to flip</span></div></div>
+<div class="system-face back"><p class="system-back-text">Such intuitive thinking is often referred to as <em>System 1</em>. It is susceptible to cognitive biases like availability bias. <em>Availability bias</em> can influence our judgments when memorable events are easier to recall than less dramatic information.</p><div class="system-hint" aria-hidden="true"><i data-lucide="rotate-cw"></i><span>Click to flip back</span></div></div>
+</div>
+</button>
+<button type="button" class="system-card flip" aria-expanded="false" aria-label="System 2 card. Click to flip and read more." onclick="this.classList.toggle('is-flipped');this.setAttribute('aria-expanded',String(this.classList.contains('is-flipped')))">
+<div class="system-inner">
+<div class="system-face front"><div class="system-label">System 2</div><div class="system-body"><div class="system-icons" aria-hidden="true"><i data-lucide="user"></i><i data-lucide="search"></i></div><div><div class="system-title">Think deeper.</div><div class="system-desc">Deliberate. Analytical. Reflective.</div></div></div><div class="system-hint" aria-hidden="true"><i data-lucide="rotate-cw"></i><span>Click to flip</span></div></div>
+<div class="system-face back"><p class="system-back-text"><em>System 2</em> is less susceptible to biases and encourages us to slow down, question our assumptions, and examine what the data might be missing.</p><div class="system-hint" aria-hidden="true"><i data-lucide="rotate-cw"></i><span>Click to flip back</span></div></div>
+</div>
+</button>
 </div><h3 class="systems-cta"><em>Let's put your System 2 thinking to work.</em></h3></section>
 <section class="section reveal" id="rising"><div class="story-label">Timing</div><h2>Atlanta commuters feel like driving during rush hour is the most dangerous.</h2><p class="desc">Initially, the crash data seems to agree. Switch between the two views to challenge your first impression.</p>
 <div class="card"><div class="cardhead"><strong>Crashes by Day and Hour</strong><span class="tag">2021–2023</span></div><div class="controls" role="group" aria-label="Heatmap metric"><button class="toggle active" data-group="heat" data-value="crashes" aria-pressed="true">All crashes</button><button class="toggle" data-group="heat" data-value="fatalSerious" aria-pressed="false">Fatal or serious-injury crashes</button></div>
@@ -111,22 +163,23 @@ footer{padding:38px 0;border-top:1px solid var(--line);font-size:13px;color:var(
 <p id="line-takeaway" class="chart-takeaway"></p>
 <p class="helper">Counts: the two lines use separate axes, so compare their shapes rather than their heights. Vehicle passages come from FHWA TMAS traffic counting stations, so they approximate traffic near those counters, not every road. Rates: crashes matched within 500 m of a station, divided by that station's vehicle passages in the same hour.</p></div></section>
 <section class="section reveal" id="climax"><div class="story-label">The reveal</div><h2>First impressions can be misleading.</h2><p class="desc">Now let's revisit our initial map. After dividing crashes by traffic volume to be more risk-relative, our rankings change.</p>
-<div class="card"><div class="cardhead"><strong>Highway comparison · 2023</strong><span class="tag">Atlanta interstates</span></div>
+<div class="card"><div class="cardhead"><strong>Highway comparison</strong><span class="tag">2023</span></div>
 <div class="controls" role="group" aria-label="Highway comparison metric"><button class="toggle active" data-group="highway" data-value="total" aria-pressed="true">Total crashes</button><button class="toggle" data-group="highway" data-value="normalized" aria-pressed="false">Serious or fatal crashes / traffic exposure</button></div>
 <p id="hw-sub" class="line-context"></p>
 <div class="highway-grid"><div id="hw-map" class="hw-map"><p class="chart-status">Loading crash and traffic data…</p></div>
-<div><h4 id="hw-rank-title" class="hw-rank-title"></h4><div id="hw-ranks"></div><p id="hw-caption" class="hw-caption"></p></div></div>
+<div><h3 id="hw-rank-title" class="hw-rank-title"></h3><div id="hw-ranks"></div><p id="hw-caption" class="hw-caption"></p></div></div>
 <div class="hw-legend"><span><span class="legend-swatch top"></span>Highest rank</span><span><span class="legend-swatch mid"></span>Middle ranks</span><span><span class="legend-swatch low"></span>Lowest rank</span></div>
 <p id="hw-takeaway" class="chart-takeaway" aria-live="polite"></p>
 <p class="helper">Schematic highway map, not individual crash locations; hover over or focus a road for details. Crashes are assigned to an interstate through their matched road segment. Serious or fatal = K/A crashes; rate = serious or fatal crashes ÷ estimated vehicle-miles traveled (VMT) × 100 million. Corridor matching and traffic estimates introduce uncertainty, so rankings are exploratory.</p></div>
 <div class="question">Which highway looked worst before normalization? Does your answer change when you account for traffic?</div></section>
 <section class="section reveal" id="resolution"><div class="story-label">Look closer</div><h2>There’s more to road safety.</h2><p class="desc">Zoom out from a single ranking. Explore the structure of crash outcomes and compare crash density by highway to put the earlier patterns into context.</p>
-<div class="card"><div class="cardhead"><strong>Crash density by highway</strong><span class="tag">2021–2023</span></div>
-<p id="const-sub" class="line-context"></p>
-<div class="constellation-wrap"><div id="constellation-chart" class="chart"><p class="chart-status">Loading crash and traffic data…</p></div></div>
-<div id="const-key" class="hw-legend"></div>
-<p id="const-detail" class="chart-detail" aria-live="polite">Hover, tap, or focus a circle for its count. Click a circle to highlight that hour on every highway.</p>
-<p class="helper">Each circle is one interstate in one hour of the day, combining all three years. Circle area shows the number of crashes; color shows the share that were serious or fatal (K/A). Crashes are assigned to an interstate through their matched road segment. These are historical counts, not per-trip crash probabilities.</p></div>
+<div class="card"><div class="cardhead"><strong>Crash density by highway</strong><span class="tag">2021-2023</span></div>
+<div class="constellation-wrap"><div id="constellation-chart" class="chart" aria-label="Interactive corridor-by-hour crash constellation"><p class="chart-status">Loading crash and traffic data…</p></div></div>
+<div class="icicle-legend constellation-legend" aria-label="Constellation chart legend">
+<div class="legend-row"><strong class="legend-heading">K/A share (fatal/serious injuries)</strong><div class="legend-items" aria-label="Serious/fatal share color scale"><span class="legend-item">Lower</span><span class="sequential-swatches" aria-hidden="true"><i style="background:#b7d9d9"></i><i style="background:#8fc3c1"></i><i style="background:#62a6a5"></i><i style="background:#347f83"></i><i style="background:#155968"></i></span><span class="legend-item">Higher</span></div></div>
+<div class="legend-row"><strong class="legend-heading">Crash count</strong><div class="legend-items size-key" id="const-size-key" aria-label="Bubble area represents recorded crash count"></div></div>
+</div>
+<div id="const-detail" class="const-interpretation" aria-live="polite"><b>Interpretation:</b> Bigger circles mean more recorded crashes in that corridor-hour over 2021–2023; they do not mean a crash was more dangerous or that an individual trip is riskier. Shading marks weekday peak-hour windows; each bubble still includes crashes from all days at that hour. Select a circle to inspect its count and K/A share.</div></div>
 <div class="question">When do different crashes happen? How severe are they? And do these patterns look the same across highways?</div>
 <div class="card spaced"><div class="cardhead"><strong id="icicle-title">Crash outcomes · All recorded crashes</strong><span class="tag">2021–2023</span></div>
 <div class="controls" role="group" aria-label="Icicle highway focus"><button class="toggle active" data-group="icicle" data-value="all" aria-pressed="true">All crashes</button><button class="toggle" data-group="icicle" data-value="I-285" aria-pressed="false">I-285</button><button class="toggle" data-group="icicle" data-value="I-75" aria-pressed="false">I-75</button><button class="toggle" data-group="icicle" data-value="I-85" aria-pressed="false">I-85</button><button class="toggle" data-group="icicle" data-value="I-20" aria-pressed="false">I-20</button></div>
@@ -148,10 +201,12 @@ footer{padding:38px 0;border-top:1px solid var(--line);font-size:13px;color:var(
 <div class="system-card takeaway"><i data-lucide="hash" aria-hidden="true"></i><div><h3>What is actually being measured?</h3><p>Ask whether you're seeing a raw count, a rate, or something else entirely.</p></div></div>
 <div class="system-card takeaway"><i data-lucide="search" aria-hidden="true"></i><div><h3>What context might be missing?</h3><p>Consider traffic exposure, severity, time, and other relevant factors before drawing conclusions.</p></div></div>
 </div><p class="desc tight">Our minds bring assumptions and cognitive biases into every decision.</p><p class="desc">System 2 thinking encourages us to pause, examine the evidence, and question what our first impressions may have overlooked.</p></section>
-<footer>ATL Traffic · Interactive storytelling prototype</footer>
 </main>
+<link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/h3-js@4.1.0/dist/h3-js.umd.js"></script>
 <script>
 if(window.lucide)lucide.createIcons();
 
@@ -170,7 +225,8 @@ const watchResize=(id,draw)=>{let frame;new ResizeObserver(()=>{cancelAnimationF
 
 const COLLISION_TYPES={"Rear End":"Rear-end","Angle Crash":"Angle","Angle":"Angle","Sideswipe-Same Direction":"Sideswipe","Sideswipe-Opposite Direction":"Sideswipe","Head On":"Head-on","Not a Collision with Motor Vehicle":"Single vehicle / object"};
 const SEVERITY_KEYS={serious_or_fatal:"severe",minor_or_possible:"injury",no_recorded_injury:"none",unknown:"unknown"};
-const crashData=d3.csv("data/crashes_2021_2023.csv",(r)=>({day:+r.weekday_index,hour:+r.hour,year:r.year,segment:r.matched_road_segment_id,fatalSerious:r.injury_severity_group==="serious_or_fatal",
+const HOOK_BBOX={west:-84.505,east:-84.225,south:33.61,north:33.925};
+const crashData=d3.csv("data/crashes_2021_2023.csv",(r)=>({day:+r.weekday_index,hour:+r.hour,year:r.year,segment:r.matched_road_segment_id,lat:+r.latitude,lon:+r.longitude,fatal:r.kabco_severity.startsWith("(K)"),fatalSerious:r.injury_severity_group==="serious_or_fatal",
   anatomy:`${r.commute_period==="weekday_rush_hour"?"rush":"off"}|${COLLISION_TYPES[r.collision_type]||"Other / unknown"}|${SEVERITY_KEYS[r.injury_severity_group]||"unknown"}`}))
   .then((crashes)=>{
     const cells=d3.range(7).flatMap((day)=>d3.range(24).map((hour)=>({day,hour,crashes:0,fatalSerious:0})));
@@ -178,9 +234,13 @@ const crashData=d3.csv("data/crashes_2021_2023.csv",(r)=>({day:+r.weekday_index,
     const bySegmentYear=new Map();
     const onSegment=[];
     const anatomyAll=new Map();
+    const located2023=[];
     for(const c of crashes){
       const cell=cells[c.day*24+c.hour];cell.crashes++;if(c.fatalSerious)cell.fatalSerious++;hourly[c.hour]++;
       anatomyAll.set(c.anatomy,(anatomyAll.get(c.anatomy)||0)+1);
+      if(c.year==="2023"&&c.lat&&c.lon&&c.lon>=HOOK_BBOX.west&&c.lon<=HOOK_BBOX.east&&c.lat>=HOOK_BBOX.south&&c.lat<=HOOK_BBOX.north){
+        located2023.push({lat:c.lat,lon:c.lon,fatal:c.fatal});
+      }
       if(!c.segment)continue;
       onSegment.push({segment:c.segment,year:c.year,hour:c.hour,fatalSerious:c.fatalSerious,anatomy:c.anatomy});
       const key=`${c.segment}|${c.year}`;
@@ -188,7 +248,7 @@ const crashData=d3.csv("data/crashes_2021_2023.csv",(r)=>({day:+r.weekday_index,
       seg.crashes++;if(c.fatalSerious)seg.severe++;
       bySegmentYear.set(key,seg);
     }
-    return {cells,hourly,total:crashes.length,bySegmentYear,onSegment,anatomyAll};
+    return {cells,hourly,total:crashes.length,bySegmentYear,onSegment,anatomyAll,located2023};
   });
 
 const trafficData=d3.csv("data/tmas_hourly_exposure_2021_2023.csv",(r)=>({station:r.tmas_station_id,hour:+r.hour,vehicles:+r.vehicles_bidirectional,matched:+r[`matched_crashes_within_${MATCH_RADIUS_M}m`]}))
@@ -205,6 +265,10 @@ crashData.then(({cells})=>{
   watchResize("heat-chart",drawHeat);
 }).catch(loadError("heat-chart","data/crashes_2021_2023.csv"));
 
+crashData.then(({located2023})=>{
+  initHookMap(located2023);
+}).catch(loadError("hook-map","data/crashes_2021_2023.csv"));
+
 Promise.all([crashData,trafficData]).then(([crashes,traffic])=>{
   lineData={
     hourly:d3.range(24).map((hour)=>({hour,crashes:crashes.hourly[hour],vehicles:traffic.vehicles[hour],matched:traffic.matched[hour],rate:traffic.matched[hour]/traffic.vehicles[hour]*1e5})),
@@ -219,9 +283,20 @@ const HIGHWAYS=["I-285","I-75","I-85","I-20"];
 const HIGHWAY_YEARS=["2023"];
 let highwayRows=null;
 const CONST_YEARS=["2021","2022","2023"];
-const CONST_SHARE_BANDS=[{min:.025,color:"#d9604c",label:"2.5% or more serious/fatal"},{min:.013,color:"#e6a27b",label:"1.3–2.5%"},{min:0,color:"#8fb3c8",label:"Under 1.3%"}];
+const CONST_ROADS=["I-20","I-75","I-85","I-285"];
+const SHARE_SCALE=["#b7d9d9","#8fc3c1","#62a6a5","#347f83","#155968"];
+const SHARE_SCALE_STOPS=SHARE_SCALE.map((color)=>color.match(/[A-Fa-f0-9]{2}/g).map((part)=>parseInt(part,16)));
+const CONST_INTERPRETATION=`<b>Interpretation:</b> Bigger circles mean more recorded crashes in that corridor-hour over 2021–2023; they do not mean a crash was more dangerous or that an individual trip is riskier. Shading marks weekday peak-hour windows; each bubble still includes crashes from all days at that hour. Select a circle to inspect its count and K/A share.`;
 let constRows=null;
 let constHour=null;
+const hourShort=(hour)=>`${String(hour%12||12).padStart(2,"0")}${hour<12?"a":"p"}`;
+function interpolateShareColor(share,maxShare){
+  const value=Math.max(0,Math.min(1,share/Math.max(maxShare,Number.EPSILON)))*(SHARE_SCALE_STOPS.length-1);
+  const index=Math.min(Math.floor(value),SHARE_SCALE_STOPS.length-2);
+  const mix=value-index;
+  const channels=SHARE_SCALE_STOPS[index].map((start,i)=>Math.round(start+(SHARE_SCALE_STOPS[index+1][i]-start)*mix));
+  return `#${channels.map((channel)=>channel.toString(16).padStart(2,"0")).join("")}`;
+}
 const ICICLE_PERIODS={rush:{name:"Rush hour",color:"#126b63"},off:{name:"Off-peak",color:"#405d78"}};
 const ICICLE_TYPES={"Rear-end":"#176b78",Angle:"#9b451f",Sideswipe:"#405c9a","Head-on":"#a52a3a","Single vehicle / object":"#67428c","Other / unknown":"#475d69"};
 const ICICLE_SEVERITY={severe:{name:"Serious / fatal K/A",short:"K/A",color:"#b4232f",note:"fatal or suspected serious injury"},injury:{name:"Minor / possible B/C",short:"B/C",color:"#8a5700",note:"suspected minor or possible injury"},none:{name:"No injury O",short:"O",color:"#28627d",note:"no injury reported"},unknown:{name:"Unknown",short:"Unknown",color:"#59636d",note:"severity not reported"}};
@@ -286,6 +361,244 @@ const ROUTES=[
 const PLACES=[{text:"BUCKHEAD",x:348,y:200},{text:"MIDTOWN",x:331,y:249},{text:"DOWNTOWN",x:336,y:335},{text:"EAST POINT",x:143,y:400}];
 const hwTooltip=d3.select("body").append("div").attr("class","hw-tooltip");
 
+const HOOK_ARTICLES=[
+  {id:"dekalb-10car",title:"2 killed, 4 injured in 10-car crash that shut down I-285 for hours",date:"WSB-TV ⋅ September 30, 2023",url:"https://www.wsbtv.com/news/local/dekalb-county/red-alert-crash-involving-10-vehicles-shuts-down-i-285-leaves-multiple-people-injured-police-say/TOT7SAGWJ5BJRBNNUWBSOLZU4E/",lat:33.82339,lon:-84.236774},
+  {id:"airport-pileup",title:"1 dead, 4 hospitalized after tractor-trailer loses load on I-285, causing pile-up",date:"WSB-TV ⋅ May 5, 2023",url:"https://www.wsbtv.com/news/local/traffic-red-alert-all-lanes-i-285-eb-near-atlanta-airport-shut-down/JVK7HEPCTNDW3B3J6AXFWKZKKU/",lat:33.658986,lon:-84.447861},
+  {id:"fulton-construction",title:"Crash on I-285 leaves construction worker, off-duty police officer in critical condition",date:"WSB-TV ⋅ June 25, 2023",url:"https://www.wsbtv.com/news/local/fulton-county/crash-shuts-down-i-285-fulton-co-construction-worker-officer-hospitalized-police-say/YMJWF2F5VFFSHHEDUT43BG3YEQ/",lat:33.791,lon:-84.492}
+];
+const HOOK_RES_LEVELS=[8,9,10,11];
+let hookMap=null;
+let hookHexByRes=null;
+let hookActiveRes=null;
+
+function hookResForZoom(z){return z<10?8:z<12?9:z<14?10:11}
+
+function buildHookHexMaps(points){
+  if(!window.h3)return null;
+  const byRes={};
+  for(const res of HOOK_RES_LEVELS)byRes[res]=new Map();
+  for(const p of points){
+    for(const res of HOOK_RES_LEVELS){
+      const id=h3.latLngToCell(p.lat,p.lon,res);
+      const cell=byRes[res].get(id)||{crashes:0,fatal:0};
+      cell.crashes++;if(p.fatal)cell.fatal++;
+      byRes[res].set(id,cell);
+    }
+  }
+  return byRes;
+}
+
+function hookHexGeoJSON(res){
+  const bins=hookHexByRes[res];
+  const max=d3.max(bins.values(),(d)=>d.crashes)||1;
+  return {
+    type:"FeatureCollection",
+    features:[...bins].map(([id,d])=>{
+      const ring=h3.cellToBoundary(id,true);
+      ring.push(ring[0]);
+      const intensity=Math.pow(d.crashes/max,.55);
+      return {type:"Feature",properties:{id,crashes:d.crashes,fatal:d.fatal,intensity},geometry:{type:"Polygon",coordinates:[ring]}};
+    })
+  };
+}
+
+function fitHookBounds(){
+  if(!hookMap)return;
+  // Pad beyond the study rectangle so the full I-285 loop stays inside the frame.
+  hookMap.fitBounds(
+    [[HOOK_BBOX.west-.02,HOOK_BBOX.south-.015],[HOOK_BBOX.east+.02,HOOK_BBOX.north+.015]],
+    {padding:{top:28,bottom:28,left:28,right:28},duration:0,maxZoom:9}
+  );
+}
+
+/** MapLibre geojson VT under-renders dense MultiLineStrings; flatten to LineStrings. */
+function hookFlattenHighways(geo){
+  const features=[];
+  for(const f of (geo&&geo.features)||[]){
+    const road=f.properties&&f.properties.road;
+    const g=f.geometry;
+    if(!road||!g)continue;
+    if(g.type==="LineString"&&g.coordinates&&g.coordinates.length>=2){
+      features.push({type:"Feature",properties:{road},geometry:{type:"LineString",coordinates:g.coordinates}});
+    }else if(g.type==="MultiLineString"){
+      for(const coords of g.coordinates||[]){
+        if(coords&&coords.length>=2)features.push({type:"Feature",properties:{road},geometry:{type:"LineString",coordinates:coords}});
+      }
+    }
+  }
+  return {type:"FeatureCollection",features};
+}
+
+function setHookHexResolution(res){
+  if(!hookMap||!hookHexByRes||res===hookActiveRes)return;
+  hookActiveRes=res;
+  hookMap.getSource("hook-hex").setData(hookHexGeoJSON(res));
+  const sub=document.getElementById("hook-sub");
+  if(sub){
+    const n=[...hookHexByRes[res].values()].reduce((s,d)=>s+d.crashes,0);
+    sub.textContent=`${count(n)} crashes in 2023`;
+  }
+}
+
+function initHookMap(points){
+  const el=document.getElementById("hook-map");
+  if(!el)return;
+  if(!window.maplibregl||!window.h3){
+    el.innerHTML=`<p class="chart-status">Map libraries failed to load. Check your network connection and refresh.</p>`;
+    return;
+  }
+  if(!points.length){
+    el.innerHTML=`<p class="chart-status">No geocoded 2023 crashes found in the Atlanta bounding rectangle.</p>`;
+    return;
+  }
+  hookHexByRes=buildHookHexMaps(points);
+  el.innerHTML="";
+  document.getElementById("hook-sub").textContent=`${count(points.length)} crashes in 2023`;
+
+  hookMap=new maplibregl.Map({
+    container:el,
+    style:"https://tiles.openfreemap.org/styles/positron",
+    bounds:[[HOOK_BBOX.west-.02,HOOK_BBOX.south-.015],[HOOK_BBOX.east+.02,HOOK_BBOX.north+.015]],
+    fitBoundsOptions:{padding:{top:28,bottom:28,left:28,right:28},maxZoom:9},
+    minZoom:7,
+    maxZoom:16,
+    maxBounds:[[HOOK_BBOX.west-.35,HOOK_BBOX.south-.28],[HOOK_BBOX.east+.35,HOOK_BBOX.north+.28]]
+  });
+  window.hookMap=hookMap;
+  hookMap.addControl(new maplibregl.NavigationControl({showCompass:false}),"top-right");
+  hookMap.on("load",()=>{
+    fitHookBounds();
+    // Re-resolve after fitBounds settles the camera
+    const startRes=hookResForZoom(hookMap.getZoom());
+    hookMap.addSource("hook-hex",{type:"geojson",data:hookHexGeoJSON(startRes)});
+    hookActiveRes=startRes;
+    hookMap.addLayer({
+      id:"hook-hex-fill",
+      type:"fill",
+      source:"hook-hex",
+      paint:{
+        "fill-color":["interpolate",["linear"],["get","intensity"],0,"#b4232f",.35,"#a11d28",.7,"#8c1420",1,"#6f0f18"],
+        "fill-opacity":["interpolate",["linear"],["get","intensity"],0,0.04,.15,0.12,.35,0.28,.6,0.48,.85,0.68,1,0.8],
+        "fill-outline-color":"rgba(255,255,255,0)"
+      }
+    });
+    hookMap.addLayer({
+      id:"hook-hex-line",
+      type:"line",
+      source:"hook-hex",
+      paint:{
+        "line-color":"#b4232f",
+        "line-width":.4,
+        "line-opacity":["interpolate",["linear"],["get","intensity"],0,0.05,.3,0.12,.7,0.22,1,0.35]
+      }
+    });
+
+    hookMap.addSource("hook-highways",{type:"geojson",data:{type:"FeatureCollection",features:[]}});
+    hookMap.addLayer({
+      id:"hook-highways-casing",
+      type:"line",
+      source:"hook-highways",
+      layout:{"line-cap":"round","line-join":"round"},
+      paint:{
+        "line-color":"#ffffff",
+        "line-opacity":.7,
+        "line-width":["interpolate",["linear"],["zoom"],7,1.6,9,2.4,11,3.4,14,4.6]
+      }
+    });
+    hookMap.addLayer({
+      id:"hook-highways-line",
+      type:"line",
+      source:"hook-highways",
+      layout:{"line-cap":"round","line-join":"round"},
+      paint:{
+        "line-color":"#0d9b8a",
+        "line-opacity":.98,
+        "line-width":["interpolate",["linear"],["zoom"],7,1.0,9,1.5,11,2.3,14,3.2]
+      }
+    });
+    hookMap.addLayer({
+      id:"hook-highway-labels",
+      type:"symbol",
+      source:"hook-highways",
+      layout:{
+        "symbol-placement":"line",
+        "text-field":["get","road"],
+        "text-size":11,
+        "text-font":["Noto Sans Bold"],
+        "text-max-angle":30,
+        "symbol-spacing":280,
+        "text-allow-overlap":false,
+        "text-ignore-placement":false
+      },
+      paint:{
+        "text-color":"#087f75",
+        "text-halo-color":"#ffffff",
+        "text-halo-width":1.5
+      }
+    });
+
+    d3.json("data/interstates_bbox.geojson").then((geo)=>{
+      const src=hookMap.getSource("hook-highways");
+      if(!src)return;
+      src.setData(hookFlattenHighways(geo));
+      if(hookMap.getLayer("hook-highways-casing"))hookMap.moveLayer("hook-highways-casing");
+      if(hookMap.getLayer("hook-highways-line"))hookMap.moveLayer("hook-highways-line");
+      if(hookMap.getLayer("hook-highway-labels"))hookMap.moveLayer("hook-highway-labels");
+    }).catch((err)=>console.error("Could not load interstate outlines",err));
+
+    const tip=hwTooltip;
+    hookMap.on("mousemove","hook-hex-fill",(e)=>{
+      hookMap.getCanvas().style.cursor="pointer";
+      const f=e.features&&e.features[0];
+      if(!f)return;
+      const {crashes,fatal}=f.properties;
+      tip.style("display","block").style("left",`${e.originalEvent.pageX+12}px`).style("top",`${e.originalEvent.pageY+12}px`)
+        .html(`<b>${count(+crashes)} recorded crashes</b><div>${count(+fatal)} fatal crash${+fatal===1?"":"es"} in this hex</div>`);
+    });
+    hookMap.on("mouseleave","hook-hex-fill",()=>{
+      hookMap.getCanvas().style.cursor="";
+      tip.style("display","none");
+    });
+
+    for(const a of HOOK_ARTICLES){
+      const node=document.createElement("button");
+      node.type="button";
+      node.className="hook-story-marker";
+      node.setAttribute("aria-label",`News story: ${a.title}`);
+      node.innerHTML=`<i data-lucide="newspaper"></i>`;
+      const popup=new maplibregl.Popup({
+        closeButton:true,
+        closeOnClick:false,
+        closeOnMove:false,
+        maxWidth:"280px",
+        offset:14
+      }).setLngLat([a.lon,a.lat]).setHTML(`<strong>${a.title}</strong><div>${a.date}</div><div style="margin-top:8px"><a href="${a.url}" target="_blank" rel="noopener">Read story</a></div>`);
+      const openStory=(event)=>{
+        event.preventDefault();
+        event.stopPropagation();
+        tip.style("display","none");
+        if(!popup.isOpen())popup.addTo(hookMap);
+      };
+      // Stop map drag / double-click zoom from stealing marker interactions
+      for(const evt of ["mousedown","touchstart","dblclick","pointerdown"]){
+        node.addEventListener(evt,(event)=>{event.stopPropagation();});
+      }
+      node.addEventListener("click",openStory);
+      new maplibregl.Marker({element:node,anchor:"center"}).setLngLat([a.lon,a.lat]).addTo(hookMap);
+    }
+    if(window.lucide)lucide.createIcons();
+    document.getElementById("hook-sub").textContent=`${count(points.length)} crashes in 2023`;
+  });
+
+  let zoomTimer=null;
+  hookMap.on("zoomend",()=>{
+    clearTimeout(zoomTimer);
+    zoomTimer=setTimeout(()=>setHookHexResolution(hookResForZoom(hookMap.getZoom())),80);
+  });
+
+  new ResizeObserver(()=>{if(hookMap)hookMap.resize()}).observe(el);
+}
+
 function drawHighway(){
   if(!highwayRows)return;
   const $=(id)=>document.getElementById(id);
@@ -300,10 +613,6 @@ function drawHighway(){
   const color=(i)=>i===0?"#b65a47":i===last?"#b3c4d2":"#668da9";
   const byRoad=new Map(items.map((d)=>[d.road,d]));
   const tipHtml=(r)=>`<b>${r.road} · rank ${rank.get(r.road)+1}</b><div>${count(r.crashes)} total crashes</div><div>${count(r.severe)} serious/fatal crashes</div><div>${r.rate.toFixed(2)} serious/fatal crashes / 100M VMT</div>`;
-
-  $("hw-sub").textContent=isRate
-    ?`Serious or fatal crashes per 100 million vehicle-miles traveled · ${yearLabel}`
-    :`All reported crashes matched to each interstate · ${yearLabel}`;
 
   const svg=d3.select("#hw-map").selectAll("svg").data([null]).join("svg")
     .attr("viewBox","0 0 560 465").attr("role","img")
@@ -350,46 +659,79 @@ function drawConstellation(){
   if(!constRows)return;
   const $=(id)=>document.getElementById(id);
   const pct=(n,d)=>d?`${(100*n/d).toFixed(1)}%`:"0.0%";
-  const band=(r)=>CONST_SHARE_BANDS.find((b)=>r.severe/Math.max(r.crashes,1)>=b.min);
-  const yearLabel=`${CONST_YEARS[0]}–${CONST_YEARS.at(-1)}`;
   const width=Math.max(700,$("constellation-chart").clientWidth);
-  const height=360;
-  const margin={top:20,right:24,bottom:40,left:72};
-  const x=d3.scalePoint().domain(d3.range(24)).range([margin.left,width-margin.right]);
-  const y=d3.scalePoint().domain(HIGHWAYS).range([margin.top+30,height-margin.bottom-30]);
-  const max=d3.max(constRows,(r)=>r.crashes)||1;
-  const rMax=Math.min(20,x.step()*.62,y.step()*.45);
-  const radius=(r)=>3+(rMax-3)*Math.sqrt(r.crashes/max);
-  const total=d3.sum(constRows,(r)=>r.crashes),severe=d3.sum(constRows,(r)=>r.severe);
+  const height=400;
+  const xStart=145,xEnd=width-40;
+  const ys=[82,160,238,316];
+  const x=(hour)=>xStart+hour*(xEnd-xStart)/23;
+  const step=(xEnd-xStart)/23;
+  const maxCrashes=d3.max(constRows,(r)=>r.crashes)||1;
+  const maxShare=d3.max(constRows,(r)=>r.severe/Math.max(r.crashes,1))||0;
+  const maxRadius=14;
+  const radius=(crashes)=>maxRadius*Math.sqrt(crashes/maxCrashes);
+  const peakBands=[
+    {start:7,end:10,className:"peak-band-morning",label:"WEEKDAY AM PEAK"},
+    {start:16,end:19,className:"peak-band-evening",label:"WEEKDAY PM PEAK"}
+  ];
+  const plotTop=44,plotBottom=351;
 
-  $("const-sub").textContent=`${count(total)} crashes on I-285, I-75, I-85, and I-20 · ${count(severe)} serious or fatal (${pct(severe,total)}) · ${yearLabel}`;
-  $("const-key").innerHTML=`<span>Small ↔ large = fewer ↔ more crashes</span>`+CONST_SHARE_BANDS.map((b)=>`<span><i class="key-dot" style="background:${b.color}"></i>${b.label}</span>`).join("");
+  const refs=[.2,.5,1].map((fraction)=>Math.max(1,Math.round(maxCrashes*fraction)));
+  $("const-size-key").innerHTML=`<span class="legend-item">Circle area · recorded crashes</span>${refs.map((n)=>{
+    const r=radius(n),d=Math.ceil(r*2+4);
+    return `<span class="size-reference"><svg width="${d}" height="${d}" viewBox="0 0 ${d} ${d}" role="img" aria-label="${count(n)} crashes"><circle cx="${d/2}" cy="${d/2}" r="${r.toFixed(2)}" fill="#438c8d" fill-opacity=".85" stroke="#155968" stroke-width="1"/></svg>${count(n)}</span>`;
+  }).join("")}`;
 
-  const describe=(r)=>`${r.road} · ${interval(r.hour)} · ${count(r.crashes)} crashes, including ${count(r.severe)} serious or fatal (${pct(r.severe,r.crashes)})`;
   const svg=d3.select("#constellation-chart").selectAll("svg").data([null]).join("svg")
-    .attr("height",height).attr("viewBox",`0 0 ${width} ${height}`).attr("role","group")
-    .attr("aria-label","Crash counts and serious or fatal shares by interstate and hour");
+    .attr("height",height).attr("viewBox",`0 0 ${width} ${height}`).attr("role","img")
+    .attr("aria-label","Actual crash counts and serious or fatal shares by corridor and hour");
+  svg.selectAll("*").remove();
+
+  svg.selectAll("rect.peak-band").data(peakBands).join("rect")
+    .attr("class",(d)=>d.className)
+    .attr("x",(d)=>x(d.start)-step/2).attr("y",plotTop)
+    .attr("width",(d)=>(d.end-d.start)*step).attr("height",plotBottom-plotTop);
+  svg.selectAll("text.peak-label").data(peakBands).join("text").attr("class","peak-label")
+    .attr("x",(d)=>x(d.start)-step/2+(d.end-d.start)*step/2).attr("y",30).attr("text-anchor","middle").text((d)=>d.label);
+  const peakEdges=peakBands.flatMap((d)=>[d.start,d.end]);
+  svg.selectAll("line.peak-marker").data(peakEdges).join("line").attr("class","peak-marker")
+    .attr("x1",(h)=>x(h)-step/2).attr("x2",(h)=>x(h)-step/2).attr("y1",plotTop).attr("y2",plotBottom);
   svg.selectAll("line.gridline").data(d3.range(0,24,3)).join("line").attr("class","gridline")
-    .attr("x1",(h)=>x(h)).attr("x2",(h)=>x(h)).attr("y1",margin.top).attr("y2",height-margin.bottom);
+    .attr("x1",(h)=>x(h)).attr("x2",(h)=>x(h)).attr("y1",plotTop).attr("y2",plotBottom);
   svg.selectAll("text.tick").data(d3.range(0,24,3)).join("text").attr("class","tick")
-    .attr("x",(h)=>x(h)).attr("y",height-margin.bottom+22).attr("text-anchor","middle").text(pad);
-  svg.selectAll("text.hour-label").data([null]).join("text").attr("class","hour-label")
-    .attr("x",(margin.left+width-margin.right)/2).attr("y",height-3).attr("text-anchor","middle").text("Hour of day (00 means 00:00–00:59)");
-  svg.selectAll("line.row-line").data(HIGHWAYS).join("line").attr("class","row-line")
-    .attr("x1",margin.left-14).attr("x2",width-margin.right+8).attr("y1",(d)=>y(d)).attr("y2",(d)=>y(d));
-  svg.selectAll("text.road-label").data(HIGHWAYS).join("text").attr("class","road-label")
-    .attr("x",4).attr("y",(d)=>y(d)+5).text((d)=>d);
-  svg.selectAll("circle").data(constRows,(r)=>`${r.road}|${r.hour}`).join("circle")
-    .attr("cx",(r)=>x(r.hour)).attr("cy",(r)=>y(r.road)).attr("r",radius)
-    .attr("fill",(r)=>band(r).color).attr("fill-opacity",(r)=>constHour===null||constHour===r.hour?.85:.3)
+    .attr("x",(h)=>x(h)).attr("y",382).attr("text-anchor","middle").text(hourShort);
+
+  CONST_ROADS.forEach((road,i)=>{
+    const y=ys[i];
+    svg.append("text").attr("class","road-label").attr("x",16).attr("y",y+5).text(road);
+    svg.append("line").attr("class","row-line").attr("x1",xStart-17).attr("x2",xEnd+9).attr("y1",y).attr("y2",y);
+  });
+
+  const describe=(r)=>`${r.road}, ${hourShort(r.hour)}: ${count(r.crashes)} crashes, ${count(r.severe)} serious or fatal`;
+  const detailHTML=(r)=>`<b>${r.road} · ${hourShort(r.hour)}:</b> ${count(r.crashes)} assigned crashes, including ${count(r.severe)} serious/fatal (${pct(r.severe,r.crashes)}). Circle size shows count only; it does not mean greater danger or individual risk. Shaded weekday peaks are shown for context, but the count includes all days.`;
+
+  svg.selectAll("circle.star").data(constRows,(r)=>`${r.road}|${r.hour}`).join("circle")
+    .attr("class","star")
+    .attr("cx",(r)=>x(r.hour)).attr("cy",(r)=>ys[CONST_ROADS.indexOf(r.road)]).attr("r",(r)=>radius(r.crashes))
+    .attr("fill",(r)=>interpolateShareColor(r.severe/Math.max(r.crashes,1),maxShare))
+    .attr("fill-opacity",.95)
     .classed("selected",(r)=>constHour===r.hour)
     .attr("tabindex",0).attr("role","button").attr("aria-label",describe)
     .on("pointermove",(event,r)=>{hwTooltip.style("display","block").style("left",`${event.pageX+12}px`).style("top",`${event.pageY+12}px`)
-      .html(`<b>${r.road} · ${interval(r.hour)}</b><div>${count(r.crashes)} crashes</div><div>${count(r.severe)} serious/fatal · ${pct(r.severe,r.crashes)}</div>`)})
+      .html(`<b>${r.road} · ${hourShort(r.hour)}</b><div>${count(r.crashes)} crashes</div><div>${count(r.severe)} serious/fatal · ${pct(r.severe,r.crashes)}</div>`)})
     .on("pointerleave",()=>hwTooltip.style("display","none"))
-    .on("focus",(_,r)=>{$("const-detail").textContent=describe(r)})
-    .on("click",(_,r)=>{constHour=constHour===r.hour?null:r.hour;$("const-detail").textContent=describe(r);drawConstellation()})
-    .on("keydown",(event,r)=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();constHour=constHour===r.hour?null:r.hour;drawConstellation()}});
+    .on("click",(_,r)=>{
+      constHour=constHour===r.hour?null:r.hour;
+      $("const-detail").innerHTML=constHour===null?CONST_INTERPRETATION:detailHTML(r);
+      drawConstellation();
+    })
+    .on("keydown",(event,r)=>{
+      if(event.key==="Enter"||event.key===" "){
+        event.preventDefault();
+        constHour=constHour===r.hour?null:r.hour;
+        $("const-detail").innerHTML=constHour===null?CONST_INTERPRETATION:detailHTML(r);
+        drawConstellation();
+      }
+    });
 }
 
 function buildIcicleTree(road){
