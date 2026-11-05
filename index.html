@@ -64,14 +64,18 @@ h2{font-size:clamp(34px,4.7vw,56px);line-height:1.16;letter-spacing:-2px;margin:
 #line-chart circle{cursor:pointer;outline:none}#line-chart circle:hover,#line-chart circle:focus{stroke:var(--ink);stroke-width:2}#line-chart .grid line{stroke:#edf2f5}#line-chart .grid .domain{display:none}
 .line-context{font-size:12px;color:var(--muted);margin:0 0 6px}.line-legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--muted);margin:0 0 8px}.line-legend:empty{display:none}.line-key{display:inline-flex;align-items:center;gap:7px}.line-key span{display:inline-block;width:18px;height:3px;border-radius:2px}
 .highway-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px;align-items:center}
-.hw-map svg{display:block;width:100%;height:auto;background:#f7f9fc;border:1px solid #e0e7ef;border-radius:10px}
-.hw-map .guide{stroke:#e8eef4;stroke-width:1}.hw-map .place{font-size:11px;fill:#7c8995;letter-spacing:.2px}.hw-map .highlight-badge{font-weight:700;font-size:12px}
-.hw-map .route-under{fill:none;stroke:#fff;stroke-width:13;stroke-linecap:round;stroke-linejoin:round}
-.hw-map .route-colored{fill:none;stroke-linecap:round;stroke-linejoin:round;cursor:pointer;transition:stroke-width .15s}.hw-map .route-colored:hover,.hw-map .route-colored:focus{stroke-width:11;outline:none}
-.hw-map .route-label{font-weight:700;font-size:13px;paint-order:stroke;stroke:#f7f9fc;stroke-width:4px;stroke-linejoin:round}
+.hw-map{height:465px;position:relative;background:#f7f9fc;border:1px solid #e0e7ef;border-radius:10px;overflow:hidden}
+.hw-map .maplibregl-map{height:100%;width:100%}.hw-map .maplibregl-canvas{outline:none}
+.hw-map .maplibregl-ctrl-group{box-shadow:0 1px 5px #17364b26}
+.hw-info-panel{position:absolute;left:12px;bottom:12px;z-index:2;max-width:245px;padding:11px 34px 11px 13px;background:#fff;border:1px solid #dce7ed;border-radius:10px;box-shadow:0 6px 24px #15364b18;font-size:12px;line-height:1.45;color:var(--muted)}
+.hw-info-panel strong{display:block;color:var(--ink);font-size:14px;margin-bottom:3px}.hw-info-panel .close{position:absolute;top:5px;right:7px;border:0;background:transparent;color:var(--muted);font-size:20px;line-height:1;padding:2px 5px}.hw-info-panel .close:hover,.hw-info-panel .close:focus-visible{color:var(--ink)}
+.hw-info-panel .rank{color:#9d4939;font-weight:700}
+.hw-info-panel .hw-shared-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}.hw-info-panel .hw-shared-stats strong{font-size:12px}
+.hw-map .hw-route-hover{cursor:pointer}
+.hw-rank{cursor:pointer}.hw-rank:focus-visible{outline:2px solid var(--blue);outline-offset:2px}.hw-rank.selected{background:#edf5f9}
 .hw-rank-title{font-size:15px;margin:0 0 10px}.hw-caption{font-size:13px;font-weight:700;color:#2e4d65;margin:12px 0 0}
 .hw-rank{display:flex;align-items:center;gap:10px;font-size:14px;margin:4px 0;padding:7px 8px;border-radius:8px}.hw-rank .road{width:50px;font-weight:700}.hw-rank .track{height:12px;background:#eef1f4;flex:1;border-radius:6px;overflow:hidden}.hw-rank .fill{height:100%;background:#668da9;border-radius:6px;transition:width .4s}.hw-rank .val{min-width:84px;text-align:right;font-variant-numeric:tabular-nums}
-.hw-rank.first{background:#fbf0ed}.hw-rank.first .road,.hw-rank.first .val{color:#9d4939}.hw-rank.first .fill{background:#b65a47}.hw-rank.last .fill{background:#b3c4d2}
+.hw-rank.first{background:transparent}.hw-rank.first .road,.hw-rank.first .val{color:#9d4939}.hw-rank.first .fill{background:#b65a47}.hw-rank.last .fill{background:#b3c4d2}
 .hw-legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--muted);margin-top:14px}.hw-legend>span{display:inline-flex;align-items:center;gap:7px}
 .legend-swatch{display:inline-block;width:22px;height:5px;border-radius:3px}.legend-swatch.top{background:#b65a47}.legend-swatch.mid{background:#668da9}.legend-swatch.low{background:#b3c4d2}
 .constellation-wrap{overflow-x:auto}#constellation-chart svg{min-width:700px}
@@ -172,7 +176,7 @@ footer{padding:38px 0;border-top:1px solid var(--line);font-size:13px;color:var(
 <div><h3 id="hw-rank-title" class="hw-rank-title"></h3><div id="hw-ranks"></div><p id="hw-caption" class="hw-caption"></p></div></div>
 <div class="hw-legend"><span><span class="legend-swatch top"></span>Highest rank</span><span><span class="legend-swatch mid"></span>Middle ranks</span><span><span class="legend-swatch low"></span>Lowest rank</span></div>
 <p id="hw-takeaway" class="chart-takeaway" aria-live="polite"></p>
-<p class="helper">Schematic highway map, not individual crash locations; hover over or focus a road for details. Crashes are assigned to an interstate through their matched road segment. Serious or fatal = K/A crashes; rate = serious or fatal crashes ÷ estimated vehicle-miles traveled (VMT) × 100 million. Corridor matching and traffic estimates introduce uncertainty, so rankings are exploratory.</p></div>
+<p class="helper">Map shows actual interstate geometry and nearby streets, not individual crash locations. Hover over a road for details; click to pin the information, and use × to close it. The shared I-75/I-85 downtown corridor is shown with a blended color. Crashes are assigned to an interstate through their matched road segment. Serious or fatal = K/A crashes; rate = serious or fatal crashes ÷ estimated vehicle-miles traveled (VMT) × 100 million. Corridor matching and traffic estimates introduce uncertainty, so rankings are exploratory.</p></div>
 <div class="question">Which highway looked worst before normalization? Does your answer change when you account for traffic?</div></section>
 <section class="section reveal" id="resolution"><div class="story-label">Look closer</div><h2>There’s more to road safety.</h2><p class="desc">Zoom out from a single ranking. Explore the structure of crash outcomes and compare crash density by highway to put the earlier patterns into context.</p>
 <div class="card"><div class="cardhead"><strong>Crash density by highway</strong><span class="tag">2021-2023</span></div>
@@ -353,14 +357,6 @@ Promise.all([crashData,segmentData]).then(([crashes,segments])=>{
   for(const id of ["hw-map","constellation-chart","icicle-chart"])loadError(id,"the crash and traffic CSVs in data/")();
 });
 
-// Hand-drawn, schematic Atlanta freeway corridors. Not official GDOT geometry.
-const ROUTES=[
-  {road:"I-285",path:"M 169 394 C 140 358 126 318 127 271 C 125 224 143 169 174 133 C 205 96 255 79 303 79 C 357 79 407 96 440 137 C 470 174 480 215 474 264 C 469 320 439 358 397 385 C 353 413 304 421 257 415 C 223 413 192 405 169 394",lx:423,ly:113},
-  {road:"I-75",path:"M 216 28 C 227 64 246 86 258 118 C 272 146 283 169 285 197 C 294 211 300 218 303 225 C 301 255 303 285 302 315 C 301 335 303 350 303 365 C 298 385 292 405 290 425 C 289 433 288 438 288 443",lx:219,ly:66},
-  {road:"I-85",path:"M 479 39 C 449 56 428 78 406 104 C 391 130 372 147 349 163 C 331 184 316 203 303 225 C 301 255 303 285 302 315 C 301 335 303 350 303 365 C 280 385 250 405 230 422 C 218 432 208 440 201 446",lx:452,ly:72},
-  {road:"I-20",path:"M 37 281 C 90 281 119 283 150 281 C 181 277 205 285 236 286 C 265 291 286 284 314 285 C 347 285 367 290 387 295 C 413 303 435 307 461 306 C 486 307 509 310 531 312",lx:49,ly:265}
-];
-const PLACES=[{text:"BUCKHEAD",x:290,y:150},{text:"MIDTOWN",x:330,y:230},{text:"DOWNTOWN",x:220,y:270},{text:"ATL AIRPORT",x:190,y:390}];
 const hwTooltip=d3.select("body").append("div").attr("class","hw-tooltip");
 
 const HOOK_ARTICLES=[
@@ -601,6 +597,105 @@ function initHookMap(points){
   new ResizeObserver(()=>{if(hookMap)hookMap.resize()}).observe(el);
 }
 
+let highwayMap=null;
+let highwayMapReady=false;
+let pinnedHighway=null;
+let hoveredHighway=null;
+let dismissedHighway=null;
+
+function hwGeoColors(){
+  const key=state.highway==="normalized"?"rate":"crashes";
+  const sorted=[...highwayRows].sort((a,b)=>b[key]-a[key]);
+  const colors=new Map(sorted.map((d,i)=>[d.road,i===0?"#b65a47":i===sorted.length-1?"#b3c4d2":"#668da9"]));
+  const blend=(a,b)=>`#${[0,1,2].map((i)=>Math.round((parseInt(a.slice(1+i*2,3+i*2),16)+parseInt(b.slice(1+i*2,3+i*2),16))/2).toString(16).padStart(2,"0")).join("")}`;
+  const shared=blend(colors.get("I-75"),colors.get("I-85"));
+  return ["match",["get","road"],...sorted.flatMap((d)=>[d.road,colors.get(d.road)]),"I-75/I-85",shared,"#668da9"];
+}
+
+function showHighwayInfo(road,shouldPin=false){
+  if(shouldPin){
+    pinnedHighway=road;
+    dismissedHighway=null;
+  }
+  if(!shouldPin&&dismissedHighway===road)return;
+  if(pinnedHighway&&road!==pinnedHighway&&!shouldPin)return;
+  const row=highwayRows.find((d)=>d.road===road);
+  if(!highwayMap)return;
+  const panel=highwayMap.getContainer().querySelector(".hw-info-panel");
+  if(!row){
+    if(road==="I-75/I-85"){
+      const byRoad=new Map(highwayRows.map((d)=>[d.road,d]));
+      const key=state.highway==="normalized"?"rate":"crashes";
+      const sorted=[...highwayRows].sort((a,b)=>b[key]-a[key]);
+      const summary=(name)=>{const item=byRoad.get(name);return `<strong>${name}</strong><span class="rank">Rank ${sorted.findIndex((d)=>d.road===name)+1} of ${sorted.length}</span><div>${count(item.crashes)} total crashes</div><div>${count(item.severe)} serious/fatal</div><div>${item.rate.toFixed(2)} serious/fatal / 100M VMT</div>`};
+      panel.innerHTML=`<button class="close" type="button" aria-label="Close highway information">×</button><strong>I-75/I-85 shared corridor</strong><div>Shared geometry is not ranked separately. Its blended color combines the current ranks of both highways.</div><div class="hw-shared-stats">${summary("I-75")}${summary("I-85")}</div>`;
+      panel.hidden=false;
+      panel.querySelector(".close").addEventListener("click",()=>{
+        pinnedHighway=null;
+        dismissedHighway=hoveredHighway;
+        panel.hidden=true;
+      });
+    }
+    return;
+  }
+  const key=state.highway==="normalized"?"rate":"crashes";
+  const sorted=[...highwayRows].sort((a,b)=>b[key]-a[key]);
+  panel.innerHTML=`<button class="close" type="button" aria-label="Close highway information">×</button><strong>${row.road}</strong><span class="rank">Rank ${sorted.findIndex((d)=>d.road===road)+1} of ${sorted.length}</span><div>${count(row.crashes)} total crashes</div><div>${count(row.severe)} serious/fatal</div><div>${row.rate.toFixed(2)} serious/fatal / 100M VMT</div>`;
+  panel.querySelector(".close").addEventListener("click",()=>{
+    pinnedHighway=null;
+    dismissedHighway=hoveredHighway;
+    panel.hidden=true;
+  });
+  panel.hidden=false;
+}
+
+function initHighwayMap(){
+  if(highwayMap||!window.maplibregl)return;
+  const el=document.getElementById("hw-map");
+  el.innerHTML='<div class="hw-info-panel" aria-live="polite" hidden></div>';
+  highwayMap=new maplibregl.Map({
+    container:el,
+    style:"https://tiles.openfreemap.org/styles/positron",
+    center:[-84.39,33.78],zoom:10.4
+  });
+  highwayMap.addControl(new maplibregl.NavigationControl({showCompass:false}),"top-right");
+  highwayMap.on("load",()=>{
+    highwayMap.addSource("climax-routes",{type:"geojson",data:"data/interstates_bbox.geojson"});
+    highwayMap.addSource("climax-labels",{type:"geojson",data:{type:"FeatureCollection",features:[
+      {type:"Feature",properties:{road:"I-285"},geometry:{type:"Point",coordinates:[-84.43,33.84]}},
+      {type:"Feature",properties:{road:"I-75"},geometry:{type:"Point",coordinates:[-84.41,33.82]}},
+      {type:"Feature",properties:{road:"I-85"},geometry:{type:"Point",coordinates:[-84.37,33.79]}},
+      {type:"Feature",properties:{road:"I-20"},geometry:{type:"Point",coordinates:[-84.46,33.75]}}
+    ]}});
+    highwayMap.addLayer({id:"climax-routes",type:"line",source:"climax-routes",paint:{"line-color":hwGeoColors(),"line-width":3.5,"line-opacity":.9}});
+    highwayMap.addLayer({id:"climax-routes-hover",type:"line",source:"climax-routes",paint:{"line-color":"#172b39","line-width":7,"line-opacity":0}});
+    highwayMap.addLayer({id:"climax-labels",type:"symbol",source:"climax-labels",layout:{"text-field":["get","road"],"text-size":12,"text-allow-overlap":true},paint:{"text-color":"#172b39","text-halo-color":"#fff","text-halo-width":2}});
+    highwayMapReady=true;
+    showHighwayInfo([...highwayRows].sort((a,b)=>b.crashes-a.crashes)[0].road);
+  });
+  highwayMap.on("mousemove","climax-routes",(event)=>{
+    highwayMap.getCanvas().style.cursor="pointer";
+    const road=event.features?.[0]?.properties?.road;
+    if(road){
+      hoveredHighway=road;
+      highwayMap.setFilter("climax-routes-hover",["==",["get","road"],road]);
+      showHighwayInfo(road);
+    }
+  });
+  highwayMap.on("mouseleave","climax-routes",()=>{
+    highwayMap.getCanvas().style.cursor="";
+    highwayMap.setFilter("climax-routes-hover",["==",["get","road"],""]);
+    hoveredHighway=null;
+    dismissedHighway=null;
+    if(!pinnedHighway)highwayMap.getContainer().querySelector(".hw-info-panel").hidden=true;
+  });
+  highwayMap.on("click","climax-routes",(event)=>{
+    const road=event.features?.[0]?.properties?.road;
+    if(road)showHighwayInfo(road,true);
+  });
+  new ResizeObserver(()=>highwayMap.resize()).observe(el);
+}
+
 function drawHighway(){
   if(!highwayRows)return;
   const $=(id)=>document.getElementById(id);
@@ -610,51 +705,35 @@ function drawHighway(){
   const yearLabel=HIGHWAY_YEARS.length>1?`${HIGHWAY_YEARS[0]}–${HIGHWAY_YEARS.at(-1)}`:HIGHWAY_YEARS[0];
   const fmtVal=(d)=>isRate?`${d.rate.toFixed(2)} / 100M VMT`:`${count(d.crashes)} crashes`;
   const sorted=[...items].sort((a,b)=>b[key]-a[key]);
-  const rank=new Map(sorted.map((d,i)=>[d.road,i]));
   const last=items.length-1;
-  const color=(i)=>i===0?"#b65a47":i===last?"#b3c4d2":"#668da9";
-  const byRoad=new Map(items.map((d)=>[d.road,d]));
-  const tipHtml=(r)=>`<b>${r.road} · rank ${rank.get(r.road)+1}</b><div>${count(r.crashes)} total crashes</div><div>${count(r.severe)} serious/fatal crashes</div><div>${r.rate.toFixed(2)} serious/fatal crashes / 100M VMT</div>`;
 
-  const svg=d3.select("#hw-map").selectAll("svg").data([null]).join("svg")
-    .attr("viewBox","0 0 560 465").attr("role","img")
-    .attr("aria-label",isRate?"Simplified Atlanta interstate network, colored by serious and fatal crash rate rank":"Simplified Atlanta interstate network, colored by total crash rank");
-  drawBaseMap(svg);
-  const g=svg.selectAll("g.network").data([null]).join("g").attr("class","network");
-  g.selectAll("path.route-under").data(ROUTES,(d)=>d.road).join("path").attr("class","route-under").attr("d",(d)=>d.path);
-  g.selectAll("path.route-colored").data(ROUTES,(d)=>d.road).join("path")
-    .attr("class","route-colored").attr("d",(d)=>d.path).attr("stroke-width",8)
-    .attr("stroke",(d)=>color(rank.get(d.road))).attr("tabindex",0)
-    .attr("aria-label",(d)=>{const r=byRoad.get(d.road);return `${d.road}, rank ${rank.get(d.road)+1}: ${isRate?r.rate.toFixed(2)+" serious or fatal crashes per 100 million vehicle miles":count(r.crashes)+" crashes"}`})
-    .on("mousemove",(event,d)=>{hwTooltip.style("display","block").style("left",`${event.pageX+12}px`).style("top",`${event.pageY+12}px`).html(tipHtml(byRoad.get(d.road)))})
-    .on("mouseleave",()=>hwTooltip.style("display","none"))
-    .on("focus",(event,d)=>{const box=event.target.getBoundingClientRect();hwTooltip.style("display","block").style("left",`${box.right+scrollX+8}px`).style("top",`${box.top+scrollY}px`).html(tipHtml(byRoad.get(d.road)))})
-    .on("blur",()=>hwTooltip.style("display","none"));
-  svg.selectAll("g.route-labels").data([null]).join("g").attr("class","route-labels")
-    .selectAll("text.route-label").data(ROUTES,(d)=>d.road).join("text").attr("class","route-label")
-    .attr("x",(d)=>d.lx).attr("y",(d)=>d.ly).attr("fill",(d)=>color(rank.get(d.road))).text((d)=>d.road);
-  svg.selectAll("text.map-top").data([sorted[0]]).join("text").attr("class","highlight-badge map-top")
-    .attr("x",16).attr("y",22).attr("fill","#9d4939").text((d)=>`#1: ${d.road} · ${fmtVal(d)}`);
+  if(!highwayMap)initHighwayMap();
+
+  if(highwayMapReady){
+    highwayMap.setPaintProperty(
+      "climax-routes",
+      "line-color",
+      hwGeoColors()
+    );
+  }
+  if(pinnedHighway)showHighwayInfo(pinnedHighway);
 
   $("hw-rank-title").textContent=isRate?"Serious/fatal crashes per 100M vehicle-miles":"Total reported crashes";
   const max=d3.max(items,(d)=>d[key]);
   d3.select("#hw-ranks").selectAll("div.hw-rank").data(sorted,(d)=>d.road).join("div")
-    .attr("class",(d,i)=>"hw-rank"+(i===0?" first":i===last?" last":""))
-    .html((d)=>`<span class="road">${d.road}</span><div class="track"><div class="fill" style="width:${(d[key]/max*100).toFixed(1)}%"></div></div><span class="val">${isRate?d.rate.toFixed(2):count(d.crashes)}</span>`);
+    .attr("class",(d,i)=>"hw-rank"+(i===0?" first":"")+(i===last?" last":""))
+    .attr("tabindex",0).attr("role","button")
+    .attr("aria-label",(d)=>`${d.road}, rank ${sorted.indexOf(d)+1}`)
+    .html((d)=>`<span class="road">${d.road}</span><div class="track"><div class="fill" style="width:${(d[key]/max*100).toFixed(1)}%"></div></div><span class="val">${isRate?d.rate.toFixed(2):count(d.crashes)}</span>`)
+    .on("pointerenter",(_,d)=>showHighwayInfo(d.road))
+    .on("click",(_,d)=>showHighwayInfo(d.road,true))
+    .on("keydown",(event,d)=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();showHighwayInfo(d.road,true)}});
   $("hw-caption").textContent=`#1: ${sorted[0].road} (${fmtVal(sorted[0])})`;
 
   const countTop=d3.greatest(items,(d)=>d.crashes),rateTop=d3.greatest(items,(d)=>d.rate);
   $("hw-takeaway").textContent=countTop.road!==rateTop.road
     ?`${countTop.road} has the most recorded crashes, but ${rateTop.road} has the highest serious-or-fatal crash rate after accounting for estimated traffic exposure.`
     :`${countTop.road} ranks highest on both measures in ${yearLabel}.`;
-}
-
-function drawBaseMap(svg){
-  const bg=svg.selectAll("g.bg").data([null]).join("g").attr("class","bg");
-  bg.selectAll("line.guide.vertical").data(d3.range(70,550,70)).join("line").attr("class","guide vertical").attr("x1",(d)=>d).attr("x2",(d)=>d).attr("y1",20).attr("y2",445);
-  bg.selectAll("line.guide.horizontal").data(d3.range(70,460,70)).join("line").attr("class","guide horizontal").attr("x1",20).attr("x2",540).attr("y1",(d)=>d).attr("y2",(d)=>d);
-  bg.selectAll("text.place").data(PLACES).join("text").attr("class","place").attr("x",(d)=>d.x).attr("y",(d)=>d.y).text((d)=>d.text);
-  svg.selectAll("text.north").data([null]).join("text").attr("class","place north").attr("x",516).attr("y",27).text("N ↑");
 }
 
 function drawConstellation(){
