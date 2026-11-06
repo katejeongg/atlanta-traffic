@@ -63,6 +63,11 @@ h2{font-size:clamp(34px,4.7vw,56px);line-height:1.16;letter-spacing:-2px;margin:
 #heat-chart rect.cell{cursor:pointer;outline:none}#heat-chart rect.cell:hover,#heat-chart rect.cell:focus{stroke:var(--ink);stroke-width:2}
 #line-chart circle{cursor:pointer;outline:none}#line-chart circle:hover,#line-chart circle:focus{stroke:var(--ink);stroke-width:2}#line-chart .grid line{stroke:#edf2f5}#line-chart .grid .domain{display:none}
 .line-context{font-size:12px;color:var(--muted);margin:0 0 6px}.line-legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--muted);margin:0 0 8px}.line-legend:empty{display:none}.line-key{display:inline-flex;align-items:center;gap:7px}.line-key span{display:inline-block;width:18px;height:3px;border-radius:2px}
+.line-coverage{background:#f0f6fa;border:1px solid #dce6ed;border-left:4px solid #25588a;border-radius:10px;padding:15px 17px;margin:0 0 20px;color:var(--ink)}
+.line-coverage-title{font-size:14px;line-height:1.5;font-weight:700;margin:0}.line-coverage-copy{font-size:13px;margin:7px 0 0}
+.line-coverage-stats{display:flex;flex-wrap:wrap;gap:4px 20px;list-style:none;padding:0;margin:9px 0 0;font-size:12px;color:#526977}.line-coverage-stats[hidden]{display:none}.line-coverage-stats strong{color:var(--ink);font-variant-numeric:tabular-nums}
+.line-coverage details{font-size:12px;color:#526977;margin-top:8px}.line-coverage summary{cursor:pointer;color:var(--ink);padding:5px 0}.line-coverage details p{margin:5px 0 0}
+@media(pointer:coarse){.line-coverage summary{min-height:44px;padding-top:10px}}
 .highway-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px;align-items:center}
 .hw-map{height:465px;position:relative;background:#f7f9fc;border:1px solid #e0e7ef;border-radius:10px;overflow:hidden}
 .hw-map .maplibregl-map{height:100%;width:100%}.hw-map .maplibregl-canvas{outline:none}
@@ -163,11 +168,26 @@ footer{padding:38px 0;border-top:1px solid var(--line);font-size:13px;color:var(
 <p class="helper">Darker cells mean more crashes. 00 is 00:00–00:59. Fatal or serious-injury counts crashes, not people.</p></div></section>
 <section class="section reveal" id="rising-2"><div class="story-label">Traffic volume</div><h2>Accounting for traffic gives us a more complete picture.</h2><p class="desc">Notice how some hours have a higher crash frequency relative to how many vehicles are on the road.</p>
 <div class="card"><div class="cardhead"><strong>Hourly crash count vs. hourly vehicle count</strong><span class="tag">2021–2023</span></div><div class="controls" role="group" aria-label="Hourly metric"><button class="toggle active" data-group="hourly" data-value="counts" aria-pressed="true">Counts</button><button class="toggle" data-group="hourly" data-value="rates" aria-pressed="false">Rates</button></div>
+<aside class="line-coverage" aria-labelledby="line-coverage-title">
+<div aria-live="polite" aria-atomic="true">
+<h3 id="line-coverage-title" class="line-coverage-title">The two count series have different coverage.</h3>
+<p id="line-coverage-copy" class="line-coverage-copy">The crash line uses the full dataset. The vehicle line measures traffic only at the counter locations.</p>
+<ul id="line-coverage-stats" class="line-coverage-stats" aria-label="Coverage summary" hidden>
+<li><strong id="line-coverage-count"></strong> <span id="line-coverage-count-label"></span></li>
+<li><strong id="line-coverage-stations"></strong> counters</li>
+<li><strong id="line-coverage-scope"></strong> <span id="line-coverage-scope-label"></span></li>
+</ul>
+</div>
+<details><summary>Coverage details</summary>
+<p id="line-coverage-details">Hourly rates use crash counts matched within 500 m of traffic-counting stations and vehicle passages in the same hour.</p>
+<p>The highway comparison separately uses estimated vehicle-miles on matched road segments. Each describes its own covered roads and time period.</p>
+</details>
+</aside>
 <p id="line-context" class="line-context"></p><p id="line-legend" class="line-legend"></p>
 <div id="line-chart" class="chart"><p class="chart-status">Loading crash and traffic data…</p></div>
 <p id="line-detail" class="chart-detail" aria-live="polite">Hover, tap, or focus a point for its value.</p>
 <p id="line-takeaway" class="chart-takeaway"></p>
-<p class="helper">Counts: the two lines use separate axes, so compare their shapes rather than their heights. Vehicle passages come from FHWA TMAS traffic counting stations, so they approximate traffic near those counters, not every road. Rates: crashes matched within 500 m of a station, divided by that station's vehicle passages in the same hour.</p></div></section>
+<p class="helper">Counts use separate vertical axes; compare the hourly patterns rather than the heights of the two lines. Rates are per 100,000 vehicle passages at the covered FHWA TMAS counting stations.</p></div></section>
 <section class="section reveal" id="climax"><div class="story-label">The reveal</div><h2>First impressions can be misleading.</h2><p class="desc">Now let's revisit our initial map. After dividing crashes by traffic volume to be more risk-relative, our rankings change.</p>
 <div class="card"><div class="cardhead"><strong>Highway comparison</strong><span class="tag">2023</span></div>
 <div class="controls" role="group" aria-label="Highway comparison metric"><button class="toggle active" data-group="highway" data-value="total" aria-pressed="true">Total crashes</button><button class="toggle" data-group="highway" data-value="normalized" aria-pressed="false">Serious or fatal crashes / traffic exposure</button></div>
@@ -909,6 +929,25 @@ function drawIcicle(){
   $("icicle-severity-key").innerHTML=Object.values(ICICLE_SEVERITY).map((s)=>`<span class="legend-item"><i class="key-dot" style="background:${s.color}"></i><span><b>${s.short}</b> · ${s.note}</span></span>`).join("");
 }
 
+function drawLineCoverage(isRate){
+  if(!lineData)return;
+  const text={
+    "line-coverage-title":isRate?"Hourly rates cover a small station-linked sample.":"The two count series have different coverage.",
+    "line-coverage-copy":isRate?"These rates describe locations near the counters and may not represent the wider study area.":"The crash line uses the full dataset. The vehicle line measures traffic only at the counter locations.",
+    "line-coverage-count":count(isRate?lineData.totalMatched:lineData.totalCrashes),
+    "line-coverage-count-label":isRate?"matched crash counts":"crash records",
+    "line-coverage-stations":count(lineData.stationCount),
+    "line-coverage-scope":isRate?`${count(MATCH_RADIUS_M)} m`:"2021–2023",
+    "line-coverage-scope-label":isRate?"radius":"included",
+    "line-coverage-details":`The full dataset contains ${count(lineData.totalCrashes)} crash records. Hourly rates use ${count(lineData.totalMatched)} matched crash counts within ${count(MATCH_RADIUS_M)} m of ${count(lineData.stationCount)} traffic-counting stations, divided by vehicle passages in the same hour.`
+  };
+  for(const [id,value] of Object.entries(text)){
+    const element=document.getElementById(id);
+    if(element.textContent!==value)element.textContent=value;
+  }
+  document.getElementById("line-coverage-stats").hidden=false;
+}
+
 function drawLine(){
   if(!lineData)return;
   const $=(id)=>document.getElementById(id);
@@ -924,9 +963,10 @@ function drawLine(){
   for(const s of series)s.y=d3.scaleLinear().domain([0,d3.max(rows,s.value)*1.12||1]).nice().range([height-margin.bottom,margin.top]);
   const [primary,secondary]=series;
 
+  drawLineCoverage(isRate);
   $("line-context").textContent=isRate
-    ?`${count(lineData.totalMatched)} crashes matched to ${lineData.stationCount} traffic counting stations · 2021–2023`
-    :`${count(lineData.totalCrashes)} crash records (all severities) · traffic from ${lineData.stationCount} counting stations · 2021–2023`;
+    ?"Crashes near traffic-counting stations · 2021–2023"
+    :`All crash records · traffic measured at ${count(lineData.stationCount)} counters · 2021–2023`;
   $("line-legend").innerHTML=series.map((s)=>`<span class="line-key"><span style="background:${s.color}"></span>${s.label}</span>`).join("");
   $("line-detail").textContent="Hover, tap, or focus a point for its value.";
 
