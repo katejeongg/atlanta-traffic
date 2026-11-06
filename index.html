@@ -80,7 +80,7 @@ h2{font-size:clamp(34px,4.7vw,56px);line-height:1.16;letter-spacing:-2px;margin:
 .hw-rank{cursor:pointer}.hw-rank:focus-visible{outline:2px solid var(--blue);outline-offset:2px}.hw-rank.selected{background:#edf5f9}
 .hw-rank-title{font-size:15px;margin:0 0 10px}.hw-caption{font-size:13px;font-weight:700;color:#2e4d65;margin:12px 0 0}
 .hw-rank{display:flex;align-items:center;gap:10px;font-size:14px;margin:4px 0;padding:7px 8px;border-radius:8px}.hw-rank .road{width:50px;font-weight:700}.hw-rank .track{height:12px;background:#eef1f4;flex:1;border-radius:6px;overflow:hidden}.hw-rank .fill{height:100%;background:#668da9;border-radius:6px;transition:width .4s}.hw-rank .val{min-width:20%;text-align:right;font-variant-numeric:tabular-nums}
-.hw-rank{transition:transform .15s ease,box-shadow .15s ease,background .15s ease}.hw-rank.pop{transform:translateX(-8px) scale(1.04);background:#fff;box-shadow:0 6px 18px #15364b26;position:relative;z-index:1}.hw-info-panel .close.pinned{color:#9d4939;font-size:inherit;padding:4px 6px;display:flex}@media(prefers-reduced-motion:reduce){.hw-rank{transition:none}}
+.hw-rank{transition:transform .15s ease,box-shadow .15s ease,background .15s ease}.hw-rank.pop{transform:translateX(-8px) scale(1.04);background:#fff;box-shadow:0 6px 18px #15364b26;position:relative;z-index:1}@media(prefers-reduced-motion:reduce){.hw-rank{transition:none}}
 .hw-rank.first{background:transparent}.hw-rank.first.pop{background:#fff}.hw-rank.first .road,.hw-rank.first .val{color:#9d4939}.hw-rank.first .fill{background:#b65a47}.hw-rank.last .fill{background:#b3c4d2}
 .hw-legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--muted);margin-top:14px}.hw-legend>span{display:inline-flex;align-items:center;gap:7px}
 .legend-swatch{display:inline-block;width:22px;height:5px;border-radius:3px}.legend-swatch.top{background:#b65a47}.legend-swatch.mid{background:#668da9}.legend-swatch.low{background:#b3c4d2}
@@ -189,7 +189,7 @@ footer{padding:38px 0;border-top:1px solid var(--line);font-size:13px;color:var(
 <p id="line-detail" class="chart-detail" aria-live="polite">Hover, tap, or focus a point for its value.</p>
 <p id="line-takeaway" class="chart-takeaway"></p>
 <p class="helper">Counts use separate vertical axes; compare the hourly patterns rather than the heights of the two lines. Rates are per 100,000 vehicle passages at the covered FHWA TMAS counting stations.</p></div></section>
-<section class="section reveal" id="climax"><div class="story-label">The reveal</div><h2>First impressions can be misleading.</h2><p class="desc">Now let's revisit our initial map. Counting only serious or fatal crashes barely changes the ranking, but dividing by traffic volume does. Toggle crash type and measure one at a time to see which change moves which highway.</p>
+<section class="section reveal" id="climax"><div class="story-label">The reveal</div><h2>First impressions can be misleading.</h2><p class="desc">Now let's revisit our initial map. After dividing crashes by traffic volume to be more risk-relative, our rankings change.</p>
 <div class="card"><div class="cardhead"><strong>Highway comparison</strong><span class="tag">2023</span></div>
 <div class="hw-controls-grid">
 <span style="color: #526977; font-size: 13px">Crash type</span>
@@ -200,7 +200,7 @@ footer{padding:38px 0;border-top:1px solid var(--line);font-size:13px;color:var(
 <div class="highway-grid"><div id="hw-map" class="hw-map"><p class="chart-status">Loading crash and traffic data…</p></div>
 <div><h3 id="hw-rank-title" class="hw-rank-title"></h3><div id="hw-ranks"></div><p id="hw-caption" class="hw-caption"></p></div></div>
 <div class="hw-legend"><span><span class="legend-swatch top"></span>Highest rank</span><span><span class="legend-swatch mid"></span>Middle ranks</span><span><span class="legend-swatch low"></span>Lowest rank</span></div>
-<p id="hw-sub" class="line-context">Pinned highway linked to the crash outcomes chart below</p>
+<p id="hw-sub" class="line-context">Selected highway linked to the crash outcomes chart below</p>
 <p id="hw-takeaway" class="chart-takeaway" aria-live="polite"></p>
 <p class="helper">Map shows actual interstate geometry and nearby streets, not individual crash locations. Hover over a road for details; click to pin the information, and use × to close it. The shared I-75/I-85 downtown corridor is shown with a blended color. Crashes are assigned to an interstate through their matched road segment. Use the two toggles to change one thing at a time: the crash type (all crashes vs. serious or fatal = K/A crashes) and the measure (raw count vs. rate = crashes ÷ estimated vehicle-miles traveled (VMT) × 100 million). Colors show rank within the selected view (red = highest, light blue = lowest), so they are not comparable across views. Serious or fatal counts are small, so close ranks are within noise. Corridor matching and traffic estimates introduce uncertainty, so rankings are exploratory.</p></div>
 <div class="question">Which highway looked worst before normalization? Does your answer change when you account for traffic?</div></section>
@@ -657,16 +657,15 @@ function hwStatsHTML(row){
   return lines.map((l)=>{const t=l.sev===m.sev&&l.norm===m.norm?`<b style="color:var(--ink)">${l.text}</b>`:l.text;return `<div>${t}</div>`}).join("");
 }
 
-const HW_PIN_ICON='<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M16 3a1 1 0 0 1 .7 1.7L15.4 6l1.6 5.2 2 1.8a1 1 0 0 1-.7 1.7H13v5.3l-1 2-1-2v-5.3H5.7A1 1 0 0 1 5 13l2-1.8L8.6 6 7.3 4.7A1 1 0 0 1 8 3z"/></svg>';
 const hwRoadsFor=(road)=>road==="I-75/I-85"?["I-75","I-85"]:road?[road]:[];
 // Rank rows pop out while their freeway is hovered on the map or pinned
 function hwSyncRankPop(){
   const on=new Set([...hwRoadsFor(hoveredHighway),...hwRoadsFor(pinnedHighway)]);
   d3.selectAll("#hw-ranks .hw-rank").classed("pop",(d)=>on.has(d.road));
 }
+// Close (×) button only exists while the panel is pinned
 function hwCloseButton(){
-  const pinned=!!pinnedHighway;
-  return `<button class="close${pinned?" pinned":""}" type="button" aria-label="${pinned?"Unpin and close highway information":"Close highway information"}">${pinned?HW_PIN_ICON:"×"}</button>`;
+  return pinnedHighway?'<button class="close" type="button" aria-label="Close highway information">×</button>':"";
 }
 // Linked interaction: pinned freeway <-> Icicle highway focus (one-way syncs, no feedback loop)
 function syncIcicleFromPin(){
@@ -706,7 +705,7 @@ function showHighwayInfo(road,shouldPin=false,cursor=null){
     const summary=(name)=>{const item=byRoad.get(name);return `<strong>${name}</strong><span class="rank">Rank ${sorted.findIndex((d)=>d.road===name)+1} of ${sorted.length}</span>${hwStatsHTML(item)}`};
     panel.innerHTML=`${hwCloseButton()}<strong>I-75/I-85 shared corridor</strong><div>Shared geometry is not ranked separately. Its blended color combines the current ranks of both highways.</div><div class="hw-shared-stats"><div>${summary("I-75")}</div><div>${summary("I-85")}</div></div>`;
   }else return;
-  panel.querySelector(".close").addEventListener("click",()=>{
+  panel.querySelector(".close")?.addEventListener("click",()=>{
     pinnedHighway=null;
     dismissedHighway=hoveredHighway;
     panel.hidden=true;
