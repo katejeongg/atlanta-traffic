@@ -72,15 +72,16 @@ h2{font-size:clamp(34px,4.7vw,56px);line-height:1.16;letter-spacing:-2px;margin:
 .hw-map{height:465px;position:relative;background:#f7f9fc;border:1px solid #e0e7ef;border-radius:10px;overflow:hidden}
 .hw-map .maplibregl-map{height:100%;width:100%}.hw-map .maplibregl-canvas{outline:none}
 .hw-map .maplibregl-ctrl-group{box-shadow:0 1px 5px #17364b26}
-.hw-info-panel{position:absolute;left:12px;bottom:12px;z-index:2;max-width:245px;padding:11px 34px 11px 13px;background:#fff;border:1px solid #dce7ed;border-radius:10px;box-shadow:0 6px 24px #15364b18;font-size:12px;line-height:1.45;color:var(--muted)}
-.hw-info-panel strong{display:block;color:var(--ink);font-size:14px;margin-bottom:3px}.hw-info-panel .close{position:absolute;top:5px;right:7px;border:0;background:transparent;color:var(--muted);font-size:20px;line-height:1;padding:2px 5px}.hw-info-panel .close:hover,.hw-info-panel .close:focus-visible{color:var(--ink)}
+.hw-info-panel{position:absolute;left:12px;bottom:12px;z-index:2;max-width:256px;padding:11px 34px 11px 13px;background:#fff;border:1px solid #dce7ed;border-radius:10px;box-shadow:0 6px 24px #15364b18;font-size:12px;line-height:1.45;color:var(--muted)}
+.hw-info-panel.follow{pointer-events:none;bottom:auto}.hw-info-panel strong{display:block;color:var(--ink);font-size:14px;margin-bottom:3px}.hw-info-panel .close{position:absolute;top:5px;right:7px;border:0;background:transparent;color:var(--muted);font-size:20px;line-height:1;padding:2px 5px}.hw-info-panel .close:hover,.hw-info-panel .close:focus-visible{color:var(--ink)}
 .hw-info-panel .rank{color:#9d4939;font-weight:700}
-.hw-info-panel .hw-shared-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}.hw-info-panel .hw-shared-stats strong{font-size:12px}
+.hw-info-panel .hw-shared-stats{display:grid;gap:10px;margin-top:8px}.hw-info-panel .hw-shared-stats strong{font-size:12px}
 .hw-map .hw-route-hover{cursor:pointer}
 .hw-rank{cursor:pointer}.hw-rank:focus-visible{outline:2px solid var(--blue);outline-offset:2px}.hw-rank.selected{background:#edf5f9}
 .hw-rank-title{font-size:15px;margin:0 0 10px}.hw-caption{font-size:13px;font-weight:700;color:#2e4d65;margin:12px 0 0}
 .hw-rank{display:flex;align-items:center;gap:10px;font-size:14px;margin:4px 0;padding:7px 8px;border-radius:8px}.hw-rank .road{width:50px;font-weight:700}.hw-rank .track{height:12px;background:#eef1f4;flex:1;border-radius:6px;overflow:hidden}.hw-rank .fill{height:100%;background:#668da9;border-radius:6px;transition:width .4s}.hw-rank .val{min-width:84px;text-align:right;font-variant-numeric:tabular-nums}
-.hw-rank.first{background:transparent}.hw-rank.first .road,.hw-rank.first .val{color:#9d4939}.hw-rank.first .fill{background:#b65a47}.hw-rank.last .fill{background:#b3c4d2}
+.hw-rank{transition:transform .15s ease,box-shadow .15s ease,background .15s ease}.hw-rank.pop{transform:translateX(-8px) scale(1.04);background:#fff;box-shadow:0 6px 18px #15364b26;position:relative;z-index:1}.hw-info-panel .close.pinned{color:#9d4939;font-size:inherit;padding:4px 6px;display:flex}@media(prefers-reduced-motion:reduce){.hw-rank{transition:none}}
+.hw-rank.first{background:transparent}.hw-rank.first.pop{background:#fff}.hw-rank.first .road,.hw-rank.first .val{color:#9d4939}.hw-rank.first .fill{background:#b65a47}.hw-rank.last .fill{background:#b3c4d2}
 .hw-legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--muted);margin-top:14px}.hw-legend>span{display:inline-flex;align-items:center;gap:7px}
 .legend-swatch{display:inline-block;width:22px;height:5px;border-radius:3px}.legend-swatch.top{background:#b65a47}.legend-swatch.mid{background:#668da9}.legend-swatch.low{background:#b3c4d2}
 .constellation-wrap{overflow-x:auto}#constellation-chart svg{min-width:700px}
@@ -188,15 +189,16 @@ footer{padding:38px 0;border-top:1px solid var(--line);font-size:13px;color:var(
 <p id="line-detail" class="chart-detail" aria-live="polite">Hover, tap, or focus a point for its value.</p>
 <p id="line-takeaway" class="chart-takeaway"></p>
 <p class="helper">Counts use separate vertical axes; compare the hourly patterns rather than the heights of the two lines. Rates are per 100,000 vehicle passages at the covered FHWA TMAS counting stations.</p></div></section>
-<section class="section reveal" id="climax"><div class="story-label">The reveal</div><h2>First impressions can be misleading.</h2><p class="desc">Now let's revisit our initial map. After dividing crashes by traffic volume to be more risk-relative, our rankings change.</p>
+<section class="section reveal" id="climax"><div class="story-label">The reveal</div><h2>First impressions can be misleading.</h2><p class="desc">Now let's revisit our initial map. Counting only serious or fatal crashes barely changes the ranking, but dividing by traffic volume does. Toggle crash type and measure one at a time to see which change moves which highway.</p>
 <div class="card"><div class="cardhead"><strong>Highway comparison</strong><span class="tag">2023</span></div>
-<div class="controls" role="group" aria-label="Highway comparison metric"><button class="toggle active" data-group="highway" data-value="total" aria-pressed="true">Total crashes</button><button class="toggle" data-group="highway" data-value="normalized" aria-pressed="false">Serious or fatal crashes / traffic exposure</button></div>
+<div class="controls" role="group" aria-label="Highway comparison crash type"><button class="toggle active" data-group="hwSeverity" data-value="all" aria-pressed="true">All crashes</button><button class="toggle" data-group="hwSeverity" data-value="severe" aria-pressed="false">Serious or fatal only</button></div>
+<div class="controls" role="group" aria-label="Highway comparison measure"><button class="toggle active" data-group="hwMeasure" data-value="count" aria-pressed="true">Raw count</button><button class="toggle" data-group="hwMeasure" data-value="rate" aria-pressed="false">Per 100M vehicle-miles</button></div>
 <p id="hw-sub" class="line-context"></p>
 <div class="highway-grid"><div id="hw-map" class="hw-map"><p class="chart-status">Loading crash and traffic data…</p></div>
 <div><h3 id="hw-rank-title" class="hw-rank-title"></h3><div id="hw-ranks"></div><p id="hw-caption" class="hw-caption"></p></div></div>
 <div class="hw-legend"><span><span class="legend-swatch top"></span>Highest rank</span><span><span class="legend-swatch mid"></span>Middle ranks</span><span><span class="legend-swatch low"></span>Lowest rank</span></div>
 <p id="hw-takeaway" class="chart-takeaway" aria-live="polite"></p>
-<p class="helper">Map shows actual interstate geometry and nearby streets, not individual crash locations. Hover over a road for details; click to pin the information, and use × to close it. The shared I-75/I-85 downtown corridor is shown with a blended color. Crashes are assigned to an interstate through their matched road segment. Serious or fatal = K/A crashes; rate = serious or fatal crashes ÷ estimated vehicle-miles traveled (VMT) × 100 million. Corridor matching and traffic estimates introduce uncertainty, so rankings are exploratory.</p></div>
+<p class="helper">Map shows actual interstate geometry and nearby streets, not individual crash locations. Hover over a road for details; click to pin the information, and use × to close it. The shared I-75/I-85 downtown corridor is shown with a blended color. Crashes are assigned to an interstate through their matched road segment. Use the two toggles to change one thing at a time: the crash type (all crashes vs. serious or fatal = K/A crashes) and the measure (raw count vs. rate = crashes ÷ estimated vehicle-miles traveled (VMT) × 100 million). Colors show rank within the selected view (red = highest, light blue = lowest), so they are not comparable across views. Serious or fatal counts are small, so close ranks are within noise. Corridor matching and traffic estimates introduce uncertainty, so rankings are exploratory.</p></div>
 <div class="question">Which highway looked worst before normalization? Does your answer change when you account for traffic?</div></section>
 <section class="section reveal" id="resolution"><div class="story-label">Look closer</div><h2>There’s more to road safety.</h2><p class="desc">Zoom out from a single ranking. Explore the structure of crash outcomes and compare crash density by highway to put the earlier patterns into context.</p>
 <div class="card"><div class="cardhead"><strong>Crash density by highway</strong><span class="tag">2021-2023</span></div>
@@ -308,6 +310,13 @@ Promise.all([crashData,trafficData]).then(([crashes,traffic])=>{
 const HIGHWAYS=["I-285","I-75","I-85","I-20"];
 const HIGHWAY_YEARS=["2023"];
 let highwayRows=null;
+// Active highway view = crash type (all | severe) x measure (count | rate per 100M VMT)
+const hwMetric=()=>({sev:state.hwSeverity==="severe",norm:state.hwMeasure==="rate"});
+const hwValue=(d,m=hwMetric())=>m.norm?(m.sev?d.rate:d.allRate):(m.sev?d.severe:d.crashes);
+const hwSorted=(m=hwMetric())=>[...highwayRows].sort((a,b)=>hwValue(b,m)-hwValue(a,m));
+const hwFormat=(v,m=hwMetric())=>m.norm?v.toFixed(m.sev?2:1):count(v);
+const hwTitle=(m=hwMetric())=>m.norm?(m.sev?"Serious/fatal crashes per 100M vehicle-miles":"All crashes per 100M vehicle-miles"):(m.sev?"Serious or fatal crashes":"Total reported crashes");
+const hwUnit=(m=hwMetric())=>m.norm?" / 100M VMT":(m.sev?" serious/fatal crashes":" crashes");
 const CONST_YEARS=["2021","2022","2023"];
 const CONST_ROADS=["I-20","I-75","I-85","I-285"];
 const SHARE_SCALE=["#b7d9d9","#8fc3c1","#62a6a5","#347f83","#155968"];
@@ -347,7 +356,7 @@ Promise.all([crashData,segmentData]).then(([crashes,segments])=>{
     if(!road||!HIGHWAY_YEARS.includes(year))continue;
     const r=byRoad.get(road);r.crashes+=v.crashes;r.severe+=v.severe;
   }
-  highwayRows=[...byRoad.values()].map((r)=>({...r,rate:r.severe/r.vmt*1e8}));
+  highwayRows=[...byRoad.values()].map((r)=>({...r,rate:r.severe/r.vmt*1e8,allRate:r.crashes/r.vmt*1e8}));
   document.getElementById("hw-map").innerHTML="";
   drawHighway();
 
@@ -624,15 +633,37 @@ let hoveredHighway=null;
 let dismissedHighway=null;
 
 function hwGeoColors(){
-  const key=state.highway==="normalized"?"rate":"crashes";
-  const sorted=[...highwayRows].sort((a,b)=>b[key]-a[key]);
+  const sorted=hwSorted();
   const colors=new Map(sorted.map((d,i)=>[d.road,i===0?"#b65a47":i===sorted.length-1?"#b3c4d2":"#668da9"]));
   const blend=(a,b)=>`#${[0,1,2].map((i)=>Math.round((parseInt(a.slice(1+i*2,3+i*2),16)+parseInt(b.slice(1+i*2,3+i*2),16))/2).toString(16).padStart(2,"0")).join("")}`;
   const shared=blend(colors.get("I-75"),colors.get("I-85"));
   return ["match",["get","road"],...sorted.flatMap((d)=>[d.road,colors.get(d.road)]),"I-75/I-85",shared,"#668da9"];
 }
 
-function showHighwayInfo(road,shouldPin=false){
+// All four numbers for a highway; the active view is bold.
+function hwStatsHTML(row){
+  const m=hwMetric();
+  const lines=[
+    {sev:false,norm:false,text:`${count(row.crashes)} total crashes`},
+    {sev:true,norm:false,text:`${count(row.severe)} serious/fatal crashes`},
+    {sev:false,norm:true,text:`${row.allRate.toFixed(1)} all crashes / 100M VMT`},
+    {sev:true,norm:true,text:`${row.rate.toFixed(2)} serious/fatal / 100M VMT`}
+  ];
+  return lines.map((l)=>{const t=l.sev===m.sev&&l.norm===m.norm?`<b style="color:var(--ink)">${l.text}</b>`:l.text;return `<div>${t}</div>`}).join("");
+}
+
+const HW_PIN_ICON='<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M16 3a1 1 0 0 1 .7 1.7L15.4 6l1.6 5.2 2 1.8a1 1 0 0 1-.7 1.7H13v5.3l-1 2-1-2v-5.3H5.7A1 1 0 0 1 5 13l2-1.8L8.6 6 7.3 4.7A1 1 0 0 1 8 3z"/></svg>';
+const hwRoadsFor=(road)=>road==="I-75/I-85"?["I-75","I-85"]:road?[road]:[];
+// Rank rows pop out while their freeway is hovered on the map or pinned
+function hwSyncRankPop(){
+  const on=new Set([...hwRoadsFor(hoveredHighway),...hwRoadsFor(pinnedHighway)]);
+  d3.selectAll("#hw-ranks .hw-rank").classed("pop",(d)=>on.has(d.road));
+}
+function hwCloseButton(){
+  const pinned=!!pinnedHighway;
+  return `<button class="close${pinned?" pinned":""}" type="button" aria-label="${pinned?"Unpin and close highway information":"Close highway information"}">${pinned?HW_PIN_ICON:"×"}</button>`;
+}
+function showHighwayInfo(road,shouldPin=false,cursor=null){
   if(shouldPin){
     pinnedHighway=road;
     dismissedHighway=null;
@@ -642,31 +673,34 @@ function showHighwayInfo(road,shouldPin=false){
   const row=highwayRows.find((d)=>d.road===road);
   if(!highwayMap)return;
   const panel=highwayMap.getContainer().querySelector(".hw-info-panel");
-  if(!row){
-    if(road==="I-75/I-85"){
-      const byRoad=new Map(highwayRows.map((d)=>[d.road,d]));
-      const key=state.highway==="normalized"?"rate":"crashes";
-      const sorted=[...highwayRows].sort((a,b)=>b[key]-a[key]);
-      const summary=(name)=>{const item=byRoad.get(name);return `<strong>${name}</strong><span class="rank">Rank ${sorted.findIndex((d)=>d.road===name)+1} of ${sorted.length}</span><div>${count(item.crashes)} total crashes</div><div>${count(item.severe)} serious/fatal</div><div>${item.rate.toFixed(2)} serious/fatal / 100M VMT</div>`};
-      panel.innerHTML=`<button class="close" type="button" aria-label="Close highway information">×</button><strong>I-75/I-85 shared corridor</strong><div>Shared geometry is not ranked separately. Its blended color combines the current ranks of both highways.</div><div class="hw-shared-stats">${summary("I-75")}${summary("I-85")}</div>`;
-      panel.hidden=false;
-      panel.querySelector(".close").addEventListener("click",()=>{
-        pinnedHighway=null;
-        dismissedHighway=hoveredHighway;
-        panel.hidden=true;
-      });
-    }
-    return;
-  }
-  const key=state.highway==="normalized"?"rate":"crashes";
-  const sorted=[...highwayRows].sort((a,b)=>b[key]-a[key]);
-  panel.innerHTML=`<button class="close" type="button" aria-label="Close highway information">×</button><strong>${row.road}</strong><span class="rank">Rank ${sorted.findIndex((d)=>d.road===road)+1} of ${sorted.length}</span><div>${count(row.crashes)} total crashes</div><div>${count(row.severe)} serious/fatal</div><div>${row.rate.toFixed(2)} serious/fatal / 100M VMT</div>`;
+  const sorted=hwSorted();
+  if(row){
+    panel.innerHTML=`${hwCloseButton()}<strong>${row.road}</strong><span class="rank">Rank ${sorted.findIndex((d)=>d.road===road)+1} of ${sorted.length}</span>${hwStatsHTML(row)}`;
+  }else if(road==="I-75/I-85"){
+    const byRoad=new Map(highwayRows.map((d)=>[d.road,d]));
+    const summary=(name)=>{const item=byRoad.get(name);return `<strong>${name}</strong><span class="rank">Rank ${sorted.findIndex((d)=>d.road===name)+1} of ${sorted.length}</span>${hwStatsHTML(item)}`};
+    panel.innerHTML=`${hwCloseButton()}<strong>I-75/I-85 shared corridor</strong><div>Shared geometry is not ranked separately. Its blended color combines the current ranks of both highways.</div><div class="hw-shared-stats"><div>${summary("I-75")}</div><div>${summary("I-85")}</div></div>`;
+  }else return;
   panel.querySelector(".close").addEventListener("click",()=>{
     pinnedHighway=null;
     dismissedHighway=hoveredHighway;
     panel.hidden=true;
+    hwSyncRankPop();
   });
   panel.hidden=false;
+  // Unpinned hover over the map: follow the cursor (never under it, so it can't steal the hover).
+  // Pinned or bar-hover: fixed at the bottom left.
+  const follow=!!cursor&&!pinnedHighway;
+  panel.classList.toggle("follow",follow);
+  if(follow){
+    const box=highwayMap.getContainer(),gap=16;
+    const w=panel.offsetWidth,hgt=panel.offsetHeight;
+    let x=cursor.x+gap,y=cursor.y+gap;
+    if(x+w>box.clientWidth-4)x=cursor.x-w-gap;
+    if(y+hgt>box.clientHeight-4)y=cursor.y-hgt-gap;
+    panel.style.left=`${Math.max(4,x)}px`;panel.style.top=`${Math.max(4,y)}px`;
+  }else{panel.style.left="";panel.style.top="";}
+  hwSyncRankPop();
 }
 
 function initHighwayMap(){
@@ -676,7 +710,7 @@ function initHighwayMap(){
   highwayMap=new maplibregl.Map({
     container:el,
     style:"https://tiles.openfreemap.org/styles/positron",
-    center:[-84.39,33.78],zoom:10.4
+    center:[-84.39,33.78],zoom:9.4
   });
   highwayMap.addControl(new maplibregl.NavigationControl({showCompass:false}),"top-right");
   highwayMap.on("load",()=>{
@@ -691,7 +725,6 @@ function initHighwayMap(){
     highwayMap.addLayer({id:"climax-routes-hover",type:"line",source:"climax-routes",paint:{"line-color":"#172b39","line-width":7,"line-opacity":0}});
     highwayMap.addLayer({id:"climax-labels",type:"symbol",source:"climax-labels",layout:{"text-field":["get","road"],"text-size":12,"text-allow-overlap":true},paint:{"text-color":"#172b39","text-halo-color":"#fff","text-halo-width":2}});
     highwayMapReady=true;
-    showHighwayInfo([...highwayRows].sort((a,b)=>b.crashes-a.crashes)[0].road);
   });
   highwayMap.on("mousemove","climax-routes",(event)=>{
     highwayMap.getCanvas().style.cursor="pointer";
@@ -699,7 +732,8 @@ function initHighwayMap(){
     if(road){
       hoveredHighway=road;
       highwayMap.setFilter("climax-routes-hover",["==",["get","road"],road]);
-      showHighwayInfo(road);
+      showHighwayInfo(road,false,event.point);
+      hwSyncRankPop();
     }
   });
   highwayMap.on("mouseleave","climax-routes",()=>{
@@ -708,6 +742,7 @@ function initHighwayMap(){
     hoveredHighway=null;
     dismissedHighway=null;
     if(!pinnedHighway)highwayMap.getContainer().querySelector(".hw-info-panel").hidden=true;
+    hwSyncRankPop();
   });
   highwayMap.on("click","climax-routes",(event)=>{
     const road=event.features?.[0]?.properties?.road;
@@ -720,11 +755,10 @@ function drawHighway(){
   if(!highwayRows)return;
   const $=(id)=>document.getElementById(id);
   const items=highwayRows;
-  const isRate=state.highway==="normalized";
-  const key=isRate?"rate":"crashes";
+  const m=hwMetric();
   const yearLabel=HIGHWAY_YEARS.length>1?`${HIGHWAY_YEARS[0]}–${HIGHWAY_YEARS.at(-1)}`:HIGHWAY_YEARS[0];
-  const fmtVal=(d)=>isRate?`${d.rate.toFixed(2)} / 100M VMT`:`${count(d.crashes)} crashes`;
-  const sorted=[...items].sort((a,b)=>b[key]-a[key]);
+  const fmtVal=(d)=>`${hwFormat(hwValue(d,m),m)}${hwUnit(m)}`;
+  const sorted=hwSorted(m);
   const last=items.length-1;
 
   if(!highwayMap)initHighwayMap();
@@ -738,22 +772,29 @@ function drawHighway(){
   }
   if(pinnedHighway)showHighwayInfo(pinnedHighway);
 
-  $("hw-rank-title").textContent=isRate?"Serious/fatal crashes per 100M vehicle-miles":"Total reported crashes";
-  const max=d3.max(items,(d)=>d[key]);
+  $("hw-rank-title").textContent=hwTitle(m);
+  $("hw-sub").textContent=`Showing: ${m.sev?"serious or fatal (K/A) crashes":"all reported crashes"} · ${m.norm?"per 100M estimated vehicle-miles":"raw count"} · ${yearLabel}`;
+  const max=d3.max(items,(d)=>hwValue(d,m));
   d3.select("#hw-ranks").selectAll("div.hw-rank").data(sorted,(d)=>d.road).join("div")
     .attr("class",(d,i)=>"hw-rank"+(i===0?" first":"")+(i===last?" last":""))
     .attr("tabindex",0).attr("role","button")
     .attr("aria-label",(d)=>`${d.road}, rank ${sorted.indexOf(d)+1}`)
-    .html((d)=>`<span class="road">${d.road}</span><div class="track"><div class="fill" style="width:${(d[key]/max*100).toFixed(1)}%"></div></div><span class="val">${isRate?d.rate.toFixed(2):count(d.crashes)}</span>`)
+    .html((d)=>`<span class="road">${d.road}</span><div class="track"><div class="fill" style="width:${(hwValue(d,m)/max*100).toFixed(1)}%"></div></div><span class="val">${hwFormat(hwValue(d,m),m)}</span>`)
     .on("pointerenter",(_,d)=>showHighwayInfo(d.road))
+    .on("pointerleave",()=>{if(!pinnedHighway&&highwayMap)highwayMap.getContainer().querySelector(".hw-info-panel").hidden=true})
     .on("click",(_,d)=>showHighwayInfo(d.road,true))
     .on("keydown",(event,d)=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();showHighwayInfo(d.road,true)}});
+  hwSyncRankPop();
   $("hw-caption").textContent=`#1: ${sorted[0].road} (${fmtVal(sorted[0])})`;
 
-  const countTop=d3.greatest(items,(d)=>d.crashes),rateTop=d3.greatest(items,(d)=>d.rate);
-  $("hw-takeaway").textContent=countTop.road!==rateTop.road
-    ?`${countTop.road} has the most recorded crashes, but ${rateTop.road} has the highest serious-or-fatal crash rate after accounting for estimated traffic exposure.`
-    :`${countTop.road} ranks highest on both measures in ${yearLabel}.`;
+  const baseline={sev:false,norm:false};
+  const baseTop=hwSorted(baseline)[0].road,top=sorted[0].road;
+  const changes=[m.sev&&"counting only serious or fatal crashes",m.norm&&"dividing by estimated vehicle-miles"].filter(Boolean).join(" and ");
+  $("hw-takeaway").textContent=!changes
+    ?`${baseTop} has the most recorded crashes in ${yearLabel}. Change one toggle at a time to see what moves the ranking.`
+    :top!==baseTop
+      ?`${top} ranks first after ${changes}, compared with ${baseTop} on raw total crashes.`
+      :`${top} still ranks first after ${changes}, as it does on raw total crashes in ${yearLabel}.`;
 }
 
 function drawConstellation(){
@@ -1065,7 +1106,7 @@ function drawHeat(){
     :"This is a count of crashes, not a traffic-adjusted rate or a count of people injured."}`;
 }
 
-const state={heat:"crashes",highway:"total",hourly:"counts",icicle:"all"};
+const state={heat:"crashes",hwSeverity:"all",hwMeasure:"count",hourly:"counts",icicle:"all"};
 function update(){drawHeat();drawLine();drawHighway();drawIcicle()}
 document.querySelectorAll("[data-group]").forEach(btn=>btn.addEventListener("click",()=>{const group=btn.dataset.group;state[group]=btn.dataset.value;document.querySelectorAll(`[data-group="${group}"]`).forEach(b=>{let active=b===btn;b.classList.toggle("active",active);b.setAttribute("aria-pressed",String(active))});update()}));
 const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target)}}),{threshold:.08});
