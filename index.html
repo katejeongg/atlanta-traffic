@@ -17,7 +17,7 @@ h2{font-size:clamp(34px,4.7vw,56px);line-height:1.16;letter-spacing:-2px;margin:
 .desc{color:var(--muted);font-size:18px;margin-bottom:30px}
 .card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:0 12px 35px #123b5710}
 .cardhead{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:20px}.tag{border-radius:30px;padding:5px 12px;background:#eaf4fa;color:var(--blue);font-size:11px;font-weight:700}
-.controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 22px}.toggle{border:1px solid #d8e4ea;border-radius:9px;background:white;padding:9px 15px;color:#526977;font-size:13px}.toggle.active{background:#193d54;color:white;border-color:#193d54}
+.controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 22px}.toggle{border:1px solid #d8e4ea;border-radius:9px;background:white;padding:9px 15px;color:#526977;font-size:13px}.toggle.active{background:#193d54;color:white;border-color:#193d54}.hw-controls-grid{display:grid;grid-template-columns:max-content max-content;align-items:center;justify-content:start;gap:10px 16px;margin:12px 0 22px}.hw-controls-grid .controls{margin:0}.toggle.secondary{border-color:#b5c0c6}.toggle.secondary.active{background:rgb(0 0 0 / 70%);border-color:rgb(0 0 0 / 70%);color:white}
 .viz{position:relative;min-height:370px;border-radius:14px;background:linear-gradient(135deg,#f7fbfd,#eaf4f9);border:1px dashed #b9d2df;display:flex;justify-content:center;align-items:center;text-align:center;padding:35px;overflow:hidden}
 .viz-inner{max-width:420px;position:relative;z-index:2}.viz-icon{font-size:48px;line-height:1.3}.viz strong{display:block;font-size:20px;margin:12px 0 5px}.viz p{color:var(--muted);font-size:14px;margin:0}
 .tooltip-demo{position:absolute;right:18px;bottom:18px;background:#fff;border:1px solid #dce7ed;border-radius:11px;padding:13px 16px;box-shadow:0 6px 24px #15364b18;text-align:left;font-size:12px;color:var(--muted);z-index:3}
@@ -79,7 +79,7 @@ h2{font-size:clamp(34px,4.7vw,56px);line-height:1.16;letter-spacing:-2px;margin:
 .hw-map .hw-route-hover{cursor:pointer}
 .hw-rank{cursor:pointer}.hw-rank:focus-visible{outline:2px solid var(--blue);outline-offset:2px}.hw-rank.selected{background:#edf5f9}
 .hw-rank-title{font-size:15px;margin:0 0 10px}.hw-caption{font-size:13px;font-weight:700;color:#2e4d65;margin:12px 0 0}
-.hw-rank{display:flex;align-items:center;gap:10px;font-size:14px;margin:4px 0;padding:7px 8px;border-radius:8px}.hw-rank .road{width:50px;font-weight:700}.hw-rank .track{height:12px;background:#eef1f4;flex:1;border-radius:6px;overflow:hidden}.hw-rank .fill{height:100%;background:#668da9;border-radius:6px;transition:width .4s}.hw-rank .val{min-width:84px;text-align:right;font-variant-numeric:tabular-nums}
+.hw-rank{display:flex;align-items:center;gap:10px;font-size:14px;margin:4px 0;padding:7px 8px;border-radius:8px}.hw-rank .road{width:50px;font-weight:700}.hw-rank .track{height:12px;background:#eef1f4;flex:1;border-radius:6px;overflow:hidden}.hw-rank .fill{height:100%;background:#668da9;border-radius:6px;transition:width .4s}.hw-rank .val{min-width:20%;text-align:right;font-variant-numeric:tabular-nums}
 .hw-rank{transition:transform .15s ease,box-shadow .15s ease,background .15s ease}.hw-rank.pop{transform:translateX(-8px) scale(1.04);background:#fff;box-shadow:0 6px 18px #15364b26;position:relative;z-index:1}.hw-info-panel .close.pinned{color:#9d4939;font-size:inherit;padding:4px 6px;display:flex}@media(prefers-reduced-motion:reduce){.hw-rank{transition:none}}
 .hw-rank.first{background:transparent}.hw-rank.first.pop{background:#fff}.hw-rank.first .road,.hw-rank.first .val{color:#9d4939}.hw-rank.first .fill{background:#b65a47}.hw-rank.last .fill{background:#b3c4d2}
 .hw-legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--muted);margin-top:14px}.hw-legend>span{display:inline-flex;align-items:center;gap:7px}
@@ -191,12 +191,16 @@ footer{padding:38px 0;border-top:1px solid var(--line);font-size:13px;color:var(
 <p class="helper">Counts use separate vertical axes; compare the hourly patterns rather than the heights of the two lines. Rates are per 100,000 vehicle passages at the covered FHWA TMAS counting stations.</p></div></section>
 <section class="section reveal" id="climax"><div class="story-label">The reveal</div><h2>First impressions can be misleading.</h2><p class="desc">Now let's revisit our initial map. Counting only serious or fatal crashes barely changes the ranking, but dividing by traffic volume does. Toggle crash type and measure one at a time to see which change moves which highway.</p>
 <div class="card"><div class="cardhead"><strong>Highway comparison</strong><span class="tag">2023</span></div>
+<div class="hw-controls-grid">
+<span style="color: #526977; font-size: 13px">Crash type</span>
 <div class="controls" role="group" aria-label="Highway comparison crash type"><button class="toggle active" data-group="hwSeverity" data-value="all" aria-pressed="true">All crashes</button><button class="toggle" data-group="hwSeverity" data-value="severe" aria-pressed="false">Serious or fatal only</button></div>
-<div class="controls" role="group" aria-label="Highway comparison measure"><button class="toggle active" data-group="hwMeasure" data-value="count" aria-pressed="true">Raw count</button><button class="toggle" data-group="hwMeasure" data-value="rate" aria-pressed="false">Per 100M vehicle-miles</button></div>
-<p id="hw-sub" class="line-context"></p>
+<span style="color: #526977; font-size: 13px">Normalized measure</span>
+<div class="controls" role="group" aria-label="Highway comparison measure"><button class="toggle secondary active" data-group="hwMeasure" data-value="count" aria-pressed="true">Raw count</button><button class="toggle secondary" data-group="hwMeasure" data-value="rate" aria-pressed="false">Per 100M vehicle-miles</button></div>
+</div>
 <div class="highway-grid"><div id="hw-map" class="hw-map"><p class="chart-status">Loading crash and traffic data…</p></div>
 <div><h3 id="hw-rank-title" class="hw-rank-title"></h3><div id="hw-ranks"></div><p id="hw-caption" class="hw-caption"></p></div></div>
 <div class="hw-legend"><span><span class="legend-swatch top"></span>Highest rank</span><span><span class="legend-swatch mid"></span>Middle ranks</span><span><span class="legend-swatch low"></span>Lowest rank</span></div>
+<p id="hw-sub" class="line-context">Pinned highway linked to the crash outcomes chart below</p>
 <p id="hw-takeaway" class="chart-takeaway" aria-live="polite"></p>
 <p class="helper">Map shows actual interstate geometry and nearby streets, not individual crash locations. Hover over a road for details; click to pin the information, and use × to close it. The shared I-75/I-85 downtown corridor is shown with a blended color. Crashes are assigned to an interstate through their matched road segment. Use the two toggles to change one thing at a time: the crash type (all crashes vs. serious or fatal = K/A crashes) and the measure (raw count vs. rate = crashes ÷ estimated vehicle-miles traveled (VMT) × 100 million). Colors show rank within the selected view (red = highest, light blue = lowest), so they are not comparable across views. Serious or fatal counts are small, so close ranks are within noise. Corridor matching and traffic estimates introduce uncertainty, so rankings are exploratory.</p></div>
 <div class="question">Which highway looked worst before normalization? Does your answer change when you account for traffic?</div></section>
@@ -210,7 +214,8 @@ footer{padding:38px 0;border-top:1px solid var(--line);font-size:13px;color:var(
 <div id="const-detail" class="const-interpretation" aria-live="polite"><b>Interpretation:</b> Bigger circles mean more recorded crashes in that corridor-hour over 2021–2023; they do not mean a crash was more dangerous or that an individual trip is riskier. Shading marks weekday peak-hour windows; each bubble still includes crashes from all days at that hour. Select a circle to inspect its count and K/A share.</div></div>
 <div class="question">When do different crashes happen? How severe are they? And do these patterns look the same across highways?</div>
 <div class="card spaced"><div class="cardhead"><strong id="icicle-title">Crash outcomes · All recorded crashes</strong><span class="tag">2021–2023</span></div>
-<div class="controls" role="group" aria-label="Icicle highway focus"><button class="toggle active" data-group="icicle" data-value="all" aria-pressed="true">All crashes</button><button class="toggle" data-group="icicle" data-value="I-285" aria-pressed="false">I-285</button><button class="toggle" data-group="icicle" data-value="I-75" aria-pressed="false">I-75</button><button class="toggle" data-group="icicle" data-value="I-85" aria-pressed="false">I-85</button><button class="toggle" data-group="icicle" data-value="I-20" aria-pressed="false">I-20</button></div>
+<div class="controls" role="group" aria-label="Icicle highway focus" style="margin: 0"><button class="toggle active" data-group="icicle" data-value="all" aria-pressed="true">All crashes</button><button class="toggle" data-group="icicle" data-value="I-285" aria-pressed="false">I-285</button><button class="toggle" data-group="icicle" data-value="I-75" aria-pressed="false">I-75</button><button class="toggle" data-group="icicle" data-value="I-85" aria-pressed="false">I-85</button><button class="toggle" data-group="icicle" data-value="I-20" aria-pressed="false">I-20</button></div>
+<p class="line-context" style="margin-bottom: 20px">Filter linked to the highway comparison map above</p>
 <div class="anatomy-layout"><div class="visual-panel">
 <p class="icicle-hint"><i data-lucide="mouse-pointer-click" aria-hidden="true"></i><span><strong>Click any section to zoom into that part of the hierarchy.</strong> Use the breadcrumbs that appear below or <em>↺ Full hierarchy</em> to zoom back out.</span></p>
 <div id="icicle-crumbs" class="crumbs" aria-label="Hierarchy breadcrumbs"></div>
@@ -663,6 +668,26 @@ function hwCloseButton(){
   const pinned=!!pinnedHighway;
   return `<button class="close${pinned?" pinned":""}" type="button" aria-label="${pinned?"Unpin and close highway information":"Close highway information"}">${pinned?HW_PIN_ICON:"×"}</button>`;
 }
+// Linked interaction: pinned freeway <-> Icicle highway focus (one-way syncs, no feedback loop)
+function syncIcicleFromPin(){
+  const target=HIGHWAYS.includes(pinnedHighway)?pinnedHighway:"all";
+  if(state.icicle===target)return;
+  state.icicle=target;
+  setToggle("icicle",target);
+  drawIcicle();
+}
+function syncPinFromIcicle(value){
+  const panel=highwayMap?highwayMap.getContainer().querySelector(".hw-info-panel"):null;
+  if(value==="all"){
+    if(!pinnedHighway)return;
+    pinnedHighway=null;
+    if(panel)panel.hidden=true;
+    hwSyncRankPop();
+    return;
+  }
+  if(highwayMap&&highwayRows)showHighwayInfo(value,true);
+  else pinnedHighway=value; // drawHighway() shows the panel once the map is ready
+}
 function showHighwayInfo(road,shouldPin=false,cursor=null){
   if(shouldPin){
     pinnedHighway=road;
@@ -686,6 +711,7 @@ function showHighwayInfo(road,shouldPin=false,cursor=null){
     dismissedHighway=hoveredHighway;
     panel.hidden=true;
     hwSyncRankPop();
+    syncIcicleFromPin();
   });
   panel.hidden=false;
   // Unpinned hover over the map: follow the cursor (never under it, so it can't steal the hover).
@@ -701,6 +727,7 @@ function showHighwayInfo(road,shouldPin=false,cursor=null){
     panel.style.left=`${Math.max(4,x)}px`;panel.style.top=`${Math.max(4,y)}px`;
   }else{panel.style.left="";panel.style.top="";}
   hwSyncRankPop();
+  if(shouldPin)syncIcicleFromPin();
 }
 
 function initHighwayMap(){
@@ -773,7 +800,6 @@ function drawHighway(){
   if(pinnedHighway)showHighwayInfo(pinnedHighway);
 
   $("hw-rank-title").textContent=hwTitle(m);
-  $("hw-sub").textContent=`Showing: ${m.sev?"serious or fatal (K/A) crashes":"all reported crashes"} · ${m.norm?"per 100M estimated vehicle-miles":"raw count"} · ${yearLabel}`;
   const max=d3.max(items,(d)=>hwValue(d,m));
   d3.select("#hw-ranks").selectAll("div.hw-rank").data(sorted,(d)=>d.road).join("div")
     .attr("class",(d,i)=>"hw-rank"+(i===0?" first":"")+(i===last?" last":""))
@@ -1108,7 +1134,8 @@ function drawHeat(){
 
 const state={heat:"crashes",hwSeverity:"all",hwMeasure:"count",hourly:"counts",icicle:"all"};
 function update(){drawHeat();drawLine();drawHighway();drawIcicle()}
-document.querySelectorAll("[data-group]").forEach(btn=>btn.addEventListener("click",()=>{const group=btn.dataset.group;state[group]=btn.dataset.value;document.querySelectorAll(`[data-group="${group}"]`).forEach(b=>{let active=b===btn;b.classList.toggle("active",active);b.setAttribute("aria-pressed",String(active))});update()}));
+function setToggle(group,value){document.querySelectorAll(`[data-group="${group}"]`).forEach(b=>{const active=b.dataset.value===value;b.classList.toggle("active",active);b.setAttribute("aria-pressed",String(active))})}
+document.querySelectorAll("[data-group]").forEach(btn=>btn.addEventListener("click",()=>{const group=btn.dataset.group;state[group]=btn.dataset.value;setToggle(group,btn.dataset.value);if(group==="icicle")syncPinFromIcicle(btn.dataset.value);update()}));
 const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target)}}),{threshold:.08});
 document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));update();
 </script></body></html>
