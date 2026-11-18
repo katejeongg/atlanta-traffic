@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08121c">
+  <title>Crash Icicle &amp; Constellation — Atlanta</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f8fa;
+      --panel: #ffffff;
+      --panel-2: #edf3f6;
+      --border: #d5e0e6;
+      --ink: #203340;
+      --muted: #647987;
+      --mint: #61ddc7;
+      --orange: #ffa86c;
+      --red: #ff796b;
+      --blue: #79c0de;
+      --gold: #f7cb80;
+      --radius: 17px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: radial-gradient(ellipse at 78% 0%, #e1f1f2 0, transparent 38rem), var(--bg);
+      color: var(--ink);
+      font: 16px/1.55 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    button { font: inherit; }
+    .shell { width: min(1180px, calc(100% - 40px)); margin-inline: auto; }
+    header { padding: 58px 0 30px; }
+    .brand, .eyebrow, .tag, .label, .axis-label {
+      color: var(--mint);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    h1 { margin: 12px 0; font-size: clamp(36px, 6vw, 68px); line-height: 1.02; letter-spacing: -.045em; }
+    h1 em { color: var(--orange); font-style: normal; }
+    .intro { max-width: 790px; margin: 0; color: #c4d4d6; font-size: 17px; }
+    .subline { margin-top: 19px; color: var(--muted); font-size: 11px; font-weight: 750; letter-spacing: .1em; }
+    .filters { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; margin: 18px 0 28px; }
+    .filter-label { width: 100%; margin-bottom: 2px; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .pill, .crumb {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: #edf3f6;
+      color: #000000;
+      cursor: pointer;
+      padding: 8px 14px;
+      transition: border-color .15s, background .15s, color .15s, transform .15s;
+    }
+    .pill:hover, .crumb:hover { border-color: var(--mint); color: var(--ink); transform: translateY(-1px); }
+    .pill[aria-pressed="true"] { border-color: var(--mint); background: #edf3f6; color: var(--mint); }
+    .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0 30px; }
+    .metric { border: 1px solid var(--border); border-radius: 13px; background: #edf3f6; padding: 15px 18px; }
+    .metric strong { display: block; font-size: clamp(22px, 3vw, 31px); line-height: 1.2; }
+    .metric span { color: var(--muted); font-size: 12px; }
+    .chapter { padding: 28px 0 10px; scroll-margin-top: 24px; }
+    .chapter-head { display: grid; grid-template-columns: 48px 1fr; gap: 15px; align-items: start; margin-bottom: 16px; }
+    .number { color: var(--mint); font-size: 14px; font-weight: 850; }
+    h2 { margin: 2px 0 8px; font-size: clamp(25px, 3.3vw, 36px); line-height: 1.12; letter-spacing: -.025em; }
+    .lead { max-width: 850px; margin: 0; color: #b7cbd0; }
+    .card { overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius); background: linear-gradient(145deg, #edf3f6, #edf3f6); box-shadow: 0 16px 40px #0002; }
+    .cardhead { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 17px 20px 13px; }
+    .cardhead strong { font-size: 15px; }
+    .tag { border: 1px solid #385869; border-radius: 999px; color: #a7c5ce; padding: 4px 8px; font-size: 9px; }
+    .anatomy-layout { display: grid; grid-template-columns: minmax(0, 1fr) 230px; gap: 14px; padding: 0 14px 14px; }
+    .visual-panel { min-width: 0; }
+    .crumbs { display: flex; flex-wrap: wrap; gap: 6px; min-height: 34px; padding: 0 4px 8px; }
+    .crumb { border-radius: 7px; padding: 4px 9px; font-size: 12px; }
+    .crumb[aria-current="page"] { border-color: #3e6871; background: #17323c; color: var(--mint); }
+    .plot { overflow-x: auto; border: 1px solid #284556; border-radius: 11px; background: #edf3f6; }
+    .plot svg { display: block; width: 100%; height: auto; }
+    #icicle-viz svg { min-width: 580px; }
+    .icicle-block { cursor: pointer; transition: opacity .15s; }
+    .icicle-block:hover { stroke: white; stroke-width: 2.5; }
+    .inspector { min-height: 100%; border: 1px solid #284556; border-radius: 11px; background: #edf3f6; padding: 17px; }
+    .inspector .label { color: var(--muted); font-size: 10px; }
+    .inspector h3 { margin: 7px 0 5px; font-size: 17px; line-height: 1.25; }
+    .big-number { font-size: 31px; font-weight: 800; letter-spacing: -.03em; }
+    .muted { color: var(--muted); font-size: 12px; }
+    .inspector-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+    .inspector-grid strong { display: block; font-size: 18px; }
+    .inspector-grid span { color: var(--muted); font-size: 11px; }
+    .reset { margin-top: 8px; border-radius: 8px; padding: 7px 11px; }
+    .key { display: flex; flex-wrap: wrap; gap: 9px 16px; padding: 12px 5px 3px; color: #b4c8ce; font-size: 11px; }
+    .key span { display: inline-flex; align-items: center; gap: 6px; }
+    .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+    .truth { margin: 0 18px 18px; border-left: 3px solid #edf3f6; padding: 3px 0 3px 12px; color: #a9c0c7; font-size: 12px; }
+    .constellation-card { padding-bottom: 14px; }
+    #constellation { margin: 0 14px; }
+    #constellation svg { min-width: 700px; }
+    .star { cursor: pointer; transition: opacity .15s, r .15s; }
+    .star:hover { stroke: rgb(220, 123, 123); stroke-width: 2.5; }
+    .gridline { stroke: #294657; stroke-width: 1; }
+    .tick { fill: #639fbd; font-size: 11px; }
+    .road-label { fill: #52c8a4; font-size: 17px; font-weight: 780; }
+    .takeaway { min-height: 47px; margin: 0 18px 3px; border: 1px solid #edf3f6; border-radius: 10px; background: #0b1b27; padding: 11px 14px; color: #c6d7d9; font-size: 13px; }
+    .takeaway b { color: var(--mint); }
+    .note { margin: 18px 0 50px; color: var(--muted); font-size: 12px; }
+    .tooltip {
+      position: fixed;
+      z-index: 5;
+      display: none;
+      max-width: 250px;
+      pointer-events: none;
+      border: 1px solid #47717c;
+      border-radius: 9px;
+      background: #07141e;
+      box-shadow: 0 8px 28px #0008;
+      padding: 9px 11px;
+      color: #dbe8e7;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .tooltip b { display: block; margin-bottom: 3px; color: white; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 28px, 1180px); }
+      header { padding-top: 38px; }
+      .anatomy-layout { grid-template-columns: 1fr; }
+      .inspector { min-height: 0; }
+      .inspector-grid { margin: 10px 0; }
+      .metrics { gap: 8px; }
+      .metric { padding: 12px; }
+      .chapter-head { grid-template-columns: 34px 1fr; gap: 8px; }
+    }
+    @media (max-width: 450px) {
+      .metrics { grid-template-columns: 1fr; }
+      .cardhead { padding-inline: 14px; }
+      .truth { margin-inline: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <h1>Crash <em>icicle</em><br>&amp; constellation</h1>
+      <p class="intro"> </p>
+      <div class="subline" id="dataset-line">Loading CSV-derived summaries…</div>
+    </header>
+
+    <section class="metrics" aria-label="Dataset overview">
+      <div class="metric"><strong id="total-count">—</strong><span>Recorded crashes</span></div>
+      <div class="metric"><strong id="severe-count">—</strong><span>Serious / fatal (K/A)</span></div>
+      <div class="metric"><strong id="matched-count">—</strong><span>Verified-corridor records</span></div>
+    </section>
+
+    <div class="filters" aria-label="Corridor focus controls">
+      <span class="filter-label">Focus corridor</span>
+      <div id="filters" class="filters" style="margin:0"></div>
+    </div>
+
+    <section class="chapter" id="anatomy">
+      <div class="chapter-head">
+        <div class="number">01</div>
+        <div>
+          <div class="eyebrow">Crash icicle</div>
+          <h2>What are each crash made of?</h2>
+          <p class="lead"></p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="cardhead">
+          <strong id="icicle-title">All recorded crashes</strong>
+          <span class="tag">CLICK TO EXPLORE</span>
+        </div>
+        <div class="anatomy-layout">
+          <div class="visual-panel">
+            <div id="crumbs" class="crumbs" aria-label="Hierarchy breadcrumbs"></div>
+            <div class="plot" id="icicle-viz" aria-label="Interactive crash icicle chart"></div>
+            <div class="key" aria-label="Severity categories">
+              <span><i class="dot" style="background:#ff796b"></i>Serious / fatal K/A</span>
+              <span><i class="dot" style="background:#f7cb80"></i>Minor / possible B/C</span>
+              <span><i class="dot" style="background:#79a5ba"></i>No injury O</span>
+              <span><i class="dot" style="background:#596b77"></i>Unknown</span>
+            </div>
+          </div>
+          <aside class="inspector" aria-live="polite">
+            <div class="label">Selected branch</div>
+            <h3 id="node-title">All recorded crashes</h3>
+            <div class="big-number" id="node-count">—</div>
+            <div class="muted">Recorded crashes in this branch</div>
+            <div class="inspector-grid">
+              <div><strong id="node-severe">—</strong><span>Serious / fatal K/A</span></div>
+              <div><strong id="node-share">—</strong><span>K/A share</span></div>
+            </div>
+            <button class="pill reset" id="reset-icicle" type="button">↺ Full hierarchy</button>
+          </aside>
+    </section>
+
+    <section class="chapter" id="constellation-section">
+      <div class="chapter-head">
+        <div class="number">02</div>
+        <div>
+          <div class="eyebrow">Crash constellation</div>
+          <h2>Every freeway has its own crash clock.</h2>
+          <p class="lead"></p>
+        </div>
+      </div>
+      <div class="card constellation-card">
+        <div class="cardhead">
+          <strong>Road-by-road crash constellation · 2021–2023</strong>
+        </div>
+        <div class="plot" id="constellation-viz" aria-label="Interactive corridor-by-hour crash constellation"></div>
+        <div class="key">
+          <span>Small ↔ large = fewer ↔ more crashes</span>
+          <span><i class="dot" style="background:#7dadc0"></i>Lower K/A share</span>
+          <span><i class="dot" style="background:#ff796b"></i>Higher K/A share</span>
+        </div>
+      </div>
+    </section>
+
+    <p class="note" id="source-note">Source: <code>master_dataset_no_tmas.csv</code>, filtered to 2021–2023. The perimeter collision CSV has the same 373,976 crash rows in its 23 shared fields, so records are not counted twice. Corridor comparisons use the master’s <code>gpas_verified_corridor</code> assignments; unresolved matches are not assigned. <code>TMAS.csv</code> contributes coverage context only: its traffic-station IDs do not match crash candidate-station IDs, so vehicle counts are not joined to corridors and no exposure-adjusted rate is implied. Counts and K/A shares are descriptive crash summaries.</p>
+  </main>
+  <div class="tooltip" id="tooltip" role="status"></div>
+  <script>
+    const DATA = {"meta":{"total":231953,"severe":3988,"unknown":1943,"matched":45068,"firstYear":2021,"lastYear":2023,"yearCounts":[79052,77363,75538],"tmasRows":1260936,"tmasStations":39,"tmasCrashStationIdOverlap":0},"anatomy":[["I-20","off","Angle","injury",181],["I-20","off","Angle","none",282],["I-20","off","Angle","severe",15],["I-20","off","Head-on","injury",22],["I-20","off","Head-on","none",20],["I-20","off","Head-on","severe",6],["I-20","off","Rear-end","injury",719],["I-20","off","Rear-end","none",1134],["I-20","off","Rear-end","severe",48],["I-20","off","Rear-end","unknown",2],["I-20","off","Sideswipe","injury",348],["I-20","off","Sideswipe","none",1264],["I-20","off","Sideswipe","severe",24],["I-20","off","Sideswipe","unknown",3],["I-20","off","Single vehicle / object","injury",256],["I-20","off","Single vehicle / object","none",528],["I-20","off","Single vehicle / object","severe",39],["I-20","off","Single vehicle / object","unknown",18],["I-20","rush","Angle","injury",36],["I-20","rush","Angle","none",90],["I-20","rush","Angle","severe",5],["I-20","rush","Head-on","injury",2],["I-20","rush","Head-on","none",7],["I-20","rush","Rear-end","injury",434],["I-20","rush","Rear-end","none",885],["I-20","rush","Rear-end","severe",7],["I-20","rush","Sideswipe","injury",108],["I-20","rush","Sideswipe","none",525],["I-20","rush","Sideswipe","severe",2],["I-20","rush","Sideswipe","unknown",1],["I-20","rush","Single vehicle / object","injury",37],["I-20","rush","Single vehicle / object","none",153],["I-20","rush","Single vehicle / object","severe",5],["I-20","rush","Single vehicle / object","unknown",1],["I-285","off","Angle","injury",477],["I-285","off","Angle","none",1001],["I-285","off","Angle","severe",49],["I-285","off","Angle","unknown",1],["I-285","off","Head-on","injury",28],["I-285","off","Head-on","none",52],["I-285","off","Head-on","severe",9],["I-285","off","Other / unknown","none",3],["I-285","off","Other / unknown","unknown",1],["I-285","off","Rear-end","injury",2000],["I-285","off","Rear-end","none",3648],["I-285","off","Rear-end","severe",104],["I-285","off","Rear-end","unknown",5],["I-285","off","Sideswipe","injury",762],["I-285","off","Sideswipe","none",3453],["I-285","off","Sideswipe","severe",43],["I-285","off","Sideswipe","unknown",4],["I-285","off","Single vehicle / object","injury",395],["I-285","off","Single vehicle / object","none",1300],["I-285","off","Single vehicle / object","severe",71],["I-285","off","Single vehicle / object","unknown",56],["I-285","rush","Angle","injury",102],["I-285","rush","Angle","none",409],["I-285","rush","Angle","severe",5],["I-285","rush","Head-on","injury",4],["I-285","rush","Head-on","none",20],["I-285","rush","Head-on","severe",1],["I-285","rush","Other / unknown","injury",1],["I-285","rush","Rear-end","injury",1145],["I-285","rush","Rear-end","none",2272],["I-285","rush","Rear-end","severe",10],["I-285","rush","Rear-end","unknown",1],["I-285","rush","Sideswipe","injury",264],["I-285","rush","Sideswipe","none",1585],["I-285","rush","Sideswipe","severe",5],["I-285","rush","Sideswipe","unknown",1],["I-285","rush","Single vehicle / object","injury",73],["I-285","rush","Single vehicle / object","none",278],["I-285","rush","Single vehicle / object","severe",6],["I-285","rush","Single vehicle / object","unknown",5],["I-75","off","Angle","injury",226],["I-75","off","Angle","none",505],["I-75","off","Angle","severe",33],["I-75","off","Head-on","injury",19],["I-75","off","Head-on","none",38],["I-75","off","Head-on","severe",2],["I-75","off","Other / unknown","unknown",17],["I-75","off","Rear-end","injury",1122],["I-75","off","Rear-end","none",2170],["I-75","off","Rear-end","severe",58],["I-75","off","Rear-end","unknown",1],["I-75","off","Sideswipe","injury",390],["I-75","off","Sideswipe","none",2130],["I-75","off","Sideswipe","severe",21],["I-75","off","Sideswipe","unknown",1],["I-75","off","Single vehicle / object","injury",211],["I-75","off","Single vehicle / object","none",458],["I-75","off","Single vehicle / object","severe",42],["I-75","off","Single vehicle / object","unknown",12],["I-75","rush","Angle","injury",47],["I-75","rush","Angle","none",131],["I-75","rush","Angle","severe",2],["I-75","rush","Head-on","injury",1],["I-75","rush","Head-on","none",5],["I-75","rush","Head-on","severe",1],["I-75","rush","Other / unknown","unknown",4],["I-75","rush","Rear-end","injury",393],["I-75","rush","Rear-end","none",1056],["I-75","rush","Rear-end","severe",3],["I-75","rush","Sideswipe","injury",114],["I-75","rush","Sideswipe","none",782],["I-75","rush","Sideswipe","severe",3],["I-75","rush","Single vehicle / object","injury",26],["I-75","rush","Single vehicle / object","none",108],["I-75","rush","Single vehicle / object","severe",4],["I-85","off","Angle","injury",164],["I-85","off","Angle","none",364],["I-85","off","Angle","severe",27],["I-85","off","Angle","unknown",1],["I-85","off","Head-on","injury",11],["I-85","off","Head-on","none",12],["I-85","off","Head-on","severe",1],["I-85","off","Other / unknown","none",3],["I-85","off","Other / unknown","severe",1],["I-85","off","Rear-end","injury",812],["I-85","off","Rear-end","none",1654],["I-85","off","Rear-end","severe",55],["I-85","off","Rear-end","unknown",2],["I-85","off","Sideswipe","injury",256],["I-85","off","Sideswipe","none",1280],["I-85","off","Sideswipe","severe",18],["I-85","off","Sideswipe","unknown",3],["I-85","off","Single vehicle / object","injury",175],["I-85","off","Single vehicle / object","none",455],["I-85","off","Single vehicle / object","severe",38],["I-85","off","Single vehicle / object","unknown",20],["I-85","rush","Angle","injury",55],["I-85","rush","Angle","none",131],["I-85","rush","Angle","severe",2],["I-85","rush","Head-on","injury",1],["I-85","rush","Rear-end","injury",427],["I-85","rush","Rear-end","none",1235],["I-85","rush","Rear-end","severe",7],["I-85","rush","Sideswipe","injury",72],["I-85","rush","Sideswipe","none",634],["I-85","rush","Sideswipe","severe",2],["I-85","rush","Sideswipe","unknown",2],["I-85","rush","Single vehicle / object","injury",40],["I-85","rush","Single vehicle / object","none",112],["I-85","rush","Single vehicle / object","severe",3],["I-85","rush","Single vehicle / object","unknown",1],["all","off","Angle","injury",12762],["all","off","Angle","none",27707],["all","off","Angle","severe",910],["all","off","Angle","unknown",177],["all","off","Head-on","injury",1645],["all","off","Head-on","none",2203],["all","off","Head-on","severe",292],["all","off","Head-on","unknown",39],["all","off","Other / unknown","injury",27],["all","off","Other / unknown","none",117],["all","off","Other / unknown","severe",5],["all","off","Other / unknown","unknown",348],["all","off","Rear-end","injury",16270],["all","off","Rear-end","none",39431],["all","off","Rear-end","severe",637],["all","off","Rear-end","unknown",113],["all","off","Sideswipe","injury",5837],["all","off","Sideswipe","none",35439],["all","off","Sideswipe","severe",271],["all","off","Sideswipe","unknown",175],["all","off","Single vehicle / object","injury",4884],["all","off","Single vehicle / object","none",11023],["all","off","Single vehicle / object","severe",1254],["all","off","Single vehicle / object","unknown",761],["all","rush","Angle","injury",4793],["all","rush","Angle","none",11828],["all","rush","Angle","severe",181],["all","rush","Angle","unknown",51],["all","rush","Head-on","injury",479],["all","rush","Head-on","none",748],["all","rush","Head-on","severe",69],["all","rush","Head-on","unknown",6],["all","rush","Other / unknown","injury",13],["all","rush","Other / unknown","none",31],["all","rush","Other / unknown","severe",2],["all","rush","Other / unknown","unknown",134],["all","rush","Rear-end","injury",7857],["all","rush","Rear-end","none",21791],["all","rush","Rear-end","severe",121],["all","rush","Rear-end","unknown",20],["all","rush","Sideswipe","injury",2044],["all","rush","Sideswipe","none",15426],["all","rush","Sideswipe","severe",55],["all","rush","Sideswipe","unknown",34],["all","rush","Single vehicle / object","injury",1185],["all","rush","Single vehicle / object","none",2482],["all","rush","Single vehicle / object","severe",191],["all","rush","Single vehicle / object","unknown",85]],"constellation":[{"road":"I-20","hour":0,"crashes":235,"severe":14},{"road":"I-20","hour":1,"crashes":139,"severe":9},{"road":"I-20","hour":2,"crashes":117,"severe":12},{"road":"I-20","hour":3,"crashes":115,"severe":12},{"road":"I-20","hour":4,"crashes":117,"severe":10},{"road":"I-20","hour":5,"crashes":114,"severe":3},{"road":"I-20","hour":6,"crashes":240,"severe":5},{"road":"I-20","hour":7,"crashes":308,"severe":2},{"road":"I-20","hour":8,"crashes":390,"severe":2},{"road":"I-20","hour":9,"crashes":314,"severe":5},{"road":"I-20","hour":10,"crashes":278,"severe":2},{"road":"I-20","hour":11,"crashes":297,"severe":2},{"road":"I-20","hour":12,"crashes":319,"severe":6},{"road":"I-20","hour":13,"crashes":347,"severe":2},{"road":"I-20","hour":14,"crashes":410,"severe":7},{"road":"I-20","hour":15,"crashes":475,"severe":7},{"road":"I-20","hour":16,"crashes":567,"severe":7},{"road":"I-20","hour":17,"crashes":579,"severe":6},{"road":"I-20","hour":18,"crashes":590,"severe":5},{"road":"I-20","hour":19,"crashes":360,"severe":6},{"road":"I-20","hour":20,"crashes":270,"severe":4},{"road":"I-20","hour":21,"crashes":218,"severe":10},{"road":"I-20","hour":22,"crashes":203,"severe":2},{"road":"I-20","hour":23,"crashes":205,"severe":11},{"road":"I-75","hour":0,"crashes":339,"severe":19},{"road":"I-75","hour":1,"crashes":217,"severe":14},{"road":"I-75","hour":2,"crashes":166,"severe":10},{"road":"I-75","hour":3,"crashes":180,"severe":10},{"road":"I-75","hour":4,"crashes":139,"severe":4},{"road":"I-75","hour":5,"crashes":199,"severe":6},{"road":"I-75","hour":6,"crashes":277,"severe":8},{"road":"I-75","hour":7,"crashes":423,"severe":7},{"road":"I-75","hour":8,"crashes":506,"severe":3},{"road":"I-75","hour":9,"crashes":441,"severe":1},{"road":"I-75","hour":10,"crashes":403,"severe":3},{"road":"I-75","hour":11,"crashes":415,"severe":1},{"road":"I-75","hour":12,"crashes":489,"severe":5},{"road":"I-75","hour":13,"crashes":470,"severe":2},{"road":"I-75","hour":14,"crashes":568,"severe":5},{"road":"I-75","hour":15,"crashes":622,"severe":5},{"road":"I-75","hour":16,"crashes":708,"severe":4},{"road":"I-75","hour":17,"crashes":716,"severe":9},{"road":"I-75","hour":18,"crashes":652,"severe":2},{"road":"I-75","hour":19,"crashes":472,"severe":10},{"road":"I-75","hour":20,"crashes":476,"severe":6},{"road":"I-75","hour":21,"crashes":447,"severe":13},{"road":"I-75","hour":22,"crashes":450,"severe":12},{"road":"I-75","hour":23,"crashes":361,"severe":10},{"road":"I-85","hour":0,"crashes":248,"severe":13},{"road":"I-85","hour":1,"crashes":96,"severe":12},{"road":"I-85","hour":2,"crashes":121,"severe":16},{"road":"I-85","hour":3,"crashes":110,"severe":10},{"road":"I-85","hour":4,"crashes":109,"severe":10},{"road":"I-85","hour":5,"crashes":132,"severe":6},{"road":"I-85","hour":6,"crashes":251,"severe":1},{"road":"I-85","hour":7,"crashes":351,"severe":1},{"road":"I-85","hour":8,"crashes":442,"severe":3},{"road":"I-85","hour":9,"crashes":410,"severe":2},{"road":"I-85","hour":10,"crashes":303,"severe":2},{"road":"I-85","hour":11,"crashes":302,"severe":2},{"road":"I-85","hour":12,"crashes":367,"severe":2},{"road":"I-85","hour":13,"crashes":389,"severe":4},{"road":"I-85","hour":14,"crashes":490,"severe":10},{"road":"I-85","hour":15,"crashes":621,"severe":7},{"road":"I-85","hour":16,"crashes":672,"severe":7},{"road":"I-85","hour":17,"crashes":638,"severe":6},{"road":"I-85","hour":18,"crashes":608,"severe":0},{"road":"I-85","hour":19,"crashes":489,"severe":8},{"road":"I-85","hour":20,"crashes":286,"severe":8},{"road":"I-85","hour":21,"crashes":244,"severe":9},{"road":"I-85","hour":22,"crashes":218,"severe":9},{"road":"I-85","hour":23,"crashes":179,"severe":6},{"road":"I-285","hour":0,"crashes":615,"severe":22},{"road":"I-285","hour":1,"crashes":250,"severe":14},{"road":"I-285","hour":2,"crashes":268,"severe":20},{"road":"I-285","hour":3,"crashes":261,"severe":16},{"road":"I-285","hour":4,"crashes":248,"severe":14},{"road":"I-285","hour":5,"crashes":319,"severe":18},{"road":"I-285","hour":6,"crashes":578,"severe":13},{"road":"I-285","hour":7,"crashes":858,"severe":5},{"road":"I-285","hour":8,"crashes":956,"severe":12},{"road":"I-285","hour":9,"crashes":821,"severe":3},{"road":"I-285","hour":10,"crashes":781,"severe":12},{"road":"I-285","hour":11,"crashes":837,"severe":12},{"road":"I-285","hour":12,"crashes":1003,"severe":7},{"road":"I-285","hour":13,"crashes":1176,"severe":13},{"road":"I-285","hour":14,"crashes":1370,"severe":9},{"road":"I-285","hour":15,"crashes":1561,"severe":12},{"road":"I-285","hour":16,"crashes":1695,"severe":8},{"road":"I-285","hour":17,"crashes":1641,"severe":7},{"road":"I-285","hour":18,"crashes":1385,"severe":14},{"road":"I-285","hour":19,"crashes":930,"severe":10},{"road":"I-285","hour":20,"crashes":619,"severe":18},{"road":"I-285","hour":21,"crashes":551,"severe":7},{"road":"I-285","hour":22,"crashes":505,"severe":19},{"road":"I-285","hour":23,"crashes":421,"severe":18}]};
+    const ROADS = ["I-20", "I-75", "I-85", "I-285"];
+    const SEVERITY_LABELS = {
+      severe: "Serious / fatal K/A",
+      injury: "Minor / possible B/C",
+      none: "No injury O",
+      unknown: "Unknown"
+    };
+    const SEVERITY_COLORS = {
+      severe: "#ff796b",
+      injury: "#f7cb80",
+      none: "#79a5ba",
+      unknown: "#596b77"
+    };
+    const TYPE_COLORS = {
+      "Rear-end": "#438f9e",
+      Angle: "#c0867b",
+      Sideswipe: "#7096c5",
+      "Head-on": "#d86767",
+      "Single vehicle / object": "#a586b2",
+      "Other / unknown": "#617f87"
+    };
+    const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const state = { road: "all", branch: [], selectedHour: null };
+    const $ = (id) => document.getElementById(id);
+    const fmt = (n) => Number(n).toLocaleString("en-US");
+    const pct = (n, d) => d ? `${(100 * n / d).toFixed(1)}%` : "0.0%";
+    const escapeHTML = (s) => String(s).replace(/[&<>"']/g, (c) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    })[c]);
+    const hourLabel = (hour) => `${String(hour % 12 || 12).padStart(2, "0")}${hour < 12 ? "a" : "p"}`;
+
+    function rowsForFocus() {
+      const target = state.road === "all" ? "all" : state.road;
+      return DATA.anatomy.filter((row) => row[0] === target);
+    }
+
+    function buildTree() {
+      const root = { key: "root", name: state.road === "all" ? "All recorded crashes" : `${state.road} · verified corridor`, count: 0, severe: 0, children: [], depth: 0, path: [] };
+      for (const [road, period, type, severity, count] of rowsForFocus()) {
+        const values = [period, type, severity];
+        const labels = [
+          period === "rush" ? "Rush hour" : "Off-peak",
+          type,
+          SEVERITY_LABELS[severity]
+        ];
+        root.count += count;
+        if (severity === "severe") root.severe += count;
+        let node = root;
+        values.forEach((key, i) => {
+          let child = node.children.find((item) => item.key === key);
+          if (!child) {
+            child = {
+              key,
+              name: labels[i],
+              count: 0,
+              severe: 0,
+              children: [],
+              depth: i + 1,
+              path: [...node.path, key],
+              color: i === 0 ? (period === "rush" ? "#218d83" : "#547c9a") : i === 1 ? TYPE_COLORS[type] : SEVERITY_COLORS[severity]
+            };
+            node.children.push(child);
+          }
+          child.count += count;
+          if (severity === "severe") child.severe += count;
+          node = child;
+        });
+      }
+      const sort = (node) => {
+        node.children.sort((a, b) => b.count - a.count);
+        node.children.forEach(sort);
+      };
+      sort(root);
+      return root;
+    }
+
+    function selectedNode(root) {
+      let node = root;
+      for (const key of state.branch) {
+        const next = node.children.find((child) => child.key === key);
+        if (!next) break;
+        node = next;
+      }
+      state.branch = node.path;
+      return node;
+    }
+
+    function renderIcicle() {
+      const root = buildTree();
+      const focus = selectedNode(root);
+      const layers = [];
+      const left = 20, width = 1030, rowHeight = 62, rowGap = 29, top = 30;
+      const walk = (node, x, w) => {
+        const row = node.depth - focus.depth;
+        if (row > 3 || w < 0.08) return;
+        layers.push({ node, x, w, row });
+        let offset = x;
+        for (const child of node.children) {
+          const childWidth = w * child.count / node.count;
+          walk(child, offset, childWidth);
+          offset += childWidth;
+        }
+      };
+      walk(focus, left, width);
+      const rowCount = 4 - focus.depth;
+      const height = top + rowCount * (rowHeight + rowGap) + 4;
+      const headings = ["ALL CRASHES", "RUSH / OFF-PEAK", "COLLISION TYPE", "SEVERITY"];
+      const headerSVG = Array.from({ length: rowCount }, (_, i) =>
+        `<text x="20" y="${top + i * (rowHeight + rowGap) - 7}" fill="#a9c6ce" font-size="12" font-weight="800">${headings[focus.depth + i]}</text>`
+      ).join("");
+      const blocks = layers.map(({ node, x, w, row }) => {
+        const y = top + row * (rowHeight + rowGap);
+        const blockWidth = Math.max(0.1, w - 1.5);
+        const path = escapeHTML(JSON.stringify(node.path));
+        const text = blockWidth > 85
+          ? `<text x="${x + 8}" y="${y + 25}" fill="white" font-size="12" pointer-events="none" font-weight="750">${escapeHTML(node.name.length > Math.floor(blockWidth / 7.5) ? `${node.name.slice(0, Math.floor(blockWidth / 7.5) - 1)}…` : node.name)}</text><text x="${x + 8}" y="${y + 44}" fill="#e1f0ef" font-size="11" pointer-events="none">${fmt(node.count)} · ${(100 * node.count / focus.count).toFixed(1)}%</text>`
+          : "";
+        return `<g class="icicle-block" data-path="${path}" tabindex="0" role="button" aria-label="${escapeHTML(node.name)} ${fmt(node.count)} crashes"><rect x="${x.toFixed(2)}" y="${y}" width="${blockWidth.toFixed(2)}" height="${rowHeight}" rx="2" fill="${node.depth === 0 ? "#245361" : node.color}" fill-opacity=".9" stroke="#0a1b28" stroke-width="1"/>${text}</g>`;
+      }).join("");
+      $("icicle-viz").innerHTML = `<svg viewBox="0 0 1080 ${height}" role="img" aria-label="Zoomable crash hierarchy">${headerSVG}${blocks}</svg>`;
+
+      const crumbs = [root];
+      let current = root;
+      for (const key of focus.path) {
+        current = current.children.find((child) => child.key === key);
+        crumbs.push(current);
+      }
+      $("crumbs").innerHTML = crumbs.map((node, index) =>
+        `<button type="button" class="crumb" data-index="${index}" ${index === crumbs.length - 1 ? 'aria-current="page"' : ""}>${index ? "› " : "⌂ "}${escapeHTML(node.name)}</button>`
+      ).join("");
+      $("crumbs").querySelectorAll(".crumb").forEach((button) => button.addEventListener("click", () => {
+        const target = Number(button.dataset.index);
+        state.branch = crumbs[target].path;
+        renderIcicle();
+      }));
+      $("icicle-viz").querySelectorAll(".icicle-block").forEach((block) => {
+        const nodePath = JSON.parse(block.dataset.path);
+        let node = root;
+        for (const key of nodePath) node = node.children.find((child) => child.key === key);
+        block.addEventListener("click", () => { state.branch = nodePath; renderIcicle(); });
+        block.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            state.branch = nodePath;
+            renderIcicle();
+          }
+        });
+        block.addEventListener("pointermove", (event) => showTip(event, `<b>${escapeHTML(node.name)}</b>${fmt(node.count)} crashes<br>${fmt(node.severe)} serious/fatal · ${pct(node.severe, node.count)}`));
+        block.addEventListener("pointerleave", hideTip);
+      });
+      $("node-title").textContent = focus.name;
+      $("node-count").textContent = fmt(focus.count);
+      $("node-severe").textContent = fmt(focus.severe);
+      $("node-share").textContent = pct(focus.severe, focus.count);
+      $("icicle-title").textContent = `Crash anatomy · ${state.road === "all" ? "All recorded crashes" : state.road}`;
+    }
+
+    function renderConstellation() {
+      const xStart = 145, xEnd = 1080, ys = [78, 158, 238, 318];
+      const max = Math.max(...DATA.constellation.map((row) => row.crashes));
+      const x = (hour) => xStart + hour * (xEnd - xStart) / 23;
+      let svg = Array.from({ length: 24 }, (_, hour) => hour % 3 === 0
+        ? `<line x1="${x(hour)}" x2="${x(hour)}" y1="38" y2="351" class="gridline"/><text x="${x(hour)}" y="382" text-anchor="middle" class="tick">${hourLabel(hour)}</text>`
+        : "").join("");
+      for (const [i, road] of ROADS.entries()) {
+        const y = ys[i];
+        const dimmed = state.road !== "all" && state.road !== road;
+        svg += `<text x="16" y="${y + 5}" class="road-label" fill="${state.road === road ? "#61ddc7" : "#e4eeeb"}" opacity="${dimmed ? ".35" : "1"}">${road}</text><line x1="${xStart - 17}" x2="${xEnd + 9}" y1="${y}" y2="${y}" stroke="#38596b" stroke-width="1" opacity=".8"/>`;
+        for (const row of DATA.constellation.filter((item) => item.road === road)) {
+          const share = row.severe / Math.max(row.crashes, 1);
+          const intensity = Math.min(1, share / 0.038);
+          const radius = 4 + 18 * Math.sqrt(row.crashes / max);
+          const fill = intensity > .65 ? "#ff796b" : intensity > .35 ? "#e6a27b" : "#7dadc0";
+          const selected = state.selectedHour === row.hour;
+          const opacity = selected ? 1 : dimmed ? .19 : .82;
+          svg += `<circle class="star" data-road="${road}" data-hour="${row.hour}" data-count="${row.crashes}" data-severe="${row.severe}" cx="${x(row.hour)}" cy="${y}" r="${radius.toFixed(1)}" fill="${fill}" fill-opacity="${opacity}" stroke="${selected ? "#ffffff" : "#123343"}" stroke-width="${selected ? 2.7 : 1}" tabindex="0" role="button" aria-label="${road}, ${hourLabel(row.hour)}: ${fmt(row.crashes)} crashes, ${fmt(row.severe)} serious or fatal"/>`;
+        }
+      }
+      $("constellation-viz").innerHTML = `<svg viewBox="0 0 1120 400" role="img" aria-label="Actual crash counts and serious or fatal shares by corridor and hour">${svg}</svg>`;
+      $("constellation-viz").querySelectorAll(".star").forEach((circle) => {
+        const row = circle.dataset;
+        const detail = () => {
+          const crashes = Number(row.count), severe = Number(row.severe), hour = Number(row.hour);
+          $("constellation-detail").innerHTML = `<b>${row.road} · ${hourLabel(hour)}:</b> ${fmt(crashes)} assigned crashes, including ${fmt(severe)} serious/fatal (${pct(severe, crashes)}). This is a historical count, not a per-trip crash probability.`;
+          state.selectedHour = state.selectedHour === hour ? null : hour;
+          renderConstellation();
+        };
+        circle.addEventListener("click", detail);
+        circle.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") { event.preventDefault(); detail(); }
+        });
+        circle.addEventListener("pointermove", (event) => showTip(event, `<b>${row.road} · ${hourLabel(Number(row.hour))}</b>${fmt(Number(row.count))} crashes<br>${fmt(Number(row.severe))} serious/fatal · ${pct(Number(row.severe), Number(row.count))}`));
+        circle.addEventListener("pointerleave", hideTip);
+      });
+    }
+
+    function renderFilters() {
+      const labels = [["all", "All crashes"], ...ROADS.map((road) => [road, road])];
+      $("filters").innerHTML = labels.map(([key, label]) =>
+        `<button type="button" class="pill" data-road="${key}" aria-pressed="${state.road === key}">${label}</button>`
+      ).join("");
+      $("filters").querySelectorAll("button").forEach((button) => button.addEventListener("click", () => {
+        state.road = button.dataset.road;
+        state.branch = [];
+        renderFilters();
+        renderIcicle();
+        renderConstellation();
+      }));
+    }
+
+    function showTip(event, content) {
+      const tip = $("tooltip");
+      tip.innerHTML = content;
+      tip.style.display = "block";
+      const x = Math.min(event.clientX + 14, window.innerWidth - tip.offsetWidth - 10);
+      const y = Math.min(event.clientY + 14, window.innerHeight - tip.offsetHeight - 10);
+      tip.style.left = `${Math.max(8, x)}px`;
+      tip.style.top = `${Math.max(8, y)}px`;
+    }
+    function hideTip() { $("tooltip").style.display = "none"; }
+
+    $("total-count").textContent = fmt(DATA.meta.total);
+    $("severe-count").textContent = fmt(DATA.meta.severe);
+    $("matched-count").textContent = fmt(DATA.meta.matched);
+    $("dataset-line").textContent = `${fmt(DATA.meta.total)} RECORDS · ${fmt(DATA.meta.matched)} VERIFIED-CORRIDOR ASSIGNMENTS · ${DATA.meta.firstYear}–${DATA.meta.lastYear}`;
+    $("source-note").innerHTML = `Source: <code>master_dataset_no_tmas.csv</code>, filtered to ${DATA.meta.firstYear}–${DATA.meta.lastYear}. The perimeter collision CSV has the same 373,976 crash rows in its 23 shared fields, so records are not counted twice. Corridor comparisons use the master’s <code>gpas_verified_corridor</code> assignments; unresolved matches are not assigned. <code>TMAS.csv</code> contributes coverage context only (${fmt(DATA.meta.tmasRows)} hourly records from ${fmt(DATA.meta.tmasStations)} stations in the selected years). Its station IDs do not match crash candidate-station IDs (${DATA.meta.tmasCrashStationIdOverlap} overlaps), so vehicle counts are not joined to corridors and no exposure-adjusted rate is implied. Counts and K/A shares are descriptive crash summaries.`;
+    $("reset-icicle").addEventListener("click", () => { state.branch = []; renderIcicle(); });
+    renderFilters();
+    renderIcicle();
+    renderConstellation();
+  </script>
+</body>
+</html>

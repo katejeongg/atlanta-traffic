@@ -1,0 +1,63 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Atlanta traffic | Crash totals versus exposure</title><script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script><style>
+*{box-sizing:border-box}body{margin:0;background:#fff;color:#222;font:15px/1.5 Arial,sans-serif}main{max-width:1100px;margin:auto;padding:32px 24px}h1{font-size:28px;line-height:1.25;margin:5px 0 8px}h2{font-size:20px;margin:0 0 8px}p{margin:7px 0}.eyebrow,.note{font-size:12px;color:#555}.intro{max-width:85ch}section{border-top:1px solid #bbb;margin-top:25px;padding-top:20px}.maps{display:grid;grid-template-columns:1fr 1fr;gap:20px}.map-panel{min-width:0}.map-panel h3{font-size:17px;margin:0 0 3px}.map-panel .sub{font-size:12px;color:#555;min-height:36px}.map{background:#f5f7fa;border:1px solid #e4e8ee;width:100%;display:block}.map-panel .caption{font-size:12px;color:#555;margin-top:7px}.legend-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px;color:#555;margin-top:9px}.dot{width:11px;height:11px;border-radius:50%;display:inline-block;background:#25588a}.dot.risk{background:#b65a47}.takeaway{font-size:14px;margin-top:15px;max-width:90ch}.takeaway strong::before{content:'Takeaway: '}.detail{border-top:1px solid #bbb;margin-top:23px;padding-top:20px}.rankings{display:grid;grid-template-columns:1fr 1fr;gap:20px}.rankings h3{font-size:15px;margin:0 0 8px}.rank{display:flex;align-items:center;gap:10px;font-size:13px;margin:7px 0}.rank .road{width:46px;font-weight:bold}.rank .track{height:11px;background:#eef1f4;flex:1}.rank .fill{height:100%;background:#25588a}.rank.right .fill{background:#b65a47}.rank .val{min-width:80px;text-align:right;font-variant-numeric:tabular-nums}.footer{border-top:1px solid #bbb;margin-top:27px;padding-top:15px;color:#555;font-size:12px}.tooltip{position:absolute;pointer-events:none;background:white;border:1px solid #999;box-shadow:0 2px 8px #0002;padding:8px 10px;font-size:12px;display:none;z-index:5}.map svg text{font-family:Arial,sans-serif}.map svg .route{fill:none;stroke:#a5b7cb;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}.map svg .route-inner{fill:none;stroke:#dce5ee;stroke-width:2;stroke-linecap:round}.map svg .road-name{fill:#54708c;font-weight:bold;font-size:13px}.map svg .downtown{font-size:12px;fill:#25384a;font-weight:bold}.bubble{cursor:pointer;stroke:#fff;stroke-width:2}.bubble:focus{outline:none;stroke:#222;stroke-width:3}@media(max-width:680px){main{padding:20px 14px}h1{font-size:25px}.maps,.rankings{grid-template-columns:1fr}.map-panel .sub{min-height:0}.map{max-width:560px}}
+
+/* Direct route encoding: no ambiguous bubbles */
+.map{background:#f7f9fc;border:1px solid #e0e7ef;border-radius:3px}
+.map svg .route-under{fill:none;stroke:#fff;stroke-width:13;stroke-linecap:round;stroke-linejoin:round}
+.map svg .route-colored{fill:none;stroke-linecap:round;stroke-linejoin:round;cursor:pointer;transition:stroke-width .15s,opacity .15s}
+.map svg .route-colored:hover,.map svg .route-colored:focus{stroke-width:11;outline:none}
+.map svg .route-label{font-family:Arial,sans-serif;font-weight:bold;font-size:13px;paint-order:stroke;stroke:#f7f9fc;stroke-width:4px;stroke-linejoin:round}
+.map svg .place{font-family:Arial,sans-serif;font-size:11px;fill:#7c8995;letter-spacing:.2px}
+.map svg .guide{stroke:#e8eef4;stroke-width:1}
+.map svg .highlight-badge{font-family:Arial,sans-serif;font-weight:bold;font-size:12px}
+.legend-swatch{display:inline-block;width:22px;height:5px;border-radius:3px;vertical-align:middle}
+.legend-swatch.top{background:#b65a47}.legend-swatch.mid{background:#668da9}.legend-swatch.low{background:#b3c4d2}
+.rank.first .road,.rank.first .val{font-weight:bold;color:#9d4939}.rank.first .fill{background:#b65a47}.rank:not(.first) .fill{background:#668da9}.rank.last .fill{background:#b3c4d2}
+.rank{padding:5px 4px;border-radius:3px}.rank.first{background:#fbf0ed}
+.map-panel .caption{font-weight:bold;color:#2e4d65;font-size:13px}.map-panel .sub{min-height:0}.takeaway{margin-top:12px}
+</style></head><body><main><div class="eyebrow">ATLANTA INTERSTATES · 2021–2023</div><h1>Most crashes ≠ highest severe-crash rate</h1><section><h2>Same highways. Two different rankings.</h2><div class="maps"><div class="map-panel"><h3>A. Total crashes</h3><p class="sub">All reported crashes</p><div id="countMap" class="map"></div><div class="caption" id="countCaption"></div></div><div class="map-panel"><h3>B. Traffic-adjusted severe crashes</h3><p class="sub">Serious/fatal crashes per 100 million vehicle-miles</p><div id="rateMap" class="map"></div><div class="caption" id="rateCaption"></div></div></div><div class="legend-row"><span class="legend-swatch top"></span> Highest rank <span class="legend-swatch mid" style="margin-left:12px"></span> Middle ranks <span class="legend-swatch low" style="margin-left:12px"></span> Lowest rank </div><p class="takeaway" aria-live="polite"><strong id="takeaway"></strong></p><p class="note">Schematic highway map, not individual crash locations. Hover over a road for details.</p></section><section class="detail"><h2>Rankings</h2><div class="rankings"><div><h3>Total reported crashes</h3><div id="countRanks"></div></div><div><h3>Serious/fatal crashes per 100M vehicle-miles</h3><div id="rateRanks"></div></div></div></section><div class="footer">Source: team-cleaned GDOT crash and traffic data, 2021–2023. Serious/fatal = K/A crashes; rate = crashes ÷ estimated vehicle-miles traveled (VMT) × 100 million. Corridor matching and traffic estimates introduce uncertainty; rankings are exploratory.</div></div></main><div class="tooltip" id="tooltip"></div><script>const annual=[{"road":"I-20","year":2021,"crashes":2770,"severe":64,"vmt":1105462888},{"road":"I-20","year":2022,"crashes":2694,"severe":59,"vmt":1140624539},{"road":"I-20","year":2023,"crashes":2566,"severe":42,"vmt":1159455980},{"road":"I-285","year":2021,"crashes":8935,"severe":150,"vmt":3836662095},{"road":"I-285","year":2022,"crashes":9582,"severe":168,"vmt":3932826863},{"road":"I-285","year":2023,"crashes":9689,"severe":135,"vmt":3956907162},{"road":"I-75","year":2021,"crashes":3740,"severe":62,"vmt":2128293048},{"road":"I-75","year":2022,"crashes":4603,"severe":66,"vmt":2187160646},{"road":"I-75","year":2023,"crashes":4514,"severe":65,"vmt":2255663929},{"road":"I-85","year":2021,"crashes":3275,"severe":74,"vmt":1407110801},{"road":"I-85","year":2022,"crashes":3313,"severe":71,"vmt":1478789204},{"road":"I-85","year":2023,"crashes":3110,"severe":51,"vmt":1507322619}];
+const roads=['I-285','I-75','I-85','I-20'];
+// Hand-drawn, schematic Atlanta freeway corridors. Not official GDOT geometry.
+const routes=[
+ {road:'I-285',path:'M 169 394 C 140 358 126 318 127 271 C 125 224 143 169 174 133 C 205 96 255 79 303 79 C 357 79 407 96 440 137 C 470 174 480 215 474 264 C 469 320 439 358 397 385 C 353 413 304 421 257 415 C 223 413 192 405 169 394', lx:423,ly:113},
+ {road:'I-75',path:'M 216 28 C 227 64 246 86 258 118 C 272 146 283 169 285 197 C 288 223 297 242 307 263 C 310 289 302 313 291 337 C 280 361 277 390 288 443',lx:219,ly:66},
+ {road:'I-85',path:'M 479 39 C 449 56 428 78 406 104 C 391 130 372 147 349 163 C 331 184 312 200 301 224 C 287 244 278 265 269 293 C 258 323 252 350 238 375 C 227 398 214 424 201 446',lx:452,ly:72},
+ {road:'I-20',path:'M 37 281 C 90 281 119 283 150 281 C 181 277 205 285 236 286 C 265 291 286 284 314 285 C 347 285 367 290 387 295 C 413 303 435 307 461 306 C 486 307 509 310 531 312',lx:49,ly:265}
+];
+const fmt=d3.format(',');const tooltip=d3.select('#tooltip');function records(){return roads.map(road=>{const subset=annual.filter(d=>d.road===road);const crashes=d3.sum(subset,d=>d.crashes),severe=d3.sum(subset,d=>d.severe),vmt=d3.sum(subset,d=>d.vmt);return {road,crashes,severe,vmt,rate:severe/vmt*1e8}})}
+function map(container,items,kind){
+ const isRate=kind==='rate',key=isRate?'rate':'crashes';
+ const sorted=[...items].sort((a,b)=>b[key]-a[key]);
+ const rank=new Map(sorted.map((d,i)=>[d.road,i]));
+ const color=i=>i===0?'#b65a47':i===3?'#b3c4d2':'#668da9';
+ const svg=d3.select(container).selectAll('svg').data([0]).join('svg')
+  .attr('viewBox','0 0 560 465').attr('role','img')
+  .attr('aria-label',isRate?'Simplified Atlanta interstate network, colored by serious and fatal crash rate rank':'Simplified Atlanta interstate network, colored by total crash rank');
+ const bg=svg.selectAll('g.bg').data([0]).join('g').attr('class','bg');
+ bg.selectAll('line.guide.vertical').data(d3.range(70,550,70)).join('line').attr('class','guide vertical').attr('x1',d=>d).attr('x2',d=>d).attr('y1',20).attr('y2',445);
+ bg.selectAll('line.guide.horizontal').data(d3.range(70,460,70)).join('line').attr('class','guide horizontal').attr('x1',20).attr('x2',540).attr('y1',d=>d).attr('y2',d=>d);
+ const g=svg.selectAll('g.network').data([0]).join('g').attr('class','network');
+ g.selectAll('path.route-under').data(routes,d=>d.road).join('path').attr('class','route-under').attr('d',d=>d.path);
+ g.selectAll('path.route-colored').data(routes,d=>d.road).join('path')
+  .attr('class','route-colored').attr('d',d=>d.path).attr('stroke-width',8)
+  .attr('stroke',d=>color(rank.get(d.road))).attr('tabindex',0)
+  .attr('aria-label',d=>{const r=items.find(v=>v.road===d.road);return `${d.road}, rank ${rank.get(d.road)+1}: ${isRate?r.rate.toFixed(2)+' serious or fatal crashes per 100 million vehicle miles':fmt(r.crashes)+' crashes'}`})
+  .on('mousemove',function(event,d){const r=items.find(v=>v.road===d.road);tooltip.style('display','block').style('left',(event.pageX+12)+'px').style('top',(event.pageY+12)+'px').html(`<b>${d.road} · rank ${rank.get(d.road)+1}</b><div>${fmt(r.crashes)} total crashes</div><div>${fmt(r.severe)} serious/fatal crashes</div><div>${r.rate.toFixed(2)} serious/fatal crashes / 100M VMT</div>`)})
+  .on('mouseleave',()=>tooltip.style('display','none'))
+  .on('focus',function(event,d){const r=items.find(v=>v.road===d.road);tooltip.style('display','block').style('left','15px').style('top','15px').html(`<b>${d.road}</b>: ${fmt(r.crashes)} crashes, ${r.rate.toFixed(2)} serious/fatal crashes / 100M VMT`)})
+  .on('blur',()=>tooltip.style('display','none'));
+ const labels=svg.selectAll('g.route-labels').data([0]).join('g').attr('class','route-labels');
+ labels.selectAll('text.route-label').data(routes,d=>d.road).join('text').attr('class','route-label')
+  .attr('x',d=>d.lx).attr('y',d=>d.ly).attr('fill',d=>color(rank.get(d.road)))
+  .text(d=>d.road);
+ const places=[{text:'BUCKHEAD',x:348,y:200},{text:'MIDTOWN',x:331,y:249},{text:'DOWNTOWN',x:336,y:335},{text:'EAST POINT',x:143,y:400}];
+ bg.selectAll('text.place').data(places).join('text').attr('class','place').attr('x',d=>d.x).attr('y',d=>d.y).text(d=>d.text);
+ const top=sorted[0];
+ svg.selectAll('text.map-top').data([top]).join('text').attr('class','highlight-badge map-top')
+  .attr('x',16).attr('y',22).attr('fill','#9d4939')
+  .text(d=>`#1: ${d.road} · ${isRate?d.rate.toFixed(2)+' / 100M VMT':fmt(d.crashes)+' crashes'}`);
+ svg.selectAll('text.north').data([0]).join('text').attr('class','place north').attr('x',516).attr('y',27).text('N ↑');
+}
+function ranks(id,items,kind){const key=kind==='rate'?'rate':'crashes',max=d3.max(items,d=>d[key]);const sorted=[...items].sort((a,b)=>b[key]-a[key]);d3.select(id).selectAll('div.rank').data(sorted,d=>d.road).join('div').attr('class',(d,i)=>'rank '+(kind==='rate'?'right ':'')+(i===0?'first':i===3?'last':'')) .html((d,i)=>`<span class="road">${d.road}</span><div class="track"><div class="fill" style="width:${(d[key]/max*100).toFixed(1)}%"></div></div><span class="val">${kind==='rate'?d.rate.toFixed(2):fmt(d.crashes)}</span>`)}
+function render(){const items=records();map('#countMap',items,'count');map('#rateMap',items,'rate');ranks('#countRanks',items,'count');ranks('#rateRanks',items,'rate');const countTop=[...items].sort((a,b)=>b.crashes-a.crashes)[0],rateTop=[...items].sort((a,b)=>b.rate-a.rate)[0];document.querySelector('#countCaption').textContent=`#1: ${countTop.road} (${fmt(countTop.crashes)} crashes)`;document.querySelector('#rateCaption').textContent=`#1: ${rateTop.road} (${rateTop.rate.toFixed(2)} per 100M VMT)`;const t=document.querySelector('#takeaway');t.textContent=countTop.road!==rateTop.road?`${countTop.road} has the most recorded crashes, but ${rateTop.road} has the highest severe-crash rate after accounting for estimated traffic exposure.`:`${countTop.road} ranks highest on both measures in this period.`}
+render();</script></body></html>
